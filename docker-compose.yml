@@ -5,15 +5,15 @@ services:
     ports:
       - 80:80
     depends_on:
-      - digital-city-api
+      - digital-city-auth
     networks:
       - app-network
-  digital-city-api:
-    image: digital-city-api
+  digital-city-auth:
+    image: digital-city-auth
     ports:
       - 9000:9000
     volumes:
-      - ./backend/.:/var/www/digital-city-api
+      - ./digital-city-auth/.:/var/www/digital-city-auth
     depends_on:
       - mysql
     networks:
@@ -25,7 +25,7 @@ services:
     expose:
       - '3306'
     environment:
-      MYSQL_DATABASE: digital_city_api_db
+      MYSQL_DATABASE: digital_city_auth_db
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - dbdata:/var/lib/mysql
