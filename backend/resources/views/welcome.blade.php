@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Digital City Api
+                    Digital City API
                 </div>
 
                 <div class="links">
