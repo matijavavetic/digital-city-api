@@ -14,7 +14,7 @@ Download application from this URL:
 
 Copy source of `.env.example` to newly created `.env` file. Prepare app and database configuration settings.
 
-### 3. Run following commands to build the images###
+### 3. Run following commands to build the images ###
 
 Enter in digital-city/backend/Docker/nginx dir:
 
@@ -28,17 +28,17 @@ Enter in digital-city/backend dir:
 
     docker build -t digital-city-api .
     
-### 4. Build app with docker compose###
+### 4. Build app with docker compose ###
 
 Enter in /digital-city dir:
 
     docker compose up -d
     
-### 5. Check if containers are running###
+### 5. Check if containers are running ###
 
     docker compose ps
 
-### 6. Visit your app in browser###
+### 6. Visit your app in browser ###
 
 Enter following in browser's address bar:
 
