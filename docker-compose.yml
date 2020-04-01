@@ -1,0 +1,13 @@
+version: '3'
+services:
+  nginx:
+    image: digital-city-nginx
+    ports:
+      - 80:80
+  digital-city-api:
+    image: digital-city-api
+    ports:
+      - 9000:9000
+    volumes:
+      - ./backend/.:/code
+
