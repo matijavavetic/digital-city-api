@@ -2,7 +2,7 @@
 
 namespace src\Applications\Http\Factories\Role;
 
-use src\Business\Mappers\Request\Role\RoleListRequestMapper;
+use src\Business\Mappers\Role\Request\RoleListRequestMapper;
 
 class RoleListRequestMapperFactory
 {

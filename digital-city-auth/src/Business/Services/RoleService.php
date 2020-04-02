@@ -3,7 +3,9 @@
 namespace src\Business\Services;
 
 use src\Data\Repositories\RoleRepository;
-use src\Business\Mappers\Request\Role\RoleListRequestMapper;
+use src\Business\Mappers\Role\Response\RoleListResponseMapper;
+use src\Business\Mappers\Role\Request\RoleListRequestMapper;
+use src\Business\Factories\Role\RoleListResponseMapperFactory;
 
 class RoleService
 {
@@ -14,8 +16,12 @@ class RoleService
         $this->roleRepository = $roleRepository;
     }
 
-    public function getAll(RoleListRequestMapper $mapper)
+    public function getAll(RoleListRequestMapper $mapper) : RoleListResponseMapper
     {
-        return $this->roleRepository->get($mapper->getSort());
+        $roles = $this->roleRepository->get($mapper->getSort());
+
+        $responseMapper = RoleListResponseMapperFactory::make($roles);
+
+        return $responseMapper;
     }
 }

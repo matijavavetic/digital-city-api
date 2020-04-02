@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Business\Mappers\Request\Role;
+namespace src\Business\Mappers\Role\Request;
 
 class RoleListRequestMapper
 {
