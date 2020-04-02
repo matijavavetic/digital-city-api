@@ -16,17 +16,17 @@ Copy source of `.env.example` to newly created `.env` file. Prepare app and data
 
 ### 3. Run following commands to build the images ###
 
-Enter in digital-city/backend/Docker/nginx dir:
+Enter in digital-city/digital-city-auth/Docker/nginx dir:
 
     docker build -t digital-city-nginx .
 
-Enter in digital-city/backend/Docker/mysql dir:
+Enter in digital-city/digital-city-auth/Docker/mysql dir:
 
      docker build -t digital-city-mysql .
      
-Enter in digital-city/backend dir:
+Enter in digital-city/digital-city-auth dir:
 
-    docker build -t digital-city-api .
+    docker build -t digital-city-auth .
     
 ### 4. Build app with docker compose ###
 
@@ -43,4 +43,10 @@ Enter in /digital-city dir:
 Enter following in browser's address bar:
 
     localhost:80
+    
+### 7. Set up your Postman requests ###
+
+For example: GET role.list:
+
+    GET http://localhost:80/api/role.list
 
