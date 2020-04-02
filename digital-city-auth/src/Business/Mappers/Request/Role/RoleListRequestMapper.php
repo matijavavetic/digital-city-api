@@ -4,7 +4,7 @@ namespace src\Business\Mappers\Request\Role;
 
 class RoleListRequestMapper
 {
-    private string $sort;
+    private string $sort = "DESC";
 
     public function getSort() : string
     {

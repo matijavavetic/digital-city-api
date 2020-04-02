@@ -16,6 +16,6 @@ class RoleService
 
     public function getAll(RoleListRequestMapper $mapper)
     {
-        return $this->roleRepository->get();
+        return $this->roleRepository->get($mapper->getSort());
     }
 }
