@@ -20,4 +20,9 @@ class RoleRepository implements IRoleRepository
 
         return $role->where('identifier', $identifier)->first();
     }
+
+    public function store(Role $role)
+    {
+        return $role->save();
+    }
 }
