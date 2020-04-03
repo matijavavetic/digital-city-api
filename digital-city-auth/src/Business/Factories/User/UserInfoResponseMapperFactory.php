@@ -8,12 +8,13 @@ use src\Business\Mappers\User\Response\UserInfoResponseMapper;
 
 class UserInfoResponseMapperFactory
 {
-    public static function make(User $role) : UserInfoResponseMapper
+    public static function make(User $user) : UserInfoResponseMapper
     {
-        $roleMapper = new UserMapper($role->uuid, $role->name);
+        $userMapper = new UserMapper($user->uuid, $user->username, $user->email, $user->firstname, $user->lastname,
+        $user->birth_date, $user->country, $user->city);
 
         $mapper = new UserInfoResponseMapper();
-        $mapper->setRoleMapper($roleMapper);
+        $mapper->setUserMapper($userMapper);
 
         return $mapper;
     }

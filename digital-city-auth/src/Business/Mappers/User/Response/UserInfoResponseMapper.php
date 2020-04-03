@@ -4,25 +4,26 @@ namespace src\Business\Mappers\User\Response;
 
 use JsonSerializable;
 use src\Business\Mappers\Role\RoleMapper;
+use src\Business\Mappers\User\UserMapper;
 
 class UserInfoResponseMapper implements JsonSerializable
 {
-    private RoleMapper $roleMapper;
+    private UserMapper $userMapper;
 
-    public function getRoleMapper(): RoleMapper
+    public function getUserMapper(): UserMapper
     {
-        return $this->roleMapper;
+        return $this->userMapper;
     }
 
-    public function setRoleMapper(RoleMapper $roleMapper): void
+    public function setUserMapper(UserMapper $userMapper): void
     {
-        $this->roleMapper = $roleMapper;
+        $this->userMapper = $userMapper;
     }
 
     public function jsonSerialize()
     {
         return [
-            'data' => $this->roleMapper
+            'data' => $this->userMapper
         ];
     }
 }

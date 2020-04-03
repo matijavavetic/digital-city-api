@@ -6,7 +6,9 @@ use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use src\Business\Services\UserService;
 use src\Applications\Http\FormRequests\User\UserListRequest;
+use src\Applications\Http\FormRequests\User\UserInfoRequest;
 use src\Applications\Http\Factories\User\UserListRequestMapperFactory;
+use src\Applications\Http\Factories\User\UserInfoRequestMapperFactory;
 
 class UserController extends Controller
 {
@@ -21,7 +23,7 @@ class UserController extends Controller
         return new JsonResponse($responseMapper, Response::HTTP_OK);
     }
 
-  /*  public function info(UserInfoRequest $request, UserService $userService) : JsonResponse
+    public function info(UserInfoRequest $request, UserService $userService) : JsonResponse
     {
         $data = $request->validationData();
 
@@ -31,5 +33,4 @@ class UserController extends Controller
 
         return new JsonResponse($responseMapper, Response::HTTP_OK);
     }
-  */
 }

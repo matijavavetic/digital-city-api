@@ -30,7 +30,7 @@ class UserService
 
     public function getOne(UserInfoRequestMapper $mapper) : UserInfoResponseMapper
     {
-        $user = $this->userRepository->findOne($mapper->getUuid());
+        $user = $this->userRepository->findOne($mapper->getIdentifier());
 
         $responseMapper = UserInfoResponseMapperFactory::make($user);
 

@@ -14,10 +14,10 @@ class UserRepository implements IRoleRepository
         return $user->orderBy('id', $sort)->get();
     }
 
-    public function findOne(string $uuid)
+    public function findOne(string $identifier)
     {
         $user = new User();
 
-        return $user->where('uuid', $uuid)->first();
+        return $user->where('uuid', $identifier)->first();
     }
 }

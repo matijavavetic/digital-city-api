@@ -7,3 +7,4 @@ use src\Applications\Http\Controllers\UserController;
 Route::get('/role.list', [RoleController::class, 'list']);
 Route::get('/role.info', [RoleController::class, 'info']);
 Route::get('/user.list', [UserController::class, 'list']);
+Route::get('/user.info', [UserController::class, 'info']);
