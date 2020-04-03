@@ -8,22 +8,21 @@ class UserMapper implements JsonSerializable
 {
     private string $uuid;
     private string $username;
-    private string $firstName;
-    private string $lastName;
     private string $email;
-    private string $birthDate;
-    private string $city;
-    private string $country;
+    private ?string $firstName;
+    private ?string $lastName;
+    private ?string $birthDate;
+    private ?string $country;
+    private ?string $city;
 
-    public function __construct(string $uuid, string $username, string $firstName,
-                                string $lastName, string $email, string $birthDate,
-                                string $city, string $country)
+    public function __construct(string $uuid, string $username, string $email, ?string $firstName,
+                                ?string $lastName, ?string $birthDate, ?string $country, ?string $city)
     {
         $this->uuid = $uuid;
         $this->username = $username;
+        $this->email = $email;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
-        $this->email = $email;
         $this->birthDate = $birthDate;
         $this->country = $country;
         $this->city = $city;
@@ -39,34 +38,9 @@ class UserMapper implements JsonSerializable
         return $this->username;
     }
 
-    public function getFirstName() : string
-    {
-        return $this->firstName;
-    }
-
-    public function getLastName() : string
-    {
-        return $this->lastName;
-    }
-
     public function getEmail() : string
     {
         return $this->email;
-    }
-
-    public function getBirthDate() : string
-    {
-        return $this->birthDate;
-    }
-
-    public function getCountry() : string
-    {
-        return $this->country;
-    }
-
-    public function getCity() : string
-    {
-        return $this->city;
     }
 
     public function jsonSerialize()
@@ -74,12 +48,12 @@ class UserMapper implements JsonSerializable
         return [
             'uuid' => $this->uuid,
             'username' => $this->username,
+            'email' => $this->email,
             'first_name' => $this->firstName,
             'last_name' => $this->lastName,
-            'email' => $this->email,
             'birth_date' => $this->birthDate,
             'country' => $this->country,
-            'city' => $this->city,
+            'city' => $this->city
         ];
     }
 }
