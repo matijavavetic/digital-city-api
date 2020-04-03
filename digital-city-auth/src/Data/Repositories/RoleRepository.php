@@ -13,4 +13,11 @@ class RoleRepository implements IRoleRepository
 
         return $role->orderBy('id', $sort)->get();
     }
+
+    public function findOne(string $identifier)
+    {
+        $role = new Role();
+
+        return $role->where('identifier', $identifier)->first();
+    }
 }

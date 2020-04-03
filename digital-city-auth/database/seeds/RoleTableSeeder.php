@@ -16,7 +16,8 @@ class RoleTableSeeder extends Seeder
 
         foreach ($rows as $row) {
             $data = [
-                'name' => $row['name'],
+                'identifier' => $row['identifier'],
+                'name'       => $row['name'],
             ];
 
             if (! $this->database->connection($this->connection)->table($table)->where('id', $row['id'])->first()) {

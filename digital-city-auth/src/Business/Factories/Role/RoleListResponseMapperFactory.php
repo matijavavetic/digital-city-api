@@ -13,7 +13,7 @@ class RoleListResponseMapperFactory
         $roleMappers = [];
 
         foreach($collection as $role) {
-            $roleMappers[] = new RoleMapper($role->name);
+            $roleMappers[] = new RoleMapper($role->identifier, $role->name);
         }
 
         $mapper = new RoleListResponseMapper();

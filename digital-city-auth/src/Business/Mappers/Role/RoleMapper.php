@@ -6,11 +6,18 @@ use JsonSerializable;
 
 class RoleMapper implements JsonSerializable
 {
+    private string $identifier;
     private string $name;
 
-    public function __construct($name)
+    public function __construct(string $identifier, string $name)
     {
-        $this->name = $name;
+        $this->identifier = $identifier;
+        $this->name        =  $name;
+    }
+
+    public function getIdentifier() : string
+    {
+        return $this->identifier;
     }
 
     public function getName() : string
@@ -21,7 +28,8 @@ class RoleMapper implements JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'name' => $this->name
+            'identifier' => $this->identifier,
+            'name'       => $this->name
         ];
     }
 }
