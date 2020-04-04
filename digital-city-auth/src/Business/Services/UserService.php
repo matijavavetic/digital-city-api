@@ -2,6 +2,18 @@
 
 namespace src\Business\Services;
 
+use Illuminate\Support\Facades\Hash;
+use Ramsey\Uuid\Uuid;
+use src\Business\Factories\User\UserCreateResponseMapperFactory;
+use src\Business\Factories\User\UserDeleteResponseMapperFactory;
+use src\Business\Factories\User\UserUpdateResponseMapperFactory;
+use src\Business\Mappers\User\Request\UserDeleteRequestMapper;
+use src\Business\Mappers\User\Request\UserUpdateRequestMapper;
+use src\Business\Mappers\User\Response\UserDeleteResponseMapper;
+use src\Business\Mappers\User\Response\UserUpdateResponseMapper;
+use src\Data\Entities\User;
+use src\Business\Mappers\User\Request\UserCreateRequestMapper;
+use src\Business\Mappers\User\Response\UserCreateResponseMapper;
 use src\Data\Repositories\UserRepository;
 use src\Business\Mappers\User\Request\UserListRequestMapper;
 use src\Business\Mappers\User\Request\UserInfoRequestMapper;
@@ -33,6 +45,76 @@ class UserService
         $user = $this->userRepository->findOne($mapper->getIdentifier());
 
         $responseMapper = UserInfoResponseMapperFactory::make($user);
+
+        return $responseMapper;
+    }
+
+    public function create(UserCreateRequestMapper $mapper) : UserCreateResponseMapper
+    {
+        $user = new User();
+
+        $user->uuid = Uuid::uuid4()->getHex();
+        $user->username = "Test";
+        $user->email = $mapper->getEmail();
+        $user->password = Hash::make($mapper->getPassword());
+        $user->firstname = $mapper->getFirstName();
+        $user->lastname = $mapper->getLastName();
+        $user->birth_date = $mapper->getBirthDate();
+        $user->country = $mapper->getCountry();
+        $user->city = $mapper->getCity();
+
+        $stored = null;
+
+        $stored = $this->userRepository->store($user);
+
+        if($stored === false) {
+            throw new \Exception("Failed to store new user!", 400);
+        }
+
+        $responseMapper = UserCreateResponseMapperFactory::make($user);
+
+        return $responseMapper;
+    }
+
+    public function update(UserUpdateRequestMapper $mapper) : UserUpdateResponseMapper
+    {
+        $user = $this->userRepository->findOne($mapper->getIdentifier());
+
+        $user->username = "Test";
+        $user->email = is_null($mapper->getEmail()) ? $user->email : $mapper->getEmail();
+        $user->password = is_null($mapper->getPassword()) ? $user->password : Hash::make($mapper->getPassword());
+        $user->firstname = is_null($mapper->getFirstName()) ? $user->firstname : $mapper->getFirstName();
+        $user->lastname = is_null($mapper->getLastName()) ? $user->lastname : $mapper->getLastName();
+        $user->birth_date = is_null($mapper->getBirthDate()) ? $user->birth_date : $mapper->getBirthDate();
+        $user->country = is_null($mapper->getCountry()) ? $user->country : $mapper->getCountry();
+        $user->city = is_null($mapper->getCity()) ? $user->city : $mapper->getCity();
+
+        $stored = null;
+
+        $stored = $this->userRepository->store($user);
+
+        if($stored === false) {
+            throw new \Exception("Failed to update existing user!", 400);
+        }
+
+        $responseMapper = UserUpdateResponseMapperFactory::make($user);
+
+        return $responseMapper;
+    }
+
+    public function delete(UserDeleteRequestMapper $mapper) : UserDeleteResponseMapper
+    {
+        $user = $this->userRepository->findOne($mapper->getIdentifier());
+
+        $stored = null;
+
+        $stored = $this->userRepository->destroy($user);
+
+        if($stored === false) {
+            throw new \Exception("Failed to delete user!", 400);
+        }
+
+        $responseMapper = UserDeleteResponseMapperFactory::make($user);
 
         return $responseMapper;
     }

@@ -28,7 +28,7 @@ class UserMapper implements JsonSerializable
         $this->city = $city;
     }
 
-    public function getUuid() : string
+    public function getIdentifier() : string
     {
         return $this->uuid;
     }

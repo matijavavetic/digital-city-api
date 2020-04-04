@@ -2,12 +2,10 @@
 
 namespace src\Applications\Http\FormRequests\User;
 
-use src\Applications\Http\Enum\ErrorCodes\RoleErrorCode;
 use src\Applications\Http\Enum\ErrorCodes\UserErrorCode;
 use src\Applications\Http\FormRequests\FormRequest;
-use src\Data\Entities\User;
 
-class UserInfoRequest extends FormRequest
+class UserDeleteRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -17,7 +15,7 @@ class UserInfoRequest extends FormRequest
     public function rules() : array
     {
         return [
-            'identifier' => [
+            'uuid' => [
                 'required',
                 'string',
             ],
@@ -32,8 +30,8 @@ class UserInfoRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'identifier.required' => UserErrorCode::ERR_EMPTY_IDENTIFIER,
-            'identifier.string' => UserErrorCode::ERR_INVALID_IDENTIFIER,
+            'uuid.required' => UserErrorCode::ERR_EMPTY_IDENTIFIER,
+            'uuid.string'   => UserErrorCode::ERR_INVALID_IDENTIFIER,
         ];
     }
 
@@ -57,7 +55,7 @@ class UserInfoRequest extends FormRequest
     public function validationData() : array
     {
         $input = [
-            'identifier' => $this->input('identifier'),
+            'uuid' => $this->input('uuid'),
         ];
 
         return $input;

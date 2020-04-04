@@ -2,10 +2,10 @@
 
 namespace src\Data\Repositories;
 
-use src\Data\Repositories\Contracts\IRoleRepository;
 use src\Data\Entities\User;
+use src\Data\Repositories\Contracts\IUserRepository;
 
-class UserRepository implements IRoleRepository
+class UserRepository implements IUserRepository
 {
     public function get(string $sort)
     {
@@ -19,5 +19,15 @@ class UserRepository implements IRoleRepository
         $user = new User();
 
         return $user->where('uuid', $identifier)->first();
+    }
+
+    public function store(User $user)
+    {
+        return $user->save();
+    }
+
+    public function destroy(User $user)
+    {
+        return $user->delete();
     }
 }
