@@ -39,7 +39,7 @@ class UserCreateRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'email.required' => UserErrorCode::ERR_EMPTY_NAME,
+            'email.required' => UserErrorCode::ERR_EMPTY_EMAIL,
             'email.email' => UserErrorCode::ERR_INVALID_EMAIL,
             'password.required' => UserErrorCode::ERR_EMPTY_PASSWORD,
             'password.string' => UserErrorCode::ERR_NOT_STRING,

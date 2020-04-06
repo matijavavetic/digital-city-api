@@ -23,7 +23,7 @@ class UserUpdateResponseMapper implements JsonSerializable
     {
         return [
             'data' =>  [
-                'uuid' => $this->identifier
+                'identifier' => $this->identifier
             ]
         ];
     }

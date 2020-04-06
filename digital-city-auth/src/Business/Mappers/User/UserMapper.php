@@ -6,7 +6,7 @@ use JsonSerializable;
 
 class UserMapper implements JsonSerializable
 {
-    private string $uuid;
+    private string $identifier;
     private string $username;
     private string $email;
     private ?string $firstName;
@@ -15,10 +15,10 @@ class UserMapper implements JsonSerializable
     private ?string $country;
     private ?string $city;
 
-    public function __construct(string $uuid, string $username, string $email, ?string $firstName,
+    public function __construct(string $identifier, string $username, string $email, ?string $firstName,
                                 ?string $lastName, ?string $birthDate, ?string $country, ?string $city)
     {
-        $this->uuid = $uuid;
+        $this->identifier = $identifier;
         $this->username = $username;
         $this->email = $email;
         $this->firstName = $firstName;
@@ -30,7 +30,7 @@ class UserMapper implements JsonSerializable
 
     public function getIdentifier() : string
     {
-        return $this->uuid;
+        return $this->identifier;
     }
 
     public function getUsername() : string
@@ -46,7 +46,7 @@ class UserMapper implements JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'uuid' => $this->uuid,
+            'identifier' => $this->identifier,
             'username' => $this->username,
             'email' => $this->email,
             'first_name' => $this->firstName,

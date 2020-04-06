@@ -15,7 +15,7 @@ class UserUpdateRequestMapper
 
     public function __construct(array $data)
     {
-        $this->identifier = $data['uuid'];
+        $this->identifier = $data['identifier'];
         $this->email = isset($data['email']) ? $data['email'] : null;
         $this->password = isset($data['password']) ? $data['password'] : null;
         $this->firstName = isset($data['firstName']) ? $data['firstName'] : null;

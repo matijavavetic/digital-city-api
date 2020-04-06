@@ -9,7 +9,7 @@ class UserDeleteResponseMapperFactory
 {
     public static function make(User $user) : UserDeleteResponseMapper
     {
-        $mapper = new UserDeleteResponseMapper($user->uuid);
+        $mapper = new UserDeleteResponseMapper($user->identifier);
 
         return $mapper;
     }

@@ -8,7 +8,7 @@ class UserDeleteRequestMapperFactory
 {
     public static function make(array $data) : UserDeleteRequestMapper
     {
-        $mapper = new UserDeleteRequestMapper($data['uuid']);
+        $mapper = new UserDeleteRequestMapper($data['identifier']);
 
         return $mapper;
     }

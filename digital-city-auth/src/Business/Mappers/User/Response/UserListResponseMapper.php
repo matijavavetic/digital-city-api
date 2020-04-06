@@ -8,7 +8,7 @@ class UserListResponseMapper implements JsonSerializable
 {
     private array $userMappers;
 
-    public function getRoleMappers(): array
+    public function getUserMappers(): array
     {
         return $this->userMappers;
     }

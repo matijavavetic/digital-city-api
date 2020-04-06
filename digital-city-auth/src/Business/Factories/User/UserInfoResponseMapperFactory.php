@@ -10,7 +10,7 @@ class UserInfoResponseMapperFactory
 {
     public static function make(User $user) : UserInfoResponseMapper
     {
-        $userMapper = new UserMapper($user->uuid, $user->username, $user->email, $user->firstname, $user->lastname,
+        $userMapper = new UserMapper($user->identifier, $user->username, $user->email, $user->firstname, $user->lastname,
         $user->birth_date, $user->country, $user->city);
 
         $mapper = new UserInfoResponseMapper();

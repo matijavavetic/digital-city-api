@@ -9,7 +9,7 @@ class UserCreateResponseMapperFactory
 {
     public static function make(User $user) : UserCreateResponseMapper
     {
-        $mapper = new UserCreateResponseMapper($user->uuid);
+        $mapper = new UserCreateResponseMapper($user->identifier);
 
         return $mapper;
     }

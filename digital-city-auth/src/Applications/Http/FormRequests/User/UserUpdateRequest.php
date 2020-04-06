@@ -15,7 +15,7 @@ class UserUpdateRequest extends FormRequest
     public function rules() : array
     {
         return [
-            'uuid' => [
+            'identifier' => [
                 'required',
                 'string'
             ],
@@ -37,8 +37,8 @@ class UserUpdateRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'uuid.required' => UserErrorCode::ERR_EMPTY_IDENTIFIER,
-            'uuid.string' => UserErrorCode::ERR_NOT_STRING,
+            'identifier.required' => UserErrorCode::ERR_EMPTY_IDENTIFIER,
+            'identifier.string' => UserErrorCode::ERR_NOT_STRING,
             'email.email' => UserErrorCode::ERR_INVALID_EMAIL,
             'password.string' => UserErrorCode::ERR_NOT_STRING,
             'firstName.string' => UserErrorCode::ERR_NOT_STRING,
@@ -69,7 +69,7 @@ class UserUpdateRequest extends FormRequest
     public function validationData() : array
     {
         $input = [
-            'uuid' => $this->input('uuid'),
+            'identifier' => $this->input('identifier'),
             'email' => $this->input('email'),
             'password' => $this->input('password'),
             'firstName' => $this->input('first_name'),

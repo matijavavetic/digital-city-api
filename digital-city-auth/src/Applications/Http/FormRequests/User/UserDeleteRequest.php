@@ -15,7 +15,7 @@ class UserDeleteRequest extends FormRequest
     public function rules() : array
     {
         return [
-            'uuid' => [
+            'identifier' => [
                 'required',
                 'string',
             ],
@@ -30,8 +30,8 @@ class UserDeleteRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'uuid.required' => UserErrorCode::ERR_EMPTY_IDENTIFIER,
-            'uuid.string'   => UserErrorCode::ERR_INVALID_IDENTIFIER,
+            'identifier.required' => UserErrorCode::ERR_EMPTY_IDENTIFIER,
+            'identifier.string'   => UserErrorCode::ERR_INVALID_IDENTIFIER,
         ];
     }
 
@@ -55,7 +55,7 @@ class UserDeleteRequest extends FormRequest
     public function validationData() : array
     {
         $input = [
-            'uuid' => $this->input('uuid'),
+            'identifier' => $this->input('identifier'),
         ];
 
         return $input;
