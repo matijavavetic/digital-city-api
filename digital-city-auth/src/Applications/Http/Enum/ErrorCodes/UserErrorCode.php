@@ -4,6 +4,7 @@ namespace src\Applications\Http\Enum\ErrorCodes;
 
 final class UserErrorCode extends ErrorCodes
 {
+    const ERR_EMPTY_EMAIL        = 'ERR_EMPTY_EMAIL';
     const ERR_EMPTY_PASSWORD     = 'ERR_EMPTY_PASSWORD';
     const ERR_INVALID_SORT       = 'ERR_INVALID_SORT';
     const ERR_EMPTY_IDENTIFIER   = 'ERR_EMPTY_IDENTIFIER';

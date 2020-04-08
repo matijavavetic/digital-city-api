@@ -53,10 +53,10 @@ class UserService
     {
         $user = new User();
 
-        $user->uuid = Uuid::uuid4()->getHex();
-        $user->username = "Test";
+        $user->identifier = $mapper->getIdentifier();
+        $user->username = $mapper->getUsername();
         $user->email = $mapper->getEmail();
-        $user->password = Hash::make($mapper->getPassword());
+        $user->password = $mapper->getPassword();
         $user->firstname = $mapper->getFirstName();
         $user->lastname = $mapper->getLastName();
         $user->birth_date = $mapper->getBirthDate();
@@ -80,18 +80,9 @@ class UserService
     {
         $user = $this->userRepository->findOne($mapper->getIdentifier());
 
-        $user->username = "Test";
-        $user->email = is_null($mapper->getEmail()) ? $user->email : $mapper->getEmail();
-        $user->password = is_null($mapper->getPassword()) ? $user->password : Hash::make($mapper->getPassword());
-        $user->firstname = is_null($mapper->getFirstName()) ? $user->firstname : $mapper->getFirstName();
-        $user->lastname = is_null($mapper->getLastName()) ? $user->lastname : $mapper->getLastName();
-        $user->birth_date = is_null($mapper->getBirthDate()) ? $user->birth_date : $mapper->getBirthDate();
-        $user->country = is_null($mapper->getCountry()) ? $user->country : $mapper->getCountry();
-        $user->city = is_null($mapper->getCity()) ? $user->city : $mapper->getCity();
-
         $stored = null;
 
-        $stored = $this->userRepository->store($user);
+        $stored = $this->userRepository->update($mapper->getData());
 
         if($stored === false) {
             throw new \Exception("Failed to update existing user!", 400);

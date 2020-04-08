@@ -18,7 +18,14 @@ class UserRepository implements IUserRepository
     {
         $user = new User();
 
-        return $user->where('uuid', $identifier)->first();
+        return $user->where('identifier', $identifier)->first();
+    }
+
+    public function update(array $data)
+    {
+        $user = $this->findOne($data['identifier']);
+
+        return $user->update($data);
     }
 
     public function store(User $user)

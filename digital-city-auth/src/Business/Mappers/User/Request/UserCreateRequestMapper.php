@@ -4,6 +4,8 @@ namespace src\Business\Mappers\User\Request;
 
 class UserCreateRequestMapper
 {
+    private string $identifier;
+    private string $username;
     private string $email;
     private string $password;
     private ?string $firstName;
@@ -14,13 +16,25 @@ class UserCreateRequestMapper
 
     public function __construct(array $data)
     {
-        $this->email = $data['email'];
-        $this->password = $data['password'];
-        $this->firstName = isset($data['first_name']) ? $data['first_name'] : null;
-        $this->lastName = isset($data['last_name']) ? $data['last_name'] : null;
-        $this->birthDate = isset($data['birth_date']) ? $data['birth_date'] : null;
-        $this->country = isset($data['country']) ? $data['country'] : null;
-        $this->city = isset($data['city']) ? $data['city'] : null;
+        $this->identifier = $data['identifier'];
+        $this->username   = $data['username'];
+        $this->email      = $data['email'];
+        $this->password   = $data['password'];
+        $this->firstName  = $data['firstName'];
+        $this->lastName   = $data['lastName'];
+        $this->birthDate  = $data['birthDate'];
+        $this->country    = $data['country'];
+        $this->city       = $data['city'];
+    }
+
+    public function getIdentifier() : string
+    {
+        return $this->identifier;
+    }
+
+    public function getUsername() : string
+    {
+        return $this->username;
     }
 
     public function getEmail() : string

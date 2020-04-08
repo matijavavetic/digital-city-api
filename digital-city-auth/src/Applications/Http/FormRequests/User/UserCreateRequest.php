@@ -23,11 +23,11 @@ class UserCreateRequest extends FormRequest
                 'required',
                 'string'
             ],
-            'firstName' => 'string',
-            'lastName' => 'string',
-            'birthDate' => 'date',
-            'country' => 'string',
-            'city' => 'string'
+            'firstName' => 'nullable|string',
+            'lastName' => 'nullable|string',
+            'birthDate' => 'nullable|date',
+            'country' => 'nullable|string',
+            'city' => 'nullable|string'
         ];
     }
 
@@ -80,6 +80,6 @@ class UserCreateRequest extends FormRequest
             'city' => $this->input('city'),
         ];
 
-        return array_filter($input);
+        return $input;
     }
 }
