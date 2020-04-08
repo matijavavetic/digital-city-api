@@ -14,17 +14,9 @@ class UserCreateRequestMapper
     private ?string $country;
     private ?string $city;
 
-    public function __construct(array $data)
+    public function __construct(string $email)
     {
-        $this->identifier = $data['identifier'];
-        $this->username   = $data['username'];
-        $this->email      = $data['email'];
-        $this->password   = $data['password'];
-        $this->firstName  = $data['firstName'];
-        $this->lastName   = $data['lastName'];
-        $this->birthDate  = $data['birthDate'];
-        $this->country    = $data['country'];
-        $this->city       = $data['city'];
+        $this->email = $email;
     }
 
     public function getIdentifier() : string
@@ -70,5 +62,45 @@ class UserCreateRequestMapper
     public function getCity() : ?string
     {
         return $this->city;
+    }
+
+    public function setIdentifier(string $identifier) : void
+    {
+        $this->identifier = $identifier;
+    }
+
+    public function setUsername(string $username) : void
+    {
+        $this->username = $username;
+    }
+
+    public function setPassword(string $password) : void
+    {
+        $this->password = $password;
+    }
+
+    public function setFirstName(?string $firstName) : void
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function setLastName(?string $lastName) : void
+    {
+        $this->lastName = $lastName;
+    }
+
+    public function setBirthDate(?string $birthDate) : void
+    {
+        $this->birthDate = $birthDate;
+    }
+
+    public function setCountry(?string $country) : void
+    {
+        $this->country = $country;
+    }
+
+    public function setCity(?string $city) : void
+    {
+        $this->city = $city;
     }
 }

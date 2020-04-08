@@ -13,7 +13,15 @@ class UserListResponseMapperFactory
         $userMappers = [];
 
         foreach($collection as $user) {
-            $userMappers[] = new UserMapper($user);
+            $userMapper = new UserMapper($user->identifier, $user->username, $user->email);
+
+            $userMapper->setFirstName($user->firstname);
+            $userMapper->setLastName($user->lastname);
+            $userMapper->setBirthDate($user->birth_date);
+            $userMapper->setCountry($user->country);
+            $userMapper->setCity($user->city);
+
+            $userMappers[] = $userMapper;
         }
 
         $mapper = new UserListResponseMapper();

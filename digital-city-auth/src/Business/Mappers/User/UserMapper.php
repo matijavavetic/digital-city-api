@@ -3,7 +3,6 @@
 namespace src\Business\Mappers\User;
 
 use JsonSerializable;
-use src\Data\Entities\User;
 
 class UserMapper implements JsonSerializable
 {
@@ -16,16 +15,11 @@ class UserMapper implements JsonSerializable
     private ?string $country;
     private ?string $city;
 
-    public function __construct(User $user)
+    public function __construct(string $identifier, string $username, string $email)
     {
-        $this->identifier = $user->identifier;
-        $this->username = $user->username;
-        $this->email = $user->email;
-        $this->firstName = $user->firstName;
-        $this->lastName = $user->lastName;
-        $this->birthDate = $user->birthDate;
-        $this->country = $user->country;
-        $this->city = $user->city;
+        $this->identifier = $identifier;
+        $this->username = $username;
+        $this->email = $email;
     }
 
     public function getIdentifier() : string
@@ -41,6 +35,31 @@ class UserMapper implements JsonSerializable
     public function getEmail() : string
     {
         return $this->email;
+    }
+
+    public function setFirstName(?string $firstName) : void
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function setLastName(?string $lastName) : void
+    {
+        $this->lastName = $lastName;
+    }
+
+    public function setBirthDate(?string $birthDate) : void
+    {
+        $this->birthDate = $birthDate;
+    }
+
+    public function setCountry(?string $country) : void
+    {
+        $this->country = $country;
+    }
+
+    public function setCity(?string $city) : void
+    {
+        $this->city = $city;
     }
 
     public function jsonSerialize()

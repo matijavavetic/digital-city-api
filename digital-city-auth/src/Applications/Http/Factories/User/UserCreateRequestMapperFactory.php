@@ -10,11 +10,41 @@ class UserCreateRequestMapperFactory
 {
     public static function make(array $data) : UserCreateRequestMapper
     {
-        $data['username'] = strtok($data['email'], '@');
-        $data['identifier'] = Uuid::uuid4()->getHex();
-        $data['password'] = Hash::make($data['password']);
+        $mapper = new UserCreateRequestMapper($data['email']);
 
-        $mapper = new UserCreateRequestMapper($data);
+        $mapper->setUsername(strtok($data['email'], '@'));
+        $mapper->setIdentifier(Uuid::uuid4()->getHex());
+        $mapper->setPassword(Hash::make($data['password']));
+
+        if (isset($data['firstName'])) {
+            $mapper->setFirstName($data['firstName']);
+        } else {
+            $mapper->setFirstName(null);
+        }
+
+        if (isset($data['lastName'])) {
+            $mapper->setLastName($data['lastName']);
+        } else {
+            $mapper->setLastName(null);
+        }
+
+        if (isset($data['birthDate'])) {
+            $mapper->setBirthDate($data['birthDate']);
+        } else {
+            $mapper->setBirthDate(null);
+        }
+
+        if (isset($data['country'])) {
+            $mapper->setCountry($data['country']);
+        } else {
+            $mapper->setCountry(null);
+        }
+
+        if (isset($data['city'])) {
+            $mapper->setCity($data['city']);
+        } else {
+            $mapper->setCity(null);
+        }
 
         return $mapper;
     }

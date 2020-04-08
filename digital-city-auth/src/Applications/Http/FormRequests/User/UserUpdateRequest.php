@@ -21,9 +21,9 @@ class UserUpdateRequest extends FormRequest
             ],
             'email' => 'nullable|email',
             'password' => 'nullable|string',
-            'firstname' => 'nullable|string',
-            'lastname' => 'nullable|string',
-            'birth_date' => 'nullable|date',
+            'firstName' => 'nullable|string',
+            'lastName' => 'nullable|string',
+            'birthDate' => 'nullable|date',
             'country' => 'nullable|string',
             'city' => 'nullable|string'
         ];
@@ -41,9 +41,9 @@ class UserUpdateRequest extends FormRequest
             'identifier.string' => UserErrorCode::ERR_NOT_STRING,
             'email.email' => UserErrorCode::ERR_INVALID_EMAIL,
             'password.string' => UserErrorCode::ERR_NOT_STRING,
-            'firstname.string' => UserErrorCode::ERR_NOT_STRING,
-            'lastname.string' => UserErrorCode::ERR_NOT_STRING,
-            'birth_date.date' => UserErrorCode::ERR_INVALID_DATE,
+            'firstName.string' => UserErrorCode::ERR_NOT_STRING,
+            'lastName.string' => UserErrorCode::ERR_NOT_STRING,
+            'birthDate.date' => UserErrorCode::ERR_INVALID_DATE,
             'country.string' => UserErrorCode::ERR_NOT_STRING,
             'city.string' => UserErrorCode::ERR_NOT_STRING
         ];
@@ -72,9 +72,9 @@ class UserUpdateRequest extends FormRequest
             'identifier' => $this->input('identifier'),
             'email' => $this->input('email'),
             'password' => $this->input('password'),
-            'firstname' => $this->input('first_name'),
-            'lastname' => $this->input('last_name'),
-            'birth_date' => $this->input('birth_date'),
+            'firstName' => $this->input('first_name'),
+            'lastName' => $this->input('last_name'),
+            'birthDate' => $this->input('birth_date'),
             'country' => $this->input('country'),
             'city' => $this->input('city'),
         ];

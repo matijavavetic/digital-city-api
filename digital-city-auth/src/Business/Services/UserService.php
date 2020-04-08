@@ -67,7 +67,7 @@ class UserService
 
         $stored = $this->userRepository->store($user);
 
-        if($stored === false) {
+        if ($stored === false) {
             throw new \Exception("Failed to store new user!", 400);
         }
 
@@ -80,11 +80,20 @@ class UserService
     {
         $user = $this->userRepository->findOne($mapper->getIdentifier());
 
+        $user->username = $mapper->getUsername();
+        $user->email = $mapper->getEmail();
+        $user->password = $mapper->getPassword();
+        $user->firstname = $mapper->getFirstName();
+        $user->lastname = $mapper->getLastName();
+        $user->birth_date = $mapper->getBirthDate();
+        $user->country = $mapper->getCountry();
+        $user->city = $mapper->getCity();
+
         $stored = null;
 
-        $stored = $this->userRepository->update($mapper->getData());
+        $stored = $this->userRepository->store($user);
 
-        if($stored === false) {
+        if ($stored === false) {
             throw new \Exception("Failed to update existing user!", 400);
         }
 
@@ -101,7 +110,7 @@ class UserService
 
         $stored = $this->userRepository->destroy($user);
 
-        if($stored === false) {
+        if ($stored === false) {
             throw new \Exception("Failed to delete user!", 400);
         }
 

@@ -10,5 +10,4 @@ interface IUserRepository
     public function findOne(string $identifier);
     public function store(User $user);
     public function destroy(User $user);
-    public function update(array $data);
 }
