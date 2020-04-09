@@ -10,43 +10,18 @@ class UserCreateRequestMapperFactory
 {
     public static function make(array $data) : UserCreateRequestMapper
     {
-        $mapper = new UserCreateRequestMapper($data['email']);
+        $identifier = Uuid::uuid4()->getHex();
+        $username = strtok($data['email'], '@');
+        $password = Hash::make($data['password']);
 
-        $mapper->setUsername(strtok($data['email'], '@'));
-        $mapper->setIdentifier(Uuid::uuid4()->getHex());
-        $mapper->setPassword(Hash::make($data['password']));
+        $mapper = new UserCreateRequestMapper($identifier, $data['email'], $username, $password);
 
-        if (isset($data['firstName'])) {
-            $mapper->setFirstName($data['firstName']);
-        } else {
-            $mapper->setFirstName(null);
-        }
-
-        if (isset($data['lastName'])) {
-            $mapper->setLastName($data['lastName']);
-        } else {
-            $mapper->setLastName(null);
-        }
-
-        if (isset($data['birthDate'])) {
-            $mapper->setBirthDate($data['birthDate']);
-        } else {
-            $mapper->setBirthDate(null);
-        }
-
-        if (isset($data['country'])) {
-            $mapper->setCountry($data['country']);
-        } else {
-            $mapper->setCountry(null);
-        }
-
-        if (isset($data['city'])) {
-            $mapper->setCity($data['city']);
-        } else {
-            $mapper->setCity(null);
-        }
+        $mapper->setFirstName($data['firstName']);
+        $mapper->setLastName($data['lastName']);
+        $mapper->setBirthDate($data['birthDate']);
+        $mapper->setCountry($data['country']);
+        $mapper->setCity($data['city']);
 
         return $mapper;
     }
 }
-

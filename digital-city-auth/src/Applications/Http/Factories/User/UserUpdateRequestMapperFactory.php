@@ -11,36 +11,23 @@ class UserUpdateRequestMapperFactory
     {
         $mapper = new UserUpdateRequestMapper($data['identifier']);
 
-        if (isset($data['email'])) {
-            $mapper->setEmail($data['email']);
-        }
+        $mapper->setEmail($data['email']);
+        $mapper->setFirstName($data['firstName']);
+        $mapper->setLastName($data['lastName']);
+        $mapper->setBirthDate($data['birthDate']);
+        $mapper->setCountry($data['country']);
+        $mapper->setCity($data['city']);
 
-        if (isset($data['email'])) {
+        if (! is_null($data['email'])) {
             $mapper->setUsername(strtok($data['email'], '@'));
+        } else {
+            $mapper->setUsername(null);
         }
 
-        if (isset($data['password'])) {
+        if (! is_null($data['password'])) {
             $mapper->setPassword(Hash::make($data['password']));
-        }
-
-        if (isset($data['firstName'])) {
-            $mapper->setFirstName($data['firstName']);
-        }
-
-        if (isset($data['lastName'])) {
-            $mapper->setLastName($data['lastName']);
-        }
-
-        if (isset($data['birthDate'])) {
-            $mapper->setBirthDate($data['birthDate']);
-        }
-
-        if (isset($data['country'])) {
-            $mapper->setCountry($data['country']);
-        }
-
-        if (isset($data['city'])) {
-            $mapper->setCity($data['city']);
+        } else {
+            $mapper->setPassword(null);
         }
 
         return $mapper;

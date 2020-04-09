@@ -14,9 +14,12 @@ class UserCreateRequestMapper
     private ?string $country;
     private ?string $city;
 
-    public function __construct(string $email)
+    public function __construct(string $identifier, string $email, string $username, string $password)
     {
+        $this->identifier = $identifier;
         $this->email = $email;
+        $this->username = $username;
+        $this->password = $password;
     }
 
     public function getIdentifier() : string
@@ -62,21 +65,6 @@ class UserCreateRequestMapper
     public function getCity() : ?string
     {
         return $this->city;
-    }
-
-    public function setIdentifier(string $identifier) : void
-    {
-        $this->identifier = $identifier;
-    }
-
-    public function setUsername(string $username) : void
-    {
-        $this->username = $username;
-    }
-
-    public function setPassword(string $password) : void
-    {
-        $this->password = $password;
     }
 
     public function setFirstName(?string $firstName) : void

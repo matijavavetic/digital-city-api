@@ -2,7 +2,7 @@
 
 namespace src\Applications\Http\FormRequests\User;
 
-use src\Applications\Http\Enum\ErrorCodes\RoleErrorCode;
+use src\Applications\Http\Enum\ErrorCodes\UserErrorCode;
 use src\Applications\Http\FormRequests\FormRequest;
 
 class UserListRequest extends FormRequest
@@ -30,7 +30,7 @@ class UserListRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'sort.in' => RoleErrorCode::ERR_INVALID_SORT,
+            'sort.in' => UserErrorCode::ERR_INVALID_SORT,
         ];
     }
 

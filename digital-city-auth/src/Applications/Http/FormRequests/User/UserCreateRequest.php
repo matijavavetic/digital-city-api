@@ -39,15 +39,15 @@ class UserCreateRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'email.required' => UserErrorCode::ERR_EMPTY_EMAIL,
-            'email.email' => UserErrorCode::ERR_INVALID_EMAIL,
+            'email.required'    => UserErrorCode::ERR_EMPTY_EMAIL,
+            'email.email'       => UserErrorCode::ERR_INVALID_EMAIL,
             'password.required' => UserErrorCode::ERR_EMPTY_PASSWORD,
-            'password.string' => UserErrorCode::ERR_NOT_STRING,
-            'firstName.string' => UserErrorCode::ERR_NOT_STRING,
-            'lastName.string' => UserErrorCode::ERR_NOT_STRING,
-            'birthDate.date' => UserErrorCode::ERR_INVALID_DATE,
-            'country.string' => UserErrorCode::ERR_NOT_STRING,
-            'city.string' => UserErrorCode::ERR_NOT_STRING
+            'password.string'   => UserErrorCode::ERR_NOT_STRING,
+            'firstName.string'  => UserErrorCode::ERR_NOT_STRING,
+            'lastName.string'   => UserErrorCode::ERR_NOT_STRING,
+            'birthDate.date'    => UserErrorCode::ERR_INVALID_DATE,
+            'country.string'    => UserErrorCode::ERR_NOT_STRING,
+            'city.string'       => UserErrorCode::ERR_NOT_STRING
         ];
     }
 

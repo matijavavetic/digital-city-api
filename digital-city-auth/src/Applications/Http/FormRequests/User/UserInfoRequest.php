@@ -33,7 +33,7 @@ class UserInfoRequest extends FormRequest
     {
         return [
             'identifier.required' => UserErrorCode::ERR_EMPTY_IDENTIFIER,
-            'identifier.string' => UserErrorCode::ERR_INVALID_IDENTIFIER,
+            'identifier.string'   => UserErrorCode::ERR_INVALID_IDENTIFIER,
         ];
     }
 

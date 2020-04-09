@@ -80,14 +80,37 @@ class UserService
     {
         $user = $this->userRepository->findOne($mapper->getIdentifier());
 
-        $user->username = $mapper->getUsername();
-        $user->email = $mapper->getEmail();
-        $user->password = $mapper->getPassword();
-        $user->firstname = $mapper->getFirstName();
-        $user->lastname = $mapper->getLastName();
-        $user->birth_date = $mapper->getBirthDate();
-        $user->country = $mapper->getCountry();
-        $user->city = $mapper->getCity();
+        if ($mapper->getUsername() !== null) {
+            $user->username = $mapper->getUsername();
+        }
+
+        if ($mapper->getEmail() !== null) {
+            $user->email = $mapper->getEmail();
+        }
+
+        if ($mapper->getPassword() !== null) {
+            $user->password = $mapper->getPassword();
+        }
+
+        if ($mapper->getFirstName() !== null) {
+            $user->firstname = $mapper->getFirstName();
+        }
+
+        if ($mapper->getLastName() !== null) {
+            $user->lastname = $mapper->getLastName();
+        }
+
+        if ($mapper->getBirthDate() !== null) {
+            $user->birth_date = $mapper->getBirthDate();
+        }
+
+        if ($mapper->getCountry() !== null) {
+            $user->country = $mapper->getCountry();
+        }
+
+        if ($mapper->getCity() !== null) {
+            $user->city = $mapper->getCity();
+        }
 
         $stored = null;
 

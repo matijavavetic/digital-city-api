@@ -38,14 +38,14 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'identifier.required' => UserErrorCode::ERR_EMPTY_IDENTIFIER,
-            'identifier.string' => UserErrorCode::ERR_NOT_STRING,
-            'email.email' => UserErrorCode::ERR_INVALID_EMAIL,
-            'password.string' => UserErrorCode::ERR_NOT_STRING,
-            'firstName.string' => UserErrorCode::ERR_NOT_STRING,
-            'lastName.string' => UserErrorCode::ERR_NOT_STRING,
-            'birthDate.date' => UserErrorCode::ERR_INVALID_DATE,
-            'country.string' => UserErrorCode::ERR_NOT_STRING,
-            'city.string' => UserErrorCode::ERR_NOT_STRING
+            'identifier.string'   => UserErrorCode::ERR_NOT_STRING,
+            'email.email'         => UserErrorCode::ERR_INVALID_EMAIL,
+            'password.string'     => UserErrorCode::ERR_NOT_STRING,
+            'firstName.string'    => UserErrorCode::ERR_NOT_STRING,
+            'lastName.string'     => UserErrorCode::ERR_NOT_STRING,
+            'birthDate.date'      => UserErrorCode::ERR_INVALID_DATE,
+            'country.string'      => UserErrorCode::ERR_NOT_STRING,
+            'city.string'         => UserErrorCode::ERR_NOT_STRING
         ];
     }
 
@@ -79,6 +79,6 @@ class UserUpdateRequest extends FormRequest
             'city' => $this->input('city'),
         ];
 
-        return array_filter($input);
+        return $input;
     }
 }
