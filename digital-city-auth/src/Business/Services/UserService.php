@@ -5,7 +5,7 @@ namespace src\Business\Services;
 use Illuminate\Support\Facades\Hash;
 use Ramsey\Uuid\Uuid;
 use src\Business\Factories\User\UserCreateResponseMapperFactory;
-use src\Business\Factories\User\UserDeleteResponseMapperFactory;
+use src\Business\Factories\User\PermissionDeleteResponseMapperFactory;
 use src\Business\Factories\User\UserUpdateResponseMapperFactory;
 use src\Business\Mappers\User\Request\UserDeleteRequestMapper;
 use src\Business\Mappers\User\Request\UserUpdateRequestMapper;
@@ -137,7 +137,7 @@ class UserService
             throw new \Exception("Failed to delete user!", 400);
         }
 
-        $responseMapper = UserDeleteResponseMapperFactory::make($user);
+        $responseMapper = PermissionDeleteResponseMapperFactory::make($user);
 
         return $responseMapper;
     }
