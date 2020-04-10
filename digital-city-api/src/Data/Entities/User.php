@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     protected $table = "users";
+
     use Notifiable;
 
     /**
@@ -38,4 +39,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['roles'];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_role');
+    }
 }

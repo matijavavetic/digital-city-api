@@ -1,5 +1,7 @@
 <?php
 
+use src\Data\Entities\User;
+
 class UsersTableSeeder extends Seeder
 {
     public function run()
@@ -27,6 +29,9 @@ class UsersTableSeeder extends Seeder
 
             if (! $this->database->connection($this->connection)->table($table)->where('id', $row['id'])->first()) {
                 $this->database->connection($this->connection)->table($table)->insert($data);
+
+                $user = new User();
+                $user->find($row['id'])->roles()->sync($row['role_id']);
             }
         }
 
