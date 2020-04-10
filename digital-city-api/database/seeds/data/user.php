@@ -1,7 +1,6 @@
 <?php
 
 use Ramsey\Uuid\Uuid;
-use src\Data\Enums\RoleEnum;
 use Illuminate\Support\Facades\Hash;
 
 return [
