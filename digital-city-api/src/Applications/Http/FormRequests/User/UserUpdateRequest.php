@@ -19,6 +19,7 @@ class UserUpdateRequest extends FormRequest
                 'required',
                 'string'
             ],
+            'roleID' => 'integer',
             'email' => 'nullable|email',
             'password' => 'nullable|string',
             'firstName' => 'nullable|string',
@@ -40,6 +41,7 @@ class UserUpdateRequest extends FormRequest
             'identifier.required' => UserErrorCode::ERR_EMPTY_IDENTIFIER,
             'identifier.string'   => UserErrorCode::ERR_NOT_STRING,
             'email.email'         => UserErrorCode::ERR_INVALID_EMAIL,
+            'roleID.integer'      => UserErrorCode::ERR_INVALID_ROLE_ID,
             'password.string'     => UserErrorCode::ERR_NOT_STRING,
             'firstName.string'    => UserErrorCode::ERR_NOT_STRING,
             'lastName.string'     => UserErrorCode::ERR_NOT_STRING,
@@ -70,6 +72,7 @@ class UserUpdateRequest extends FormRequest
     {
         $input = [
             'identifier' => $this->input('identifier'),
+            'roleID' => $this->input('roleID'),
             'email' => $this->input('email'),
             'password' => $this->input('password'),
             'firstName' => $this->input('first_name'),

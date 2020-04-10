@@ -23,6 +23,10 @@ class UserCreateRequest extends FormRequest
                 'required',
                 'string'
             ],
+            'roleID' => [
+                'required',
+                'integer'
+            ],
             'firstName' => 'nullable|string',
             'lastName' => 'nullable|string',
             'birthDate' => 'nullable|date',
@@ -43,6 +47,8 @@ class UserCreateRequest extends FormRequest
             'email.email'       => UserErrorCode::ERR_INVALID_EMAIL,
             'password.required' => UserErrorCode::ERR_EMPTY_PASSWORD,
             'password.string'   => UserErrorCode::ERR_NOT_STRING,
+            'roleID.required'   => UserErrorCode::ERR_EMPTY_ROLE_ID,
+            'roleID.integer'    => UserErrorCode::ERR_INVALID_ROLE_ID,
             'firstName.string'  => UserErrorCode::ERR_NOT_STRING,
             'lastName.string'   => UserErrorCode::ERR_NOT_STRING,
             'birthDate.date'    => UserErrorCode::ERR_INVALID_DATE,
@@ -72,6 +78,7 @@ class UserCreateRequest extends FormRequest
     {
         $input = [
             'email' => $this->input('email'),
+            'roleID' => $this->input('roleID'),
             'password' => $this->input('password'),
             'firstName' => $this->input('first_name'),
             'lastName' => $this->input('last_name'),

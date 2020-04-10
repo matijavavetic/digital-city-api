@@ -14,13 +14,15 @@ return [
     ],
 
     UserErrorCode::class => [
-        UserErrorCode::ERR_INVALID_SORT       => 'Invalid sort value. Sort should be ASC or DESC.',
-        UserErrorCode::ERR_EMPTY_IDENTIFIER   => 'Empty identifier. Identifier is required.',
-        UserErrorCode::ERR_INVALID_IDENTIFIER => 'Invalid identifier value. Identifier should be a string.',
-        UserErrorCode::ERR_EMPTY_PASSWORD     => 'Empty password. Password is required.',
-        UserErrorCode::ERR_INVALID_EMAIL      => 'Invalid e-mail address format.',
-        UserErrorCode::ERR_INVALID_DATE       => 'Invalid date format.',
-        UserErrorCode::ERR_NOT_STRING         => 'This field should be a string.',
+        UserErrorCode::ERR_INVALID_SORT        => 'Invalid sort value. Sort should be ASC or DESC.',
+        UserErrorCode::ERR_EMPTY_IDENTIFIER    => 'Empty identifier. Identifier is required.',
+        UserErrorCode::ERR_INVALID_IDENTIFIER  => 'Invalid identifier value. Identifier should be a string.',
+        UserErrorCode::ERR_EMPTY_PASSWORD      => 'Empty password. Password is required.',
+        UserErrorCode::ERR_INVALID_EMAIL       => 'Invalid e-mail address format.',
+        UserErrorCode::ERR_INVALID_DATE        => 'Invalid date format.',
+        UserErrorCode::ERR_NOT_STRING          => 'This field should be a string.',
+        UserErrorCode::ERR_EMPTY_ROLE_ID       => 'Empty role ID. Role identifier is required.',
+        UserErrorCode::ERR_INVALID_ROLE_ID     => 'Invalid role ID. Role identifier should be an integer.',
     ],
 
     PermissionErrorCode::class => [

@@ -67,6 +67,8 @@ class UserService
 
         $stored = $this->userRepository->store($user);
 
+        $user->roles()->sync([$mapper->getRoleID()]);
+
         if ($stored === false) {
             throw new \Exception("Failed to store new user!", 400);
         }
@@ -110,6 +112,10 @@ class UserService
 
         if ($mapper->getCity() !== null) {
             $user->city = $mapper->getCity();
+        }
+
+        if ($mapper->getRoleID() !== null) {
+            $user->roles()->sync([$mapper->getRoleID()]);
         }
 
         $stored = null;

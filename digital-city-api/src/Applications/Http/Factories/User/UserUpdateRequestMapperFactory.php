@@ -17,6 +17,7 @@ class UserUpdateRequestMapperFactory
         $mapper->setBirthDate($data['birthDate']);
         $mapper->setCountry($data['country']);
         $mapper->setCity($data['city']);
+        $mapper->setRoleID($data['roleID']);
 
         if (! is_null($data['email'])) {
             $mapper->setUsername(strtok($data['email'], '@'));
