@@ -5,17 +5,17 @@ namespace src\Business\Services;
 use Ramsey\Uuid\Uuid;
 use src\Data\Entities\Role;
 use src\Data\Repositories\RoleRepository;
-use src\Business\Factories\Role\RoleInfoResponseMapperFactory;
+use src\Business\Factories\Role\PermissionInfoResponseMapperFactory;
 use src\Business\Mappers\Role\Response\RoleInfoResponseMapper;
 use src\Business\Mappers\Role\Response\RoleListResponseMapper;
 use src\Business\Mappers\Role\Request\RoleListRequestMapper;
-use src\Business\Mappers\Role\Request\RoleInfoRequestMapper;
-use src\Business\Factories\Role\RoleListResponseMapperFactory;
+use src\Business\Mappers\Role\Request\PermissionInfoRequestMapper;
+use src\Business\Factories\Role\PermissionListResponseMapperFactory;
 use src\Business\Mappers\Role\Response\RoleCreateResponseMapper;
 use src\Business\Mappers\Role\Request\RoleUpdateRequestMapper;
-use src\Business\Factories\Role\RoleCreateResponseMapperFactory;
-use src\Business\Factories\Role\RoleUpdateResponseMapperFactory;
-use src\Business\Mappers\Role\Request\RoleCreateRequestMapper;
+use src\Business\Factories\Role\PermissionCreateResponseMapperFactory;
+use src\Business\Factories\Role\PermissionUpdateResponseMapperFactory;
+use src\Business\Mappers\Role\Request\PermissionCreateRequestMapper;
 use src\Business\Mappers\Role\Response\RoleUpdateResponseMapper;
 
 class RoleService
@@ -31,21 +31,21 @@ class RoleService
     {
         $roles = $this->roleRepository->get($mapper->getSort());
 
-        $responseMapper = RoleListResponseMapperFactory::make($roles);
+        $responseMapper = PermissionListResponseMapperFactory::make($roles);
 
         return $responseMapper;
     }
 
-    public function getOne(RoleInfoRequestMapper $mapper) : RoleInfoResponseMapper
+    public function getOne(PermissionInfoRequestMapper $mapper) : RoleInfoResponseMapper
     {
         $role = $this->roleRepository->findOne($mapper->getIdentifier());
 
-        $responseMapper = RoleInfoResponseMapperFactory::make($role);
+        $responseMapper = PermissionInfoResponseMapperFactory::make($role);
 
         return $responseMapper;
     }
 
-    public function create(RoleCreateRequestMapper $mapper) : RoleCreateResponseMapper
+    public function create(PermissionCreateRequestMapper $mapper) : RoleCreateResponseMapper
     {
         $role = new Role();
         $role->identifier = Uuid::uuid4()->getHex();
@@ -59,7 +59,7 @@ class RoleService
             throw new \Exception("Failed to store new role!", 400);
         }
 
-        $responseMapper = RoleCreateResponseMapperFactory::make($role);
+        $responseMapper = PermissionCreateResponseMapperFactory::make($role);
 
         return $responseMapper;
     }
@@ -78,7 +78,7 @@ class RoleService
             throw new \Exception("Failed to update existing role!", 400);
         }
 
-        $responseMapper = RoleUpdateResponseMapperFactory::make($role);
+        $responseMapper = PermissionUpdateResponseMapperFactory::make($role);
 
         return $responseMapper;
     }
