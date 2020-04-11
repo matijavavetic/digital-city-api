@@ -11,4 +11,11 @@ class Permission extends Model
     public $timestamps = false;
 
     protected $fillable = ['identifier', 'name'];
+
+    //protected $with = ['roles'];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_permission');
+    }
 }
