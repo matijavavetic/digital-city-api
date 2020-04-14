@@ -2,7 +2,11 @@
 
 namespace src\Business\Services;
 
+use Firebase\JWT\JWT;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use src\Business\Factories\Auth\SignUpResponseMapperFactory;
+use src\Business\Mappers\Auth\Request\SignInRequestMapper;
 use src\Business\Mappers\Auth\Request\SignUpRequestMapper;
 use src\Business\Mappers\Auth\Response\SignUpResponseMapper;
 use src\Data\Entities\User;
@@ -37,5 +41,57 @@ class AuthService
         $responseMapper = SignUpResponseMapperFactory::make();
 
         return $responseMapper;
+    }
+
+    public function signIn(SignInRequestMapper $mapper)
+    {
+        $user = $this->userRepository->findOneByEmail($mapper->getEmail());
+
+        if (! $user) {
+            throw new \Exception("User not found!", 404);
+        }
+
+        $isPasswordCorrect = Hash::check($mapper->getPassword(), $user->password);
+
+        if ($isPasswordCorrect === false) {
+            throw new \Exception("Incorrect password!", 400);
+        }
+
+        $randomString = Str::random(100);
+        $rememberToken = Hash::make($randomString);
+
+        $user->remember_token = $rememberToken;
+
+        $stored = $this->userRepository->store($user);
+
+        if ($stored === false) {
+            throw new \Exception("Error occured!", 400);
+        }
+
+        $privatepath = base_path()."/private.pem";
+        $privateKey = file_get_contents($privatepath);
+
+        $publicPath = base_path()."/public.pem";
+        $publicKey = file_get_contents($publicPath);
+
+        $data = [
+            "username" => $user->username,
+            "email" => $user->email,
+            "rememberToken" => $rememberToken
+        ];
+
+        $payload = array(
+            "data" => $data,
+            "iss" => "http://digital-city.com",
+            "aud" =>  "http://digital-city.com",
+            "iat" => 1356999524,
+            "nbf" => 1357000000
+        );
+
+        $jwt = JWT::encode($payload, $privateKey, "RS256");
+
+        //$decoded = JWT::decode($jwt, $publicKey, array('RS256'));
+
+        return ["jwt" => $jwt];
     }
 }

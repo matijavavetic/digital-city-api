@@ -25,4 +25,5 @@ Route::post('/permission.update', [PermissionController::class, 'update']);
 Route::post('/permission.delete', [PermissionController::class, 'delete']);
 
 
-Route::post('/user.signup', [AuthController::class, 'signUp']);
+Route::post('/sign.up', [AuthController::class, 'signUp']);
+Route::post('/sign.in', [AuthController::class, 'signIn']);
