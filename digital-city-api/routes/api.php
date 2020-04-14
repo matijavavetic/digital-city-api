@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use src\Applications\Http\Controllers\RoleController;
 use src\Applications\Http\Controllers\UserController;
 use src\Applications\Http\Controllers\PermissionController;
+use src\Applications\Http\Controllers\AuthController;
 
 Route::get('/role.list', [RoleController::class, 'list']);
 Route::get('/role.info', [RoleController::class, 'info']);
@@ -22,3 +23,6 @@ Route::get('/permission.info', [PermissionController::class, 'info']);
 Route::post('/permission.create', [PermissionController::class, 'create']);
 Route::post('/permission.update', [PermissionController::class, 'update']);
 Route::post('/permission.delete', [PermissionController::class, 'delete']);
+
+
+Route::post('/user.signup', [AuthController::class, 'signUp']);
