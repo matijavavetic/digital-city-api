@@ -12,7 +12,7 @@ class PermissionMapper implements JsonSerializable
     public function __construct(string $identifier, string $name)
     {
         $this->identifier = $identifier;
-        $this->name       =  $name;
+        $this->name       = $name;
     }
 
     public function getIdentifier() : string

@@ -2,10 +2,7 @@
 
 namespace src\Business\Services;
 
-use Illuminate\Support\Facades\Hash;
-use Ramsey\Uuid\Uuid;
 use src\Business\Factories\User\UserCreateResponseMapperFactory;
-use src\Business\Factories\User\PermissionDeleteResponseMapperFactory;
 use src\Business\Factories\User\UserUpdateResponseMapperFactory;
 use src\Business\Mappers\User\Request\UserDeleteRequestMapper;
 use src\Business\Mappers\User\Request\UserUpdateRequestMapper;
@@ -67,6 +64,8 @@ class UserService
 
         $stored = $this->userRepository->store($user);
 
+        $user->roles()->sync([$mapper->getRoleIdentifier()]);
+
         if ($stored === false) {
             throw new \Exception("Failed to store new user!", 400);
         }
@@ -110,6 +109,10 @@ class UserService
 
         if ($mapper->getCity() !== null) {
             $user->city = $mapper->getCity();
+        }
+
+        if ($mapper->getRoleIdentifier() !== null) {
+            $user->roles()->sync([$mapper->getRoleIdentifier()]);
         }
 
         $stored = null;

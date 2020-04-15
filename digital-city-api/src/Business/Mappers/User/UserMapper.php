@@ -3,23 +3,26 @@
 namespace src\Business\Mappers\User;
 
 use JsonSerializable;
+use src\Business\Mappers\Role\RoleMapper;
 
 class UserMapper implements JsonSerializable
 {
     private string $identifier;
     private string $username;
     private string $email;
+    private array $roleMapper;
     private ?string $firstName;
     private ?string $lastName;
     private ?string $birthDate;
     private ?string $country;
     private ?string $city;
 
-    public function __construct(string $identifier, string $username, string $email)
+    public function __construct(string $identifier, string $username, string $email, array $roleMapper)
     {
         $this->identifier = $identifier;
-        $this->username = $username;
-        $this->email = $email;
+        $this->username   = $username;
+        $this->email      = $email;
+        $this->roleMapper = $roleMapper;
     }
 
     public function getIdentifier() : string
@@ -72,7 +75,8 @@ class UserMapper implements JsonSerializable
             'last_name' => $this->lastName,
             'birth_date' => $this->birthDate,
             'country' => $this->country,
-            'city' => $this->city
+            'city' => $this->city,
+            'role' => $this->roleMapper
         ];
     }
 }

@@ -8,11 +8,13 @@ class RoleMapper implements JsonSerializable
 {
     private string $identifier;
     private string $name;
+    private array $permissionMapper;
 
-    public function __construct(string $identifier, string $name)
+    public function __construct(string $identifier, string $name, array $permissionMapper)
     {
-        $this->identifier = $identifier;
-        $this->name        =  $name;
+        $this->identifier       = $identifier;
+        $this->name             = $name;
+        $this->permissionMapper = $permissionMapper;
     }
 
     public function getIdentifier() : string
@@ -29,7 +31,8 @@ class RoleMapper implements JsonSerializable
     {
         return [
             'identifier' => $this->identifier,
-            'name'       => $this->name
+            'name'       => $this->name,
+            'permissions' => $this->permissionMapper
         ];
     }
 }

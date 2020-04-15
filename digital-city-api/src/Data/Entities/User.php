@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     protected $table = "users";
+
     use Notifiable;
 
     /**
@@ -38,4 +39,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_role');
+    }
 }
