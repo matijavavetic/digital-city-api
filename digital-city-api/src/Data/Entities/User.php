@@ -40,13 +40,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * The relationships that should always be loaded.
-     *
-     * @var array
-     */
-    protected $with = ['roles'];
-
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'user_role');

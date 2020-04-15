@@ -16,7 +16,7 @@ class RoleListResponseMapperFactory
 
         foreach($collection as $role) {
             foreach($role->permissions as $permission) {
-                $permissionMapper[] = new PermissionMapper($permission->identifier, $permission->name);
+                $permissionMapper = new PermissionMapper($permission->identifier, $permission->name);
             }
 
             $roleMappers[] = new RoleMapper($role->identifier, $role->name, $permissionMapper);

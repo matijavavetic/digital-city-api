@@ -10,18 +10,18 @@ class UserMapper implements JsonSerializable
     private string $identifier;
     private string $username;
     private string $email;
-    private RoleMapper $roleMapper;
+    private array $roleMapper;
     private ?string $firstName;
     private ?string $lastName;
     private ?string $birthDate;
     private ?string $country;
     private ?string $city;
 
-    public function __construct(string $identifier, string $username, string $email, RoleMapper $roleMapper)
+    public function __construct(string $identifier, string $username, string $email, array $roleMapper)
     {
         $this->identifier = $identifier;
-        $this->username = $username;
-        $this->email = $email;
+        $this->username   = $username;
+        $this->email      = $email;
         $this->roleMapper = $roleMapper;
     }
 

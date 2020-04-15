@@ -19,7 +19,7 @@ class UserUpdateRequest extends FormRequest
                 'required',
                 'string'
             ],
-            'roleID' => 'integer',
+            'roleIdentifier' => 'integer',
             'email' => 'nullable|email',
             'password' => 'nullable|string',
             'firstName' => 'nullable|string',
@@ -38,16 +38,16 @@ class UserUpdateRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'identifier.required' => UserErrorCode::ERR_EMPTY_IDENTIFIER,
-            'identifier.string'   => UserErrorCode::ERR_NOT_STRING,
-            'email.email'         => UserErrorCode::ERR_INVALID_EMAIL,
-            'roleID.integer'      => UserErrorCode::ERR_INVALID_ROLE_ID,
-            'password.string'     => UserErrorCode::ERR_NOT_STRING,
-            'firstName.string'    => UserErrorCode::ERR_NOT_STRING,
-            'lastName.string'     => UserErrorCode::ERR_NOT_STRING,
-            'birthDate.date'      => UserErrorCode::ERR_INVALID_DATE,
-            'country.string'      => UserErrorCode::ERR_NOT_STRING,
-            'city.string'         => UserErrorCode::ERR_NOT_STRING
+            'identifier.required'   => UserErrorCode::ERR_EMPTY_IDENTIFIER,
+            'identifier.string'     => UserErrorCode::ERR_INVALID_IDENTIFIER,
+            'email.email'           => UserErrorCode::ERR_INVALID_EMAIL,
+            'roleIdentifier.string' => UserErrorCode::ERR_INVALID_ROLE_IDENTIFIER,
+            'password.string'       => UserErrorCode::ERR_INVALID_PASSWORD,
+            'firstName.string'      => UserErrorCode::ERR_INVALID_FIRSTNAME,
+            'lastName.string'       => UserErrorCode::ERR_INVALID_LASTNAME,
+            'birthDate.date'        => UserErrorCode::ERR_INVALID_DATE,
+            'country.string'        => UserErrorCode::ERR_INVALID_COUNTRY,
+            'city.string'           => UserErrorCode::ERR_INVALID_CITY
         ];
     }
 
@@ -71,15 +71,15 @@ class UserUpdateRequest extends FormRequest
     public function validationData() : array
     {
         $input = [
-            'identifier' => $this->input('identifier'),
-            'roleID' => $this->input('roleID'),
-            'email' => $this->input('email'),
-            'password' => $this->input('password'),
-            'firstName' => $this->input('first_name'),
-            'lastName' => $this->input('last_name'),
-            'birthDate' => $this->input('birth_date'),
-            'country' => $this->input('country'),
-            'city' => $this->input('city'),
+            'identifier'     => $this->input('identifier'),
+            'roleIdentifier' => $this->input('roleIdentifier'),
+            'email'          => $this->input('email'),
+            'password'       => $this->input('password'),
+            'firstName'      => $this->input('firstName'),
+            'lastName'       => $this->input('lastName'),
+            'birthDate'      => $this->input('birthDate'),
+            'country'        => $this->input('country'),
+            'city'           => $this->input('city'),
         ];
 
         return $input;

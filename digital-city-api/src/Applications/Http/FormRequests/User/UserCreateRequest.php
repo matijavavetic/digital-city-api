@@ -23,7 +23,7 @@ class UserCreateRequest extends FormRequest
                 'required',
                 'string'
             ],
-            'roleID' => [
+            'roleIdentifier' => [
                 'required',
                 'integer'
             ],
@@ -43,17 +43,17 @@ class UserCreateRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'email.required'    => UserErrorCode::ERR_EMPTY_EMAIL,
-            'email.email'       => UserErrorCode::ERR_INVALID_EMAIL,
-            'password.required' => UserErrorCode::ERR_EMPTY_PASSWORD,
-            'password.string'   => UserErrorCode::ERR_NOT_STRING,
-            'roleID.required'   => UserErrorCode::ERR_EMPTY_ROLE_ID,
-            'roleID.integer'    => UserErrorCode::ERR_INVALID_ROLE_ID,
-            'firstName.string'  => UserErrorCode::ERR_NOT_STRING,
-            'lastName.string'   => UserErrorCode::ERR_NOT_STRING,
-            'birthDate.date'    => UserErrorCode::ERR_INVALID_DATE,
-            'country.string'    => UserErrorCode::ERR_NOT_STRING,
-            'city.string'       => UserErrorCode::ERR_NOT_STRING
+            'email.required'          => UserErrorCode::ERR_EMPTY_EMAIL,
+            'email.email'             => UserErrorCode::ERR_INVALID_EMAIL,
+            'password.required'       => UserErrorCode::ERR_EMPTY_PASSWORD,
+            'password.string'         => UserErrorCode::ERR_INVALID_PASSWORD,
+            'roleIdentifier.required' => UserErrorCode::ERR_EMPTY_ROLE_IDENTIFIER,
+            'roleIdentifier.string'   => UserErrorCode::ERR_INVALID_ROLE_IDENTIFIER,
+            'firstName.string'        => UserErrorCode::ERR_INVALID_FIRSTNAME,
+            'lastName.string'         => UserErrorCode::ERR_INVALID_LASTNAME,
+            'birthDate.date'          => UserErrorCode::ERR_INVALID_DATE,
+            'country.string'          => UserErrorCode::ERR_INVALID_COUNTRY,
+            'city.string'             => UserErrorCode::ERR_INVALID_CITY
         ];
     }
 
@@ -77,14 +77,14 @@ class UserCreateRequest extends FormRequest
     public function validationData() : array
     {
         $input = [
-            'email' => $this->input('email'),
-            'roleID' => $this->input('roleID'),
-            'password' => $this->input('password'),
-            'firstName' => $this->input('first_name'),
-            'lastName' => $this->input('last_name'),
-            'birthDate' => $this->input('birth_date'),
-            'country' => $this->input('country'),
-            'city' => $this->input('city'),
+            'email'          => $this->input('email'),
+            'roleIdentifier' => $this->input('roleIdentifier'),
+            'password'       => $this->input('password'),
+            'firstName'      => $this->input('firstName'),
+            'lastName'       => $this->input('lastName'),
+            'birthDate'      => $this->input('birthDate'),
+            'country'        => $this->input('country'),
+            'city'           => $this->input('city'),
         ];
 
         return $input;

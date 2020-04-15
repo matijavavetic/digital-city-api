@@ -3,8 +3,6 @@
 namespace src\Business\Mappers\Role;
 
 use JsonSerializable;
-use src\Business\Mappers\Permission\PermissionMapper;
-use Illuminate\Database\Eloquent\Collection;
 
 class RoleMapper implements JsonSerializable
 {
@@ -14,8 +12,8 @@ class RoleMapper implements JsonSerializable
 
     public function __construct(string $identifier, string $name, array $permissionMapper)
     {
-        $this->identifier = $identifier;
-        $this->name = $name;
+        $this->identifier       = $identifier;
+        $this->name             = $name;
         $this->permissionMapper = $permissionMapper;
     }
 
