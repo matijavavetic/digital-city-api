@@ -2,16 +2,13 @@
 
 namespace src\Applications\Http\Controllers;
 
-use Firebase\JWT\JWT;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 use src\Applications\Http\Factories\Auth\SignInRequestFactory;
 use src\Applications\Http\Factories\Auth\SignUpRequestFactory;
 use src\Applications\Http\FormRequests\Auth\SignInRequest;
 use src\Applications\Http\FormRequests\Auth\SignUpRequest;
 use src\Business\Services\AuthService;
-use src\Data\Entities\User;
 
 class AuthController extends Controller
 {
@@ -23,7 +20,7 @@ class AuthController extends Controller
 
         $responseMapper = $service->signUp($requestMapper);
 
-        return new JsonResponse($responseMapper);
+        return new JsonResponse($responseMapper, Response::HTTP_CREATED);
     }
 
     public function signIn(SignInRequest $request, AuthService $service)
@@ -32,8 +29,8 @@ class AuthController extends Controller
 
         $requestMapper = SignInRequestFactory::make($data);
 
-        $r = $service->signIn($requestMapper);
+        $responseMapper = $service->signIn($requestMapper);
 
-        return new JsonResponse($r);
+        return new JsonResponse($responseMapper, Response::HTTP_OK);
     }
 }

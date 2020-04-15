@@ -2,15 +2,13 @@
 
 namespace src\Business\Factories\Auth;
 
-use src\Business\Mappers\Auth\Response\SignUpResponseMapper;
+use src\Business\Mappers\Auth\Response\SignInResponseMapper;
 
 class SignInResponseMapperFactory
 {
-    public static function make() : SignUpResponseMapper
+    public static function make(string $token, string $type) : SignInResponseMapper
     {
-        $message = "Please, check your email and confirm account activation. Thank you!";
-
-        $mapper = new SignUpResponseMapper($message, 201);
+        $mapper = new SignInResponseMapper($token, $type);
 
         return $mapper;
     }
