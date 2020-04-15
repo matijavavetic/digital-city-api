@@ -9,9 +9,9 @@ return [
         'identifier' => Uuid::uuid4()->getHex(),
         'password'   => Hash::make(bin2hex(random_bytes(10))),
         'username'   => 'luka.vavetic',
-        'email'      => 'luka.vavetic@dc.com',
+        'email'      => 'luka.vavetic@gmail.com',
         'firstname'  => 'Luka',
-        'lastname'   => 'Vavetić'
+        'lastname'   => 'Vavetić',
     ],
 
     [
