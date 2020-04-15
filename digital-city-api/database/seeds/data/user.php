@@ -11,7 +11,8 @@ return [
         'username'   => 'luka.vavetic',
         'email'      => 'luka.vavetic@dc.com',
         'firstname'  => 'Luka',
-        'lastname'   => 'Vavetić'
+        'lastname'   => 'Vavetić',
+        'role_id'    => 1
     ],
 
     [
@@ -21,7 +22,8 @@ return [
         'username'   => 'frano.sasvari',
         'email'      => 'frano.sasvari@dc.com',
         'firstname'  => 'Frano',
-        'lastname'   => 'Šašvari'
+        'lastname'   => 'Šašvari',
+        'role_id'    => 1
     ],
 
     [
@@ -31,6 +33,7 @@ return [
         'username'   => 'matija.vavetic',
         'email'      => 'matija.vavetic@dc.com',
         'firstname'  => 'Matija',
-        'lastname'   => 'Vavetić'
+        'lastname'   => 'Vavetić',
+        'role_id'    => 1
     ],
 ];

@@ -3,6 +3,7 @@
 namespace src\Applications\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use src\Data\Entities\User;
 use Symfony\Component\HttpFoundation\Response;
 use src\Business\Services\UserService;
 use src\Applications\Http\FormRequests\User\UserListRequest;

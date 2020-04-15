@@ -8,18 +8,20 @@ class UserCreateRequestMapper
     private string $username;
     private string $email;
     private string $password;
+    private string $roleIdentifier;
     private ?string $firstName;
     private ?string $lastName;
     private ?string $birthDate;
     private ?string $country;
     private ?string $city;
 
-    public function __construct(string $identifier, string $email, string $username, string $password)
+    public function __construct(string $identifier, string $email, string $username, string $password, string $roleIdentifier)
     {
-        $this->identifier = $identifier;
-        $this->email = $email;
-        $this->username = $username;
-        $this->password = $password;
+        $this->identifier     = $identifier;
+        $this->email          = $email;
+        $this->username       = $username;
+        $this->password       = $password;
+        $this->roleIdentifier = $roleIdentifier;
     }
 
     public function getIdentifier() : string
@@ -40,6 +42,11 @@ class UserCreateRequestMapper
     public function getPassword() : string
     {
         return $this->password;
+    }
+
+    public function getRoleIdentifier() : string
+    {
+        return $this->roleIdentifier;
     }
 
     public function getFirstName() : ?string
