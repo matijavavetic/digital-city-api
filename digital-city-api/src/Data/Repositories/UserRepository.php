@@ -21,6 +21,13 @@ class UserRepository implements IUserRepository
         return $user->where('identifier', $identifier)->with(['roles', 'permissions'])->first();
     }
 
+    public function findOneByEmail(string $email)
+    {
+        $user = new User();
+
+        return $user->where('email', $email)->first();
+    }
+
     public function store(User $user)
     {
         return $user->save();
