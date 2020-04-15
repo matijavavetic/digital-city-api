@@ -2,6 +2,7 @@
 
 namespace src\Business\Services;
 
+use Carbon\Carbon;
 use Firebase\JWT\JWT;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -60,9 +61,9 @@ class AuthService
         }
 
         $randomString = Str::random(100);
-        $rememberToken = Hash::make($randomString);
+        $accessToken = Hash::make($randomString);
 
-        $user->remember_token = $rememberToken;
+        $user->access_token = $accessToken;
 
         $stored = $this->userRepository->store($user);
 
@@ -72,14 +73,11 @@ class AuthService
 
         $pathToPrivateKey = base_path()."/private.pem";
         $privateKey = file_get_contents($pathToPrivateKey);
-//        $publicPath = base_path()."/public.pem";
-//        $publicKey = file_get_contents($publicPath);
-//        $decoded = JWT::decode($jwt, $publicKey, array('RS256'));
 
         $data = [
-            "username"      => $user->username,
-            "email"         => $user->email,
-            "rememberToken" => $rememberToken
+            "username"    => $user->username,
+            "email"       => $user->email,
+            "accessToken" => $accessToken
         ];
 
         $payload = [
@@ -87,7 +85,8 @@ class AuthService
             "iss"  => "http://digital-city.com",
             "aud"  =>  "http://digital-city.com",
             "iat"  => 1356999524,
-            "nbf"  => 1357000000
+            "nbf"  => 1357000000,
+            "exp"  => time() + 30*24*60*60
         ];
 
         $jwt = JWT::encode($payload, $privateKey, "RS256");
