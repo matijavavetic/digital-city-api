@@ -19,6 +19,10 @@ class RoleCreateRequest extends FormRequest
                 'required',
                 'string',
             ],
+            'permissions' => [
+                'required',
+                'string'
+            ]
         ];
     }
 
@@ -30,7 +34,10 @@ class RoleCreateRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'name.required' => RoleErrorCode::ERR_EMPTY_NAME,
+            'name.required'        => RoleErrorCode::ERR_EMPTY_NAME,
+            'name.string'          => RoleErrorCode::ERR_INVALID_NAME,
+            'permissions.required' => RoleErrorCode::ERR_EMPTY_PERMISSIONS,
+            'permissions.string'   => RoleErrorCode::ERR_INVALID_PERMISSIONS
         ];
     }
 
@@ -54,7 +61,8 @@ class RoleCreateRequest extends FormRequest
     public function validationData() : array
     {
         $input = [
-            'name' => $this->input('name'),
+            'name'        => $this->input('name'),
+            'permissions' => $this->input('permissions')
         ];
 
         return $input;

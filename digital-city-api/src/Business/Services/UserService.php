@@ -2,6 +2,7 @@
 
 namespace src\Business\Services;
 
+use Illuminate\Database\QueryException;
 use src\Business\Factories\User\UserCreateResponseMapperFactory;
 use src\Business\Factories\User\UserUpdateResponseMapperFactory;
 use src\Business\Mappers\User\Request\UserDeleteRequestMapper;
@@ -17,6 +18,7 @@ use src\Business\Mappers\User\Request\UserInfoRequestMapper;
 use src\Business\Mappers\User\Response\UserInfoResponseMapper;
 use src\Business\Mappers\User\Response\UserListResponseMapper;
 use src\Business\Factories\User\UserListResponseMapperFactory;
+use src\Business\Factories\User\UserDeleteResponseMapperFactory;
 use src\Business\Factories\User\UserInfoResponseMapperFactory;
 
 class UserService
@@ -64,10 +66,22 @@ class UserService
 
         $stored = $this->userRepository->store($user);
 
-        $user->roles()->sync([$mapper->getRoleIdentifier()]);
-
         if ($stored === false) {
             throw new \Exception("Failed to store new user!", 400);
+        }
+
+        try {
+            $user->roles()->sync($mapper->getRoles());
+        } catch(QueryException $e) {
+            throw new \Exception("Failed to store user's roles!", 400);
+        }
+
+        if ($mapper->getPermissions() !== null) {
+            try {
+                $user->permissions()->sync($mapper->getPermissions());
+            } catch (QueryException $e) {
+                throw new \Exception("Failed to store user's permissions!", 400);
+            }
         }
 
         $responseMapper = UserCreateResponseMapperFactory::make($user);
@@ -111,8 +125,20 @@ class UserService
             $user->city = $mapper->getCity();
         }
 
-        if ($mapper->getRoleIdentifier() !== null) {
-            $user->roles()->sync([$mapper->getRoleIdentifier()]);
+        if ($mapper->getRoles() !== null) {
+            try {
+                $user->roles()->sync($mapper->getRoles());
+            } catch (QueryException $e) {
+                throw new \Exception("Failed to store user's roles!", 400);
+            }
+        }
+
+        if ($mapper->getPermissions() !== null) {
+            try {
+                $user->permissions()->sync($mapper->getPermissions());
+            } catch (QueryException $e) {
+                throw new \Exception("Failed to store user's permissions!", 400);
+            }
         }
 
         $stored = null;
@@ -140,7 +166,7 @@ class UserService
             throw new \Exception("Failed to delete user!", 400);
         }
 
-        $responseMapper = PermissionDeleteResponseMapperFactory::make($user);
+        $responseMapper = UserDeleteResponseMapperFactory::make($user);
 
         return $responseMapper;
     }

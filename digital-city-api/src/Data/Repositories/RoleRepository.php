@@ -25,4 +25,9 @@ class RoleRepository implements IRoleRepository
     {
         return $role->save();
     }
+
+    public function destroy(Role $role)
+    {
+        return $role->delete();
+    }
 }

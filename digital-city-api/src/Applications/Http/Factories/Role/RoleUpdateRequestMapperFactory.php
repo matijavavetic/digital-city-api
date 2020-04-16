@@ -10,6 +10,13 @@ class RoleUpdateRequestMapperFactory
     {
         $mapper = new RoleUpdateRequestMapper($data['identifier'], $data['name']);
 
+        if (is_null($data['permissions']) === false) {
+            $permissions = explode(', ', $data['permissions']);
+            $mapper->setPermissions($permissions);
+        } else {
+            $mapper->setPermissions(null);
+        }
+
         return $mapper;
     }
 }

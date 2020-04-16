@@ -8,20 +8,21 @@ class UserCreateRequestMapper
     private string $username;
     private string $email;
     private string $password;
-    private string $roleIdentifier;
+    private array $roles;
     private ?string $firstName;
     private ?string $lastName;
     private ?string $birthDate;
     private ?string $country;
     private ?string $city;
+    private ?array $permissions;
 
-    public function __construct(string $identifier, string $email, string $username, string $password, string $roleIdentifier)
+    public function __construct(string $identifier, string $email, string $username, string $password, array $roles)
     {
-        $this->identifier     = $identifier;
-        $this->email          = $email;
-        $this->username       = $username;
-        $this->password       = $password;
-        $this->roleIdentifier = $roleIdentifier;
+        $this->identifier = $identifier;
+        $this->email      = $email;
+        $this->username   = $username;
+        $this->password   = $password;
+        $this->roles      = $roles;
     }
 
     public function getIdentifier() : string
@@ -44,9 +45,9 @@ class UserCreateRequestMapper
         return $this->password;
     }
 
-    public function getRoleIdentifier() : string
+    public function getRoles() : array
     {
-        return $this->roleIdentifier;
+        return $this->roles;
     }
 
     public function getFirstName() : ?string
@@ -74,6 +75,11 @@ class UserCreateRequestMapper
         return $this->city;
     }
 
+    public function getPermissions() : ?array
+    {
+        return $this->permissions;
+    }
+
     public function setFirstName(?string $firstName) : void
     {
         $this->firstName = $firstName;
@@ -97,5 +103,10 @@ class UserCreateRequestMapper
     public function setCity(?string $city) : void
     {
         $this->city = $city;
+    }
+
+    public function setPermissions(?array $permissions) : void
+    {
+        $this->permissions = $permissions;
     }
 }
