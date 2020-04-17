@@ -2,15 +2,11 @@
 
 namespace Tests\Integration;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use src\Applications\Http\Enum\ErrorCodes\RoleErrorCode;
 
 class RoleListTest extends TestCase
 {
-    use RefreshDatabase;
-
     private string $endpoint = '/api/role.list';
 
     /**
