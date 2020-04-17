@@ -9,7 +9,7 @@ class RoleUpdateResponseMapperFactory
 {
     public static function make(Role $role) : RoleUpdateResponseMapper
     {
-        $mapper = new RoleUpdateResponseMapper($role->identifier);
+        $mapper = new RoleUpdateResponseMapper($role->identifier, $role->name);
 
         return $mapper;
     }

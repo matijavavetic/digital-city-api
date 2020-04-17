@@ -57,6 +57,6 @@ class RoleController extends Controller
 
         $responseMapper = $roleService->update($requestMapper);
 
-        return new JsonResponse($responseMapper, Response::HTTP_CREATED);
+        return new JsonResponse($responseMapper, Response::HTTP_OK);
     }
 }
