@@ -1,0 +1,55 @@
+<?php
+
+namespace Tests\Integration;
+
+use src\Applications\Http\Enum\ErrorCodes\RoleErrorCode;
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Response;
+
+class RoleCreateTest extends TestCase
+{
+    use RefreshDatabase;
+
+    private string $endpoint = '/api/role.create';
+
+    /**
+     * @test
+     */
+    public function callRoleCreateEndpointWithValidData_ExpectCreatedResponse()
+    {
+        // Arrange
+        $data = [
+            'name' => 'New role name',
+        ];
+
+        // Act
+        $response = $this->json('POST', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_CREATED);
+        $response->assertJsonFragment([
+            'name' => 'New role name',
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function callRoleListEndpointWithInvalidData_ExpectBadRequestResponse()
+    {
+        // Arrange
+        $data = [
+            'name' => '',
+        ];
+
+        // Act
+        $response = $this->json('POST', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonFragment([
+            'code' => RoleErrorCode::ERR_EMPTY_NAME,
+        ]);
+    }
+}
