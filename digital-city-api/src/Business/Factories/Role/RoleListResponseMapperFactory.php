@@ -12,14 +12,16 @@ class RoleListResponseMapperFactory
     public static function make(Collection $collection) : RoleListResponseMapper
     {
         $roleMappers = [];
-        $permissionMapper = [];
+        $permissionMappers = [];
 
         foreach($collection as $role) {
             foreach($role->permissions as $permission) {
-                $permissionMapper = new PermissionMapper($permission->identifier, $permission->name);
+                $permissionMappers[] = new PermissionMapper($permission->identifier, $permission->name);
             }
+            
+            $roleMappers[] = new RoleMapper($role->identifier, $role->name, $permissionMappers);
 
-            $roleMappers[] = new RoleMapper($role->identifier, $role->name, $permissionMapper);
+            $permissionMappers = [];
         }
 
         $mapper = new RoleListResponseMapper();

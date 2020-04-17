@@ -12,12 +12,15 @@ class UserListResponseMapperFactory
     public static function make(Collection $collection) : UserListResponseMapper
     {
         $userMappers = [];
-        $roleMapper = [];
+        $roleMappers = [];
 
         foreach($collection as $user) {
             foreach($user->Roles as $role) {
-                $roleMapper = new RoleMapper($role->identifier, $role->name);
+                $roleMappers[] = new RoleMapper($role->identifier, $role->name, []);
+                dump($roleMappers);
             }
+
+            dd($roleMappers);
 
             $userMapper = new UserMapper($user->identifier, $user->username, $user->email, $roleMapper);
 
