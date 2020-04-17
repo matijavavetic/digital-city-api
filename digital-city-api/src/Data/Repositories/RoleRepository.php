@@ -11,18 +11,23 @@ class RoleRepository implements IRoleRepository
     {
         $role = new Role();
 
-        return $role->orderBy('id', $sort)->get();
+        return $role->orderBy('id', $sort)->with('permissions')->get();
     }
 
     public function findOne(string $identifier)
     {
         $role = new Role();
 
-        return $role->where('identifier', $identifier)->first();
+        return $role->where('identifier', $identifier)->with('permissions')->first();
     }
 
     public function store(Role $role)
     {
         return $role->save();
+    }
+
+    public function destroy(Role $role)
+    {
+        return $role->delete();
     }
 }

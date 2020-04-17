@@ -23,6 +23,11 @@ class RoleUpdateRequest extends FormRequest
                 'required',
                 'string',
             ],
+            'permissions' => 'nullable|array',
+            'permissions.*' => [
+                'distinct',
+                'integer'
+            ]
         ];
     }
 
@@ -34,9 +39,10 @@ class RoleUpdateRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'name.required'       => RoleErrorCode::ERR_EMPTY_NAME,
-            'identifier.required' => RoleErrorCode::ERR_EMPTY_IDENTIFIER,
-            'identifier.string'   => RoleErrorCode::ERR_INVALID_IDENTIFIER,
+            'name.required'          => RoleErrorCode::ERR_EMPTY_NAME,
+            'identifier.required'    => RoleErrorCode::ERR_EMPTY_IDENTIFIER,
+            'identifier.string'      => RoleErrorCode::ERR_INVALID_IDENTIFIER,
+            'permissions.array'      => RoleErrorCode::ERR_INVALID_PERMISSIONS_FIELD,
         ];
     }
 
@@ -60,8 +66,9 @@ class RoleUpdateRequest extends FormRequest
     public function validationData() : array
     {
         $input = [
-            'identifier' => $this->input('identifier'),
-            'name'       => $this->input('name'),
+            'identifier'  => $this->input('identifier'),
+            'name'        => $this->input('name'),
+            'permissions' => $this->input('permissions')
         ];
 
         return $input;

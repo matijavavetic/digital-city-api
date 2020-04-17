@@ -18,16 +18,28 @@ class UserUpdateRequestMapperFactory
         $mapper->setCountry($data['country']);
         $mapper->setCity($data['city']);
 
-        if (! is_null($data['email'])) {
+        if (is_null($data['email']) === false) {
             $mapper->setUsername(strtok($data['email'], '@'));
         } else {
             $mapper->setUsername(null);
         }
 
-        if (! is_null($data['password'])) {
+        if (is_null($data['password']) === false) {
             $mapper->setPassword(Hash::make($data['password']));
         } else {
             $mapper->setPassword(null);
+        }
+
+        if (is_null($data['roles']) === false) {
+            $mapper->setRoles($data['roles']);
+        } else {
+            $mapper->setRoles(null);
+        }
+
+        if (is_null($data['permissions']) === false) {
+            $mapper->setPermissions($data['permissions']);
+        } else {
+            $mapper->setPermissions(null);
         }
 
         return $mapper;

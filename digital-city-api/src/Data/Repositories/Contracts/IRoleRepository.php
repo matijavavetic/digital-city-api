@@ -9,4 +9,5 @@ interface IRoleRepository
     public function get(string $sort);
     public function findOne(string $identifier);
     public function store(Role $role);
+    public function destroy(Role $role);
 }

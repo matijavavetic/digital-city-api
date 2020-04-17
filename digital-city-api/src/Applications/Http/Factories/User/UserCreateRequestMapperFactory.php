@@ -14,13 +14,19 @@ class UserCreateRequestMapperFactory
         $username = strtok($data['email'], '@');
         $password = Hash::make($data['password']);
 
-        $mapper = new UserCreateRequestMapper($identifier, $data['email'], $username, $password);
+        $mapper = new UserCreateRequestMapper($identifier, $data['email'], $username, $password, $data['roles']);
 
         $mapper->setFirstName($data['firstName']);
         $mapper->setLastName($data['lastName']);
         $mapper->setBirthDate($data['birthDate']);
         $mapper->setCountry($data['country']);
         $mapper->setCity($data['city']);
+
+        if (is_null($data['permissions']) === false) {
+            $mapper->setPermissions($data['permissions']);
+        } else {
+            $mapper->setPermissions(null);
+        }
 
         return $mapper;
     }

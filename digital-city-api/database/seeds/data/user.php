@@ -7,30 +7,33 @@ return [
     [
         'id'         => 1,
         'identifier' => Uuid::uuid4()->getHex(),
-        'password'   => Hash::make(bin2hex(random_bytes(10))),
+        'password'   => Hash::make("12345678"),
         'username'   => 'luka.vavetic',
-        'email'      => 'luka.vavetic@dc.com',
+        'email'      => 'luka.vavetic@gmail.com',
         'firstname'  => 'Luka',
-        'lastname'   => 'Vavetić'
+        'lastname'   => 'Vavetić',
+        'role_id'    => 1
     ],
 
     [
         'id'         => 2,
         'identifier' => Uuid::uuid4()->getHex(),
-        'password'   => Hash::make(bin2hex(random_bytes(10))),
+        'password'   => Hash::make("12345678"),
         'username'   => 'frano.sasvari',
-        'email'      => 'frano.sasvari@dc.com',
+        'email'      => 'frano.sasvari@gmail.com',
         'firstname'  => 'Frano',
-        'lastname'   => 'Šašvari'
+        'lastname'   => 'Šašvari',
+        'role_id'    => 1
     ],
 
     [
         'id'         => 3,
         'identifier' => Uuid::uuid4()->getHex(),
-        'password'   => Hash::make(bin2hex(random_bytes(10))),
+        'password'   => Hash::make("12345678"),
         'username'   => 'matija.vavetic',
-        'email'      => 'matija.vavetic@dc.com',
+        'email'      => 'matija.vavetic@gmail.com',
         'firstname'  => 'Matija',
-        'lastname'   => 'Vavetić'
+        'lastname'   => 'Vavetić',
+        'role_id'    => 1
     ],
 ];

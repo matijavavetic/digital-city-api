@@ -16,7 +16,7 @@ class RoleCreateResponseMapper implements JsonSerializable
         $this->name       = $name;
     }
 
-    public function getIdentifier()
+    public function getIdentifier() : string
     {
         return $this->identifier;
     }

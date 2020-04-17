@@ -25,7 +25,9 @@ class CreateUsersTable extends Migration
             $table->date('birth_date')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
-            $table->rememberToken();
+            $table->string('access_token')->unique()->nullable();
+            $table->string('activation_token')->unique()->nullable();
+            $table->boolean('is_active')->nullable();
             $table->timestamps();
         });
     }

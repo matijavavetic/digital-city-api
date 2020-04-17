@@ -8,11 +8,13 @@ use src\Business\Services\RoleService;
 use src\Applications\Http\FormRequests\Role\RoleCreateRequest;
 use src\Applications\Http\FormRequests\Role\RoleListRequest;
 use src\Applications\Http\FormRequests\Role\RoleInfoRequest;
+use src\Applications\Http\FormRequests\Role\RoleDeleteRequest;
 use src\Applications\Http\FormRequests\Role\RoleUpdateRequest;
 use src\Applications\Http\Factories\Role\RoleListRequestMapperFactory;
 use src\Applications\Http\Factories\Role\RoleInfoRequestMapperFactory;
 use src\Applications\Http\Factories\Role\RoleCreateRequestMapperFactory;
 use src\Applications\Http\Factories\Role\RoleUpdateRequestMapperFactory;
+use src\Applications\Http\Factories\Role\RoleDeleteRequestMapperFactory;
 
 class RoleController extends Controller
 {
@@ -56,6 +58,17 @@ class RoleController extends Controller
         $requestMapper = RoleUpdateRequestMapperFactory::make($data);
 
         $responseMapper = $roleService->update($requestMapper);
+
+        return new JsonResponse($responseMapper, Response::HTTP_OK);
+    }
+
+    public function delete(RoleDeleteRequest $request, RoleService $roleService) : JsonResponse
+    {
+        $data = $request->validationData();
+
+        $requestMapper = RoleDeleteRequestMapperFactory::make($data);
+
+        $responseMapper = $roleService->delete($requestMapper);
 
         return new JsonResponse($responseMapper, Response::HTTP_OK);
     }

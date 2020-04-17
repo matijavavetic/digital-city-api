@@ -2,20 +2,29 @@
 
 namespace src\Applications\Http\Middleware;
 
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Support\Facades\Auth;
+use src\Data\Repositories\UserRepository;
+use Closure;
 
-class Authenticate extends Middleware
+class Authenticate
 {
-    /**
-     * Get the path the user should be redirected to when they are not authenticated.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string|null
-     */
-    protected function redirectTo($request)
+    private UserRepository $userRepository;
+
+    public function __construct(UserRepository $userRepository)
     {
-        if (! $request->expectsJson()) {
-            return route('login');
+        $this->userRepository = $userRepository;
+    }
+
+    public function handle($request, Closure $next)
+    {
+        $user = $this->userRepository->findOneByEmailAndAccessToken($request->userData['email'], $request->userData['accessToken']);
+
+        if ($user === null) {
+            throw new \Exception("User not found!", 404);
         }
+
+        Auth::setUser($user);
+
+        return $next($request);
     }
 }

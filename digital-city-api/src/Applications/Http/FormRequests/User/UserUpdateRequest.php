@@ -25,7 +25,17 @@ class UserUpdateRequest extends FormRequest
             'lastName' => 'nullable|string',
             'birthDate' => 'nullable|date',
             'country' => 'nullable|string',
-            'city' => 'nullable|string'
+            'city' => 'nullable|string',
+            'roles' => 'nullable|array',
+            'roles.*' => [
+                'integer',
+                'distinct'
+            ],
+            'permissions' => 'nullable|array',
+            'permissions.*' => [
+                'distinct',
+                'integer'
+            ],
         ];
     }
 
@@ -38,14 +48,16 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'identifier.required' => UserErrorCode::ERR_EMPTY_IDENTIFIER,
-            'identifier.string'   => UserErrorCode::ERR_NOT_STRING,
+            'identifier.string'   => UserErrorCode::ERR_INVALID_IDENTIFIER,
             'email.email'         => UserErrorCode::ERR_INVALID_EMAIL,
-            'password.string'     => UserErrorCode::ERR_NOT_STRING,
-            'firstName.string'    => UserErrorCode::ERR_NOT_STRING,
-            'lastName.string'     => UserErrorCode::ERR_NOT_STRING,
+            'password.string'     => UserErrorCode::ERR_INVALID_PASSWORD,
+            'firstName.string'    => UserErrorCode::ERR_INVALID_FIRSTNAME,
+            'lastName.string'     => UserErrorCode::ERR_INVALID_LASTNAME,
             'birthDate.date'      => UserErrorCode::ERR_INVALID_DATE,
-            'country.string'      => UserErrorCode::ERR_NOT_STRING,
-            'city.string'         => UserErrorCode::ERR_NOT_STRING
+            'country.string'      => UserErrorCode::ERR_INVALID_COUNTRY,
+            'city.string'         => UserErrorCode::ERR_INVALID_CITY,
+            'roles.string'        => UserErrorCode::ERR_INVALID_ROLES,
+            'permissions.string'  => UserErrorCode::ERR_INVALID_PERMISSIONS
         ];
     }
 
@@ -69,14 +81,16 @@ class UserUpdateRequest extends FormRequest
     public function validationData() : array
     {
         $input = [
-            'identifier' => $this->input('identifier'),
-            'email' => $this->input('email'),
-            'password' => $this->input('password'),
-            'firstName' => $this->input('first_name'),
-            'lastName' => $this->input('last_name'),
-            'birthDate' => $this->input('birth_date'),
-            'country' => $this->input('country'),
-            'city' => $this->input('city'),
+            'identifier'  => $this->input('identifier'),
+            'email'       => $this->input('email'),
+            'password'    => $this->input('password'),
+            'firstName'   => $this->input('firstName'),
+            'lastName'    => $this->input('lastName'),
+            'birthDate'   => $this->input('birthDate'),
+            'country'     => $this->input('country'),
+            'city'        => $this->input('city'),
+            'roles'       => $this->input('roles'),
+            'permissions' => $this->input('permissions')
         ];
 
         return $input;
