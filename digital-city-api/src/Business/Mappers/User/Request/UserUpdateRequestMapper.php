@@ -5,7 +5,8 @@ namespace src\Business\Mappers\User\Request;
 class UserUpdateRequestMapper
 {
     private string $identifier;
-    private ?string $roleIdentifier;
+    private ?array $roles;
+    private ?array $permissions;
     private ?string $username;
     private ?string $email;
     private ?string $password;
@@ -65,9 +66,14 @@ class UserUpdateRequestMapper
         return $this->city;
     }
 
-    public function getRoleIdentifier() : ?string
+    public function getRoles() : ?array
     {
-        return $this->roleIdentifier;
+        return $this->roles;
+    }
+
+    public function getPermissions() : ?array
+    {
+        return $this->permissions;
     }
 
     public function setUsername(?string $username) : void
@@ -110,8 +116,13 @@ class UserUpdateRequestMapper
         $this->city = $city;
     }
 
-    public function setRoleIdentifier(?string $roleIdentifier) : void
+    public function setRoles(?array $roles) : void
     {
-        $this->roleIdentifier = $roleIdentifier;
+        $this->roles = $roles;
+    }
+
+    public function setPermissions(?array $permissions) : void
+    {
+        $this->permissions = $permissions;
     }
 }

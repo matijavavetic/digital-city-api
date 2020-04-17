@@ -24,7 +24,7 @@ return [
     ],
 
     [
-        'id'          => 4,
+        'id'         => 4,
         'identifier' => Uuid::uuid4()->getHex(),
         'name'       => PermissionEnum::SCHOLARSHIP_DELETE
     ],
