@@ -7,6 +7,7 @@ use src\Business\Mappers\Role\Request\RoleListRequestMapper;
 use src\Business\Mappers\Role\RoleMapper;
 use src\Business\Services\RoleService;
 use Illuminate\Database\Eloquent\Collection;
+use src\Data\Entities\Permission;
 use src\Data\Entities\Role;
 use src\Data\Repositories\RoleRepository;
 use Mockery;
@@ -27,12 +28,18 @@ class RoleServiceTest extends TestCase
         $roleCollection       = new Collection();
         $roleMapperCollection = new Collection();
 
+        $permission = new Permission();
+        $permission->identifier = 1;
+        $permission->name       = "Permission name 1";
+        $permissions = new Collection([$permission]);
+
         for ($i = 1; $i <= 5; $i++) {
             // role model
             $role = new Role();
 
             $role->identifier = $i;
-            $role->name       = 'Name ' . $i;
+            $role->name       = 'Role name ' . $i;
+            $role->permissions = $permissions;
 
             $roleCollection->add($role);
 

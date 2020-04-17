@@ -17,6 +17,7 @@ class RoleCreateTest extends TestCase
         // Arrange
         $data = [
             'name' => 'New role name',
+            'permissions' => [1],
         ];
 
         // Act

@@ -21,8 +21,9 @@ class RoleUpdateTest extends TestCase
         $role = $listResponse->json('data.0');
 
         $data = [
-            'identifier' => $role['identifier'],
-            'name'       => 'New updated role name',
+            'identifier'  => $role['identifier'],
+            'name'        => 'New updated role name',
+            'permissions' => [1],
         ];
 
         // Act
