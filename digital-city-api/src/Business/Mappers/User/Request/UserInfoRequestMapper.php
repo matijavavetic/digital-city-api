@@ -17,7 +17,7 @@ class UserInfoRequestMapper
         return $this->identifier;
     }
 
-    public function getRelations() : array
+    public function getRelations() : ?array
     {
         return $this->relations;
     }

@@ -12,7 +12,7 @@ class UserListRequestMapper
         return $this->sort;
     }
 
-    public function getRelations() : array
+    public function getRelations() : ?array
     {
         return $this->relations;
     }

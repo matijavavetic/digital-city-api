@@ -7,7 +7,16 @@ use src\Data\Repositories\Contracts\IUserRepository;
 
 class UserRepository implements IUserRepository
 {
-    public function get(string $sort, array $relations)
+    public function get(string $sort)
+    {
+        $user = new User();
+
+        return $user
+            ->orderBy('id', $sort)
+            ->get();
+    }
+
+    public function getWith(string $sort, array $relations)
     {
         $user = new User();
 

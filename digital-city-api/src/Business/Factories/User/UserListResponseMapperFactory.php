@@ -2,6 +2,7 @@
 
 namespace src\Business\Factories\User;
 
+use src\Business\Mappers\Permission\PermissionMapper;
 use src\Business\Mappers\Role\RoleMapper;
 use src\Business\Mappers\User\Response\UserListResponseMapper;
 use Illuminate\Database\Eloquent\Collection;
@@ -11,15 +12,30 @@ class UserListResponseMapperFactory
 {
     public static function make(Collection $collection) : UserListResponseMapper
     {
-        $userMappers = [];
-        $roleMappers = [];
+        $usersMapper = [];
+        $rolesMapper = [];
+        $userPermissionsMapper = [];
+        $rolePermissionsMapper = [];
 
         foreach($collection as $user) {
-            foreach($user->Roles as $role) {
-                $roleMappers[] = new RoleMapper($role->identifier, $role->name);
+            if ($user->relationLoaded('roles')) {
+                foreach ($user->roles as $role) {
+                    foreach($role->permissions as $permission) {
+                        $rolePermissionsMapper[] = new PermissionMapper($permission->identifier, $permission->name);
+                    }
+
+                    $rolesMapper[] = new RoleMapper($role->identifier, $role->name, $rolePermissionsMapper);
+                    $rolePermissionsMapper = [];
+                }
             }
 
-            $userMapper = new UserMapper($user->identifier, $user->username, $user->email, $roleMapper);
+            if ($user->relationLoaded('permissions')) {
+                foreach ($user->permissions as $permission) {
+                    $userPermissionsMapper[] = new PermissionMapper($permission->identifier, $permission->name);
+                }
+            }
+
+            $userMapper = new UserMapper($user->identifier, $user->username, $user->email, $rolesMapper, $userPermissionsMapper);
 
             $userMapper->setFirstName($user->firstname);
             $userMapper->setLastName($user->lastname);
@@ -27,11 +43,13 @@ class UserListResponseMapperFactory
             $userMapper->setCountry($user->country);
             $userMapper->setCity($user->city);
 
-            $userMappers[] = $userMapper;
+            $usersMapper[] = $userMapper;
+            $rolesMapper = [];
+            $userPermissionsMapper = [];
         }
 
         $mapper = new UserListResponseMapper();
-        $mapper->setUserMappers($userMappers);
+        $mapper->setUserMappers($usersMapper);
 
         return $mapper;
     }
