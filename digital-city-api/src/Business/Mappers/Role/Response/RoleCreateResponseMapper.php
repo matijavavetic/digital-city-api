@@ -3,15 +3,17 @@
 namespace src\Business\Mappers\Role\Response;
 
 use JsonSerializable;
-use src\Business\Mappers\Role\RoleMapper;
 
 class RoleCreateResponseMapper implements JsonSerializable
 {
     private string $identifier;
 
-    public function __construct(string $identifier)
+    private string $name;
+
+    public function __construct(string $identifier, string $name)
     {
         $this->identifier = $identifier;
+        $this->name       = $name;
     }
 
     public function getIdentifier()
@@ -23,7 +25,8 @@ class RoleCreateResponseMapper implements JsonSerializable
     {
         return [
             'data' =>  [
-                'identifier' => $this->identifier
+                'identifier' => $this->identifier,
+                'name'       => $this->name,
             ]
         ];
     }
