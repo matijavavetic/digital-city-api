@@ -19,14 +19,23 @@ class UserUpdateRequest extends FormRequest
                 'required',
                 'string'
             ],
-            'roleIdentifier' => 'integer',
             'email' => 'nullable|email',
             'password' => 'nullable|string',
             'firstName' => 'nullable|string',
             'lastName' => 'nullable|string',
             'birthDate' => 'nullable|date',
             'country' => 'nullable|string',
-            'city' => 'nullable|string'
+            'city' => 'nullable|string',
+            'roles' => 'nullable|array',
+            'roles.*' => [
+                'integer',
+                'distinct'
+            ],
+            'permissions' => 'nullable|array',
+            'permissions.*' => [
+                'distinct',
+                'integer'
+            ],
         ];
     }
 
@@ -38,16 +47,17 @@ class UserUpdateRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'identifier.required'   => UserErrorCode::ERR_EMPTY_IDENTIFIER,
-            'identifier.string'     => UserErrorCode::ERR_INVALID_IDENTIFIER,
-            'email.email'           => UserErrorCode::ERR_INVALID_EMAIL,
-            'roleIdentifier.string' => UserErrorCode::ERR_INVALID_ROLE_IDENTIFIER,
-            'password.string'       => UserErrorCode::ERR_INVALID_PASSWORD,
-            'firstName.string'      => UserErrorCode::ERR_INVALID_FIRSTNAME,
-            'lastName.string'       => UserErrorCode::ERR_INVALID_LASTNAME,
-            'birthDate.date'        => UserErrorCode::ERR_INVALID_DATE,
-            'country.string'        => UserErrorCode::ERR_INVALID_COUNTRY,
-            'city.string'           => UserErrorCode::ERR_INVALID_CITY
+            'identifier.required' => UserErrorCode::ERR_EMPTY_IDENTIFIER,
+            'identifier.string'   => UserErrorCode::ERR_INVALID_IDENTIFIER,
+            'email.email'         => UserErrorCode::ERR_INVALID_EMAIL,
+            'password.string'     => UserErrorCode::ERR_INVALID_PASSWORD,
+            'firstName.string'    => UserErrorCode::ERR_INVALID_FIRSTNAME,
+            'lastName.string'     => UserErrorCode::ERR_INVALID_LASTNAME,
+            'birthDate.date'      => UserErrorCode::ERR_INVALID_DATE,
+            'country.string'      => UserErrorCode::ERR_INVALID_COUNTRY,
+            'city.string'         => UserErrorCode::ERR_INVALID_CITY,
+            'roles.string'        => UserErrorCode::ERR_INVALID_ROLES,
+            'permissions.string'  => UserErrorCode::ERR_INVALID_PERMISSIONS
         ];
     }
 
@@ -71,15 +81,16 @@ class UserUpdateRequest extends FormRequest
     public function validationData() : array
     {
         $input = [
-            'identifier'     => $this->input('identifier'),
-            'roleIdentifier' => $this->input('roleIdentifier'),
-            'email'          => $this->input('email'),
-            'password'       => $this->input('password'),
-            'firstName'      => $this->input('firstName'),
-            'lastName'       => $this->input('lastName'),
-            'birthDate'      => $this->input('birthDate'),
-            'country'        => $this->input('country'),
-            'city'           => $this->input('city'),
+            'identifier'  => $this->input('identifier'),
+            'email'       => $this->input('email'),
+            'password'    => $this->input('password'),
+            'firstName'   => $this->input('firstName'),
+            'lastName'    => $this->input('lastName'),
+            'birthDate'   => $this->input('birthDate'),
+            'country'     => $this->input('country'),
+            'city'        => $this->input('city'),
+            'roles'       => $this->input('roles'),
+            'permissions' => $this->input('permissions')
         ];
 
         return $input;

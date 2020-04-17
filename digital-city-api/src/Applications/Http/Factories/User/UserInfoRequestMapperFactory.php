@@ -10,6 +10,8 @@ class UserInfoRequestMapperFactory
     {
         $mapper = new UserInfoRequestMapper($data['identifier']);
 
+        $mapper->setRelations($data['relations']);
+
         return $mapper;
     }
 }

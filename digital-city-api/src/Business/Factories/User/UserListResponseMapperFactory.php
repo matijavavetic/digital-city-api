@@ -16,11 +16,8 @@ class UserListResponseMapperFactory
 
         foreach($collection as $user) {
             foreach($user->Roles as $role) {
-                $roleMappers[] = new RoleMapper($role->identifier, $role->name, []);
-                dump($roleMappers);
+                $roleMappers[] = new RoleMapper($role->identifier, $role->name);
             }
-
-            dd($roleMappers);
 
             $userMapper = new UserMapper($user->identifier, $user->username, $user->email, $roleMapper);
 

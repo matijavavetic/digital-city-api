@@ -8,7 +8,7 @@ class RoleCreateRequestMapperFactory
 {
     public static function make(array $data) : RoleCreateRequestMapper
     {
-        $mapper = new RoleCreateRequestMapper($data['name']);
+        $mapper = new RoleCreateRequestMapper($data['name'], $data['permissions']);
 
         return $mapper;
     }

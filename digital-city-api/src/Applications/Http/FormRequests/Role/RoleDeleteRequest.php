@@ -5,7 +5,7 @@ namespace src\Applications\Http\FormRequests\Role;
 use src\Applications\Http\Enum\ErrorCodes\RoleErrorCode;
 use src\Applications\Http\FormRequests\FormRequest;
 
-class RoleUpdateRequest extends FormRequest
+class RoleDeleteRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,19 +15,10 @@ class RoleUpdateRequest extends FormRequest
     public function rules() : array
     {
         return [
-            'name' => [
-                'required',
-                'string',
-            ],
             'identifier' => [
                 'required',
                 'string',
             ],
-            'permissions' => 'nullable|array',
-            'permissions.*' => [
-                'distinct',
-                'integer'
-            ]
         ];
     }
 
@@ -39,10 +30,8 @@ class RoleUpdateRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'name.required'          => RoleErrorCode::ERR_EMPTY_NAME,
-            'identifier.required'    => RoleErrorCode::ERR_EMPTY_IDENTIFIER,
-            'identifier.string'      => RoleErrorCode::ERR_INVALID_IDENTIFIER,
-            'permissions.array'      => RoleErrorCode::ERR_INVALID_PERMISSIONS_FIELD,
+            'identifier.required' => RoleErrorCode::ERR_EMPTY_IDENTIFIER,
+            'identifier.string'   => RoleErrorCode::ERR_INVALID_IDENTIFIER,
         ];
     }
 
@@ -54,7 +43,7 @@ class RoleUpdateRequest extends FormRequest
     public function attributes()
     {
         return [
-           //
+            //
         ];
     }
 
@@ -66,9 +55,7 @@ class RoleUpdateRequest extends FormRequest
     public function validationData() : array
     {
         $input = [
-            'identifier'  => $this->input('identifier'),
-            'name'        => $this->input('name'),
-            'permissions' => $this->input('permissions')
+            'identifier' => $this->input('identifier'),
         ];
 
         return $input;
