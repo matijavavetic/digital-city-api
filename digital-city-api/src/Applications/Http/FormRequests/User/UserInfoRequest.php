@@ -2,10 +2,9 @@
 
 namespace src\Applications\Http\FormRequests\User;
 
-use src\Applications\Http\Enum\ErrorCodes\RoleErrorCode;
 use src\Applications\Http\Enum\ErrorCodes\UserErrorCode;
 use src\Applications\Http\FormRequests\FormRequest;
-use src\Data\Entities\User;
+use src\Data\Enums\RelationEnum;
 
 class UserInfoRequest extends FormRequest
 {
@@ -21,6 +20,12 @@ class UserInfoRequest extends FormRequest
                 'required',
                 'string',
             ],
+            'relations' => 'nullable|array',
+            'relations.*' => [
+                'string',
+                'distinct',
+                'enum_value:' . RelationEnum::class,
+            ],
         ];
     }
 
@@ -34,6 +39,7 @@ class UserInfoRequest extends FormRequest
         return [
             'identifier.required' => UserErrorCode::ERR_EMPTY_IDENTIFIER,
             'identifier.string'   => UserErrorCode::ERR_INVALID_IDENTIFIER,
+            'relations.array'     => UserErrorCode::ERR_INVALID_RELATIONS
         ];
     }
 
@@ -58,6 +64,7 @@ class UserInfoRequest extends FormRequest
     {
         $input = [
             'identifier' => $this->input('identifier'),
+            'relations'  => $this->input('relations')
         ];
 
         return $input;

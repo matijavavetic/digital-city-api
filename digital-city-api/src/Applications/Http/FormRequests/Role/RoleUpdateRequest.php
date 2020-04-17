@@ -23,7 +23,11 @@ class RoleUpdateRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'permissions' => 'string'
+            'permissions' => 'nullable|array',
+            'permissions.*' => [
+                'distinct',
+                'integer'
+            ]
         ];
     }
 
@@ -35,10 +39,10 @@ class RoleUpdateRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'name.required'       => RoleErrorCode::ERR_EMPTY_NAME,
-            'identifier.required' => RoleErrorCode::ERR_EMPTY_IDENTIFIER,
-            'identifier.string'   => RoleErrorCode::ERR_INVALID_IDENTIFIER,
-            'permissions.string'  => RoleErrorCode::ERR_INVALID_PERMISSIONS
+            'name.required'          => RoleErrorCode::ERR_EMPTY_NAME,
+            'identifier.required'    => RoleErrorCode::ERR_EMPTY_IDENTIFIER,
+            'identifier.string'      => RoleErrorCode::ERR_INVALID_IDENTIFIER,
+            'permissions.array'      => RoleErrorCode::ERR_INVALID_PERMISSIONS_FIELD,
         ];
     }
 

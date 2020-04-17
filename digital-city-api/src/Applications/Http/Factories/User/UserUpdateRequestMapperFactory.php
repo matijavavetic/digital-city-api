@@ -31,15 +31,13 @@ class UserUpdateRequestMapperFactory
         }
 
         if (is_null($data['roles']) === false) {
-            $roles = explode(', ', $data['roles']);
-            $mapper->setRoles($roles);
+            $mapper->setRoles($data['roles']);
         } else {
             $mapper->setRoles(null);
         }
 
         if (is_null($data['permissions']) === false) {
-            $permissions = explode(', ', $data['permissions']);
-            $mapper->setPermissions($permissions);
+            $mapper->setPermissions($data['permissions']);
         } else {
             $mapper->setPermissions(null);
         }

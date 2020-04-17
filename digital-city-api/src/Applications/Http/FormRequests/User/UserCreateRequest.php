@@ -25,14 +25,23 @@ class UserCreateRequest extends FormRequest
             ],
             'roles' => [
                 'required',
-                'string'
+                'array'
+            ],
+            'roles.*' => [
+                'required',
+                'integer',
+                'distinct'
+            ],
+            'permissions' => 'nullable|array',
+            'permissions.*' => [
+                'distinct',
+                'integer'
             ],
             'firstName' => 'nullable|string',
             'lastName' => 'nullable|string',
             'birthDate' => 'nullable|date',
             'country' => 'nullable|string',
             'city' => 'nullable|string',
-            'permissions' => 'nullable|string'
         ];
     }
 
@@ -48,14 +57,14 @@ class UserCreateRequest extends FormRequest
             'email.email'        => UserErrorCode::ERR_INVALID_EMAIL,
             'password.required'  => UserErrorCode::ERR_EMPTY_PASSWORD,
             'password.string'    => UserErrorCode::ERR_INVALID_PASSWORD,
-            'roles.required'     => UserErrorCode::ERR_EMPTY_ROLES,
-            'roles.string'       => UserErrorCode::ERR_INVALID_ROLES,
+            'roles.required'     => UserErrorCode::ERR_EMPTY_ROLES_FIELD,
+            'roles.array'        => UserErrorCode::ERR_INVALID_ROLES_FIELD,
             'firstName.string'   => UserErrorCode::ERR_INVALID_FIRSTNAME,
             'lastName.string'    => UserErrorCode::ERR_INVALID_LASTNAME,
             'birthDate.date'     => UserErrorCode::ERR_INVALID_DATE,
             'country.string'     => UserErrorCode::ERR_INVALID_COUNTRY,
             'city.string'        => UserErrorCode::ERR_INVALID_CITY,
-            'permissions.string' => UserErrorCode::ERR_INVALID_PERMISSIONS
+            'permissions.array'  => UserErrorCode::ERR_INVALID_PERMISSIONS
         ];
     }
 

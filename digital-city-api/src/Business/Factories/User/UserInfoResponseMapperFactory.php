@@ -14,7 +14,7 @@ class UserInfoResponseMapperFactory
         $roleMapper = [];
 
         foreach($user->Roles as $role) {
-            $roleMapper = new RoleMapper($role->identifier, $role->name);
+            $roleMapper[] = new RoleMapper($role->identifier, $role->name);
         }
 
         $userMapper = new UserMapper($user->identifier, $user->username, $user->email, $roleMapper);

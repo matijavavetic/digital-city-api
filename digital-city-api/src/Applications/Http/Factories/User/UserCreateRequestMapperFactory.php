@@ -13,9 +13,8 @@ class UserCreateRequestMapperFactory
         $identifier = Uuid::uuid4()->getHex();
         $username = strtok($data['email'], '@');
         $password = Hash::make($data['password']);
-        $roles = explode(', ', $data['roles']);
 
-        $mapper = new UserCreateRequestMapper($identifier, $data['email'], $username, $password, $roles);
+        $mapper = new UserCreateRequestMapper($identifier, $data['email'], $username, $password, $data['roles']);
 
         $mapper->setFirstName($data['firstName']);
         $mapper->setLastName($data['lastName']);
@@ -24,8 +23,7 @@ class UserCreateRequestMapperFactory
         $mapper->setCity($data['city']);
 
         if (is_null($data['permissions']) === false) {
-            $permissions = explode(', ', $data['permissions']);
-            $mapper->setPermissions($permissions);
+            $mapper->setPermissions($data['permissions']);
         } else {
             $mapper->setPermissions(null);
         }

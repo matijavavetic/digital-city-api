@@ -3,6 +3,7 @@
 namespace src\Applications\Http\FormRequests\User;
 
 use src\Applications\Http\Enum\ErrorCodes\UserErrorCode;
+use src\Data\Enums\RelationEnum;
 use src\Applications\Http\FormRequests\FormRequest;
 
 class UserListRequest extends FormRequest
@@ -19,6 +20,12 @@ class UserListRequest extends FormRequest
                 'nullable',
                 'in:ASC,DESC',
             ],
+            'relations' => 'nullable|array',
+            'relations.*' => [
+                'string',
+                'distinct',
+                'enum_value:' . RelationEnum::class,
+            ],
         ];
     }
 
@@ -30,7 +37,8 @@ class UserListRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'sort.in' => UserErrorCode::ERR_INVALID_SORT,
+            'sort.in'    => UserErrorCode::ERR_INVALID_SORT,
+            'relations.array' => UserErrorCode::ERR_INVALID_RELATIONS
         ];
     }
 
@@ -54,7 +62,8 @@ class UserListRequest extends FormRequest
     public function validationData() : array
     {
         $input = [
-            'sort' => $this->input('sort'),
+            'sort'      => $this->input('sort'),
+            'relations' => $this->input('relations')
         ];
 
         return $input;

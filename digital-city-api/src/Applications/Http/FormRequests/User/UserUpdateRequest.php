@@ -26,8 +26,16 @@ class UserUpdateRequest extends FormRequest
             'birthDate' => 'nullable|date',
             'country' => 'nullable|string',
             'city' => 'nullable|string',
-            'roles' => 'nullable|string',
-            'permissions' => 'nullable|string'
+            'roles' => 'nullable|array',
+            'roles.*' => [
+                'integer',
+                'distinct'
+            ],
+            'permissions' => 'nullable|array',
+            'permissions.*' => [
+                'distinct',
+                'integer'
+            ],
         ];
     }
 

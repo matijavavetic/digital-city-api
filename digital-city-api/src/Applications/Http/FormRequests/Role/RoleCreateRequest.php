@@ -4,6 +4,7 @@ namespace src\Applications\Http\FormRequests\Role;
 
 use src\Applications\Http\Enum\ErrorCodes\RoleErrorCode;
 use src\Applications\Http\FormRequests\FormRequest;
+use src\Data\Entities\Role;
 
 class RoleCreateRequest extends FormRequest
 {
@@ -21,7 +22,12 @@ class RoleCreateRequest extends FormRequest
             ],
             'permissions' => [
                 'required',
-                'string'
+                'array'
+            ],
+            'permissions.*' => [
+                'required',
+                'distinct',
+                'integer'
             ]
         ];
     }
@@ -34,10 +40,10 @@ class RoleCreateRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'name.required'        => RoleErrorCode::ERR_EMPTY_NAME,
-            'name.string'          => RoleErrorCode::ERR_INVALID_NAME,
-            'permissions.required' => RoleErrorCode::ERR_EMPTY_PERMISSIONS,
-            'permissions.string'   => RoleErrorCode::ERR_INVALID_PERMISSIONS
+            'name.required'          => RoleErrorCode::ERR_EMPTY_NAME,
+            'name.string'            => RoleErrorCode::ERR_INVALID_NAME,
+            'permissions.required'   => RoleErrorCode::ERR_EMPTY_PERMISSIONS_FIELD,
+            'permissions.array'      => RoleErrorCode::ERR_INVALID_PERMISSIONS_FIELD,
         ];
     }
 

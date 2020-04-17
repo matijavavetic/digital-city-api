@@ -9,8 +9,9 @@ class UserListRequestMapperFactory
     public static function make(array $data) : UserListRequestMapper
     {
         $mapper = new UserListRequestMapper();
+        $mapper->setRelations($data['relations']);
 
-        if(isset($data['sort'])) {
+        if (isset($data['sort'])) {
             $mapper->setSort($data['sort']);
         }
 

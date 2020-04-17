@@ -32,7 +32,7 @@ class UserService
 
     public function getAll(UserListRequestMapper $mapper) : UserListResponseMapper
     {
-        $users = $this->userRepository->get($mapper->getSort());
+        $users = $this->userRepository->get($mapper->getSort(), $mapper->getRelations());
 
         $responseMapper = UserListResponseMapperFactory::make($users);
 
@@ -41,7 +41,7 @@ class UserService
 
     public function getOne(UserInfoRequestMapper $mapper) : UserInfoResponseMapper
     {
-        $user = $this->userRepository->findOne($mapper->getIdentifier());
+        $user = $this->userRepository->findOneWith($mapper->getIdentifier(), $mapper->getRelations());
 
         $responseMapper = UserInfoResponseMapperFactory::make($user);
 
