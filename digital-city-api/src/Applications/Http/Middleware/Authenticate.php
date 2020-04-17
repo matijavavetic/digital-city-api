@@ -2,44 +2,26 @@
 
 namespace src\Applications\Http\Middleware;
 
-use Firebase\JWT\ExpiredException;
-use Firebase\JWT\JWT;
 use Illuminate\Support\Facades\Auth;
-use src\Data\Entities\User;
+use src\Data\Repositories\UserRepository;
 use Closure;
 
 class Authenticate
 {
+    private UserRepository $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function handle($request, Closure $next)
     {
-        if (! $request->expectsJson()) {
-            throw new \Exception("Message does not contain Accept: application/json header.", 400);
+        $user = $this->userRepository->findOneByEmailAndAccessToken($request->userData['email'], $request->userData['accessToken']);
+
+        if ($user === null) {
+            throw new \Exception("User not found!", 404);
         }
-
-        $hasAuthorizationHeader = $request->hasHeader("Authorization");
-
-        if($hasAuthorizationHeader === false) {
-            throw new \Exception("Authorization is missing.", 400);
-        }
-
-        $authorizationHeader = $request->header('Authorization');
-
-        $jwtToken = str_replace("Bearer ", "", $authorizationHeader);
-
-        $pathToPublicKey = base_path()."/public.pem";
-        $publicKey = file_get_contents($pathToPublicKey);
-
-        try {
-            $tokenDecoded = JWT::decode($jwtToken, $publicKey, array('RS256'));
-        } catch (ExpiredException $exception) {
-            throw new \Exception("Token has expired! Please, sign in!", 400);
-        }
-
-        $userModel = new User();
-
-        $user = $userModel->where("email", $tokenDecoded->data->email)
-            ->where("access_token", $tokenDecoded->data->accessToken)
-            ->first();
 
         Auth::setUser($user);
 
