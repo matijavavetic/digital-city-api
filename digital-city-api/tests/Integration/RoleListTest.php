@@ -2,10 +2,10 @@
 
 namespace Tests\Integration;
 
-use src\Applications\Http\Enum\ErrorCodes\RoleErrorCode;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
+use src\Applications\Http\Enum\ErrorCodes\RoleErrorCode;
 
 class RoleListTest extends TestCase
 {
