@@ -2,9 +2,10 @@
 
 namespace src\Business\Mappers\Role;
 
+use Illuminate\Contracts\Support\Arrayable;
 use JsonSerializable;
 
-class RoleMapper implements JsonSerializable
+class RoleMapper implements Arrayable, JsonSerializable
 {
     private string $identifier;
     private string $name;
@@ -27,12 +28,17 @@ class RoleMapper implements JsonSerializable
         return $this->name;
     }
 
-    public function jsonSerialize()
+    public function toArray()
     {
         return [
             'identifier'  => $this->identifier,
             'name'        => $this->name,
             'permissions' => $this->permissions
         ];
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 }
