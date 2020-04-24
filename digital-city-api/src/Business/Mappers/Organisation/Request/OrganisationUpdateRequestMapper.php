@@ -25,6 +25,51 @@ class OrganisationUpdateRequestMapper
         return $this->identifier;
     }
 
+    public function getName() : ?string
+    {
+        return $this->name;
+    }
+
+    public function getCity() : ?string
+    {
+        return $this->city;
+    }
+
+    public function getCounty() : ?string
+    {
+        return $this->county;
+    }
+
+    public function getCountry() : ?string
+    {
+        return $this->country;
+    }
+
+    public function getDescription() : ?string
+    {
+        return $this->description;
+    }
+
+    public function getPrimaryColor() : ?string
+    {
+        return $this->primaryColor;
+    }
+
+    public function getSecondaryColor() : ?string
+    {
+        return $this->secondaryColor;
+    }
+
+    public function getTertiaryColor() : ?string
+    {
+        return $this->tertiaryColor;
+    }
+
+    public function getLogo() : ?string
+    {
+        return $this->logo;
+    }
+
     public function setName(?string $name) : void
     {
         $this->name = $name;

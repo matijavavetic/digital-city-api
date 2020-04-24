@@ -78,38 +78,42 @@ class OrganisationService
 
     public function update(OrganisationUpdateRequestMapper $mapper) : OrganisationUpdateResponseMapper
     {
-        $user = $this->organisationRepository->findOne($mapper->getIdentifier());
+        $organisation = $this->organisationRepository->findOne($mapper->getIdentifier());
 
-        if ($mapper->getUsername() !== null) {
-            $user->username = $mapper->getUsername();
-        }
-
-        if ($mapper->getEmail() !== null) {
-            $user->email = $mapper->getEmail();
-        }
-
-        if ($mapper->getPassword() !== null) {
-            $user->password = $mapper->getPassword();
-        }
-
-        if ($mapper->getFirstName() !== null) {
-            $user->firstname = $mapper->getFirstName();
-        }
-
-        if ($mapper->getLastName() !== null) {
-            $user->lastname = $mapper->getLastName();
-        }
-
-        if ($mapper->getBirthDate() !== null) {
-            $user->birth_date = $mapper->getBirthDate();
-        }
-
-        if ($mapper->getCountry() !== null) {
-            $user->country = $mapper->getCountry();
+        if ($mapper->getName() !== null) {
+            $organisation->name = $mapper->getName();
         }
 
         if ($mapper->getCity() !== null) {
-            $user->city = $mapper->getCity();
+            $organisation->city = $mapper->getCity();
+        }
+
+        if ($mapper->getCounty() !== null) {
+            $organisation->county = $mapper->getCounty();
+        }
+
+        if ($mapper->getCountry() !== null) {
+            $organisation->country = $mapper->getCountry();
+        }
+
+        if ($mapper->getDescription() !== null) {
+            $organisation->description = $mapper->getDescription();
+        }
+
+        if ($mapper->getPrimaryColor() !== null) {
+            $organisation->primary_color = $mapper->getPrimaryColor();
+        }
+
+        if ($mapper->getSecondaryColor() !== null) {
+            $organisation->secondary_color = $mapper->getSecondaryColor();
+        }
+
+        if ($mapper->getTertiaryColor() !== null) {
+            $organisation->tertiary_color = $mapper->getTertiaryColor();
+        }
+
+        if ($mapper->getLogo() !== null) {
+            $organisation->logo = $mapper->getLogo();
         }
 
         $stored = null;
