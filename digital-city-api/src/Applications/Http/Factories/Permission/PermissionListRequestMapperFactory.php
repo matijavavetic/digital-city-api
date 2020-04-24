@@ -10,7 +10,7 @@ class PermissionListRequestMapperFactory
     {
         $mapper = new PermissionListRequestMapper();
 
-        if(isset($data['sort'])) {
+        if (isset($data['sort'])) {
             $mapper->setSort($data['sort']);
         }
 

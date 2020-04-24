@@ -32,26 +32,18 @@ class OrganisationService
 
     public function getAll(OrganisationListRequestMapper $mapper) : OrganisationListResponseMapper
     {
-        if ($mapper->getRelations() !== null) {
-            $users = $this->organisationRepository->getWith($mapper->getSort(), $mapper->getRelations());
-        } else {
-            $users = $this->organisationRepository->get($mapper->getSort());
-        }
+        $organisations = $this->organisationRepository->get($mapper->getSort());
 
-        $responseMapper = OrganisationListResponseMapperFactory::make($users);
+        $responseMapper = OrganisationListResponseMapperFactory::make($organisations);
 
         return $responseMapper;
     }
 
     public function getOne(OrganisationInfoRequestMapper $mapper) : OrganisationInfoResponseMapper
     {
-        if ($mapper->getRelations() !== null) {
-            $user = $this->organisationRepository->findOneWith($mapper->getIdentifier(), $mapper->getRelations());
-        } else {
-            $user = $this->organisationRepository->findOne($mapper->getIdentifier());
-        }
+        $organisation = $this->organisationRepository->findOne($mapper->getIdentifier());
 
-        $responseMapper = OrganisationInfoResponseMapperFactory::make($user);
+        $responseMapper = OrganisationInfoResponseMapperFactory::make($organisation);
 
         return $responseMapper;
     }
