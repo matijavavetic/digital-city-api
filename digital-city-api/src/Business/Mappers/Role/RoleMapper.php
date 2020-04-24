@@ -9,11 +9,13 @@ class RoleMapper implements Arrayable, JsonSerializable
 {
     private string $identifier;
     private string $name;
+    private array $permissions;
 
-    public function __construct(string $identifier, string $name)
+    public function __construct(string $identifier, string $name, array $permissions)
     {
-        $this->identifier = $identifier;
-        $this->name        =  $name;
+        $this->identifier  = $identifier;
+        $this->name        = $name;
+        $this->permissions = $permissions;
     }
 
     public function getIdentifier() : string
@@ -29,8 +31,9 @@ class RoleMapper implements Arrayable, JsonSerializable
     public function toArray()
     {
         return [
-            'identifier' => $this->identifier,
-            'name'       => $this->name
+            'identifier'  => $this->identifier,
+            'name'        => $this->name,
+            'permissions' => $this->permissions
         ];
     }
 
