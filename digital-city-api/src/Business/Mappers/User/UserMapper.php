@@ -12,19 +12,21 @@ class UserMapper implements JsonSerializable
     private string $email;
     private array $roles;
     private array $permissions;
+    private array $organisations;
     private ?string $firstName;
     private ?string $lastName;
     private ?string $birthDate;
     private ?string $country;
     private ?string $city;
 
-    public function __construct(string $identifier, string $username, string $email, array $roles, array $permissions)
+    public function __construct(string $identifier, string $username, string $email, array $roles, array $permissions, array $organisations)
     {
-        $this->identifier  = $identifier;
-        $this->username    = $username;
-        $this->email       = $email;
-        $this->roles       = $roles;
-        $this->permissions = $permissions;
+        $this->identifier    = $identifier;
+        $this->username      = $username;
+        $this->email         = $email;
+        $this->roles         = $roles;
+        $this->permissions   = $permissions;
+        $this->organisations = $organisations;
     }
 
     public function getIdentifier() : string
@@ -80,7 +82,8 @@ class UserMapper implements JsonSerializable
             'country' => $this->country,
             'city' => $this->city,
             'roles' => $this->roles,
-            'permissions' => $this->permissions
+            'permissions' => $this->permissions,
+            'organisations' => $this->organistions
         ];
     }
 }

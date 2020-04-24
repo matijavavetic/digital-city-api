@@ -2,6 +2,7 @@
 
 namespace src\Business\Factories\User;
 
+use src\Business\Mappers\Organisation\OrganisationMapper;
 use src\Business\Mappers\Permission\PermissionMapper;
 use src\Business\Mappers\Role\RoleMapper;
 use src\Business\Mappers\User\Response\UserListResponseMapper;
@@ -16,6 +17,7 @@ class UserListResponseMapperFactory
         $rolesMapper = [];
         $userPermissionsMapper = [];
         $rolePermissionsMapper = [];
+        $organisationsMapper = [];
 
         foreach($collection as $user) {
             if ($user->relationLoaded('roles')) {
@@ -35,7 +37,13 @@ class UserListResponseMapperFactory
                 }
             }
 
-            $userMapper = new UserMapper($user->identifier, $user->username, $user->email, $rolesMapper, $userPermissionsMapper);
+            if ($user->relationLoaded('organisations')) {
+                foreach ($user->organisations as $organisation) {
+                    $organisationsMapper[] = new OrganisationMapper($organisation->identifier, $organisation->name, $organisation->city, $organisation->county, $organisation->country);
+                }
+            }
+
+            $userMapper = new UserMapper($user->identifier, $user->username, $user->email, $rolesMapper, $userPermissionsMapper, $organisationsMapper);
 
             $userMapper->setFirstName($user->firstname);
             $userMapper->setLastName($user->lastname);
@@ -46,6 +54,7 @@ class UserListResponseMapperFactory
             $usersMapper[] = $userMapper;
             $rolesMapper = [];
             $userPermissionsMapper = [];
+            $organisationsMapper = [];
         }
 
         $mapper = new UserListResponseMapper();

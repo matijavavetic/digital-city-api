@@ -84,6 +84,12 @@ class UserService
             throw new \Exception("Failed to store user's roles!", 400);
         }
 
+        try {
+            $user->organisations()->sync($mapper->getOrganisations());
+        } catch(QueryException $e) {
+            throw new \Exception("Failed to store user's organisations!", 400);
+        }
+
         if ($mapper->getPermissions() !== null) {
             try {
                 $user->permissions()->sync($mapper->getPermissions());
@@ -146,6 +152,14 @@ class UserService
                 $user->permissions()->sync($mapper->getPermissions());
             } catch (QueryException $e) {
                 throw new \Exception("Failed to store user's permissions!", 400);
+            }
+        }
+
+        if ($mapper->getOrganisations() !== null) {
+            try {
+                $user->organisations()->sync($mapper->getOrganisations());
+            } catch(QueryException $e) {
+                throw new \Exception("Failed to store user's organisations!", 400);
             }
         }
 

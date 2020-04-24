@@ -42,6 +42,12 @@ class UserUpdateRequestMapperFactory
             $mapper->setPermissions(null);
         }
 
+        if (is_null($data['organisations']) === false) {
+            $mapper->setOrganisations($data['organisations']);
+        } else {
+            $mapper->setOrganisations(null);
+        }
+
         return $mapper;
     }
 }

@@ -36,6 +36,11 @@ class UserUpdateRequest extends FormRequest
                 'distinct',
                 'integer'
             ],
+            'organisations' => 'nullable|array',
+            'organisations.*' => [
+                'distinct',
+                'integer'
+            ]
         ];
     }
 
@@ -56,8 +61,9 @@ class UserUpdateRequest extends FormRequest
             'birthDate.date'      => UserErrorCode::ERR_INVALID_DATE,
             'country.string'      => UserErrorCode::ERR_INVALID_COUNTRY,
             'city.string'         => UserErrorCode::ERR_INVALID_CITY,
-            'roles.string'        => UserErrorCode::ERR_INVALID_ROLES,
-            'permissions.string'  => UserErrorCode::ERR_INVALID_PERMISSIONS
+            'roles.array'         => UserErrorCode::ERR_INVALID_ROLES_FIELD,
+            'permissions.array'   => UserErrorCode::ERR_INVALID_PERMISSIONS_FIELD,
+            'organisations.array' => UserErrorCode::ERR_INVALID_ORGANISATIONS_FIELD,
         ];
     }
 
@@ -81,16 +87,17 @@ class UserUpdateRequest extends FormRequest
     public function validationData() : array
     {
         $input = [
-            'identifier'  => $this->input('identifier'),
-            'email'       => $this->input('email'),
-            'password'    => $this->input('password'),
-            'firstName'   => $this->input('firstName'),
-            'lastName'    => $this->input('lastName'),
-            'birthDate'   => $this->input('birthDate'),
-            'country'     => $this->input('country'),
-            'city'        => $this->input('city'),
-            'roles'       => $this->input('roles'),
-            'permissions' => $this->input('permissions')
+            'identifier'    => $this->input('identifier'),
+            'email'         => $this->input('email'),
+            'password'      => $this->input('password'),
+            'firstName'     => $this->input('firstName'),
+            'lastName'      => $this->input('lastName'),
+            'birthDate'     => $this->input('birthDate'),
+            'country'       => $this->input('country'),
+            'city'          => $this->input('city'),
+            'roles'         => $this->input('roles'),
+            'permissions'   => $this->input('permissions'),
+            'organisations' => $this->input('organisations')
         ];
 
         return $input;
