@@ -3,6 +3,8 @@
 use src\Applications\Http\Enum\ErrorCodes\RoleErrorCode;
 use src\Applications\Http\Enum\ErrorCodes\UserErrorCode;
 use src\Applications\Http\Enum\ErrorCodes\PermissionErrorCode;
+use src\Applications\Http\Enum\ErrorCodes\OrganisationErrorCode;
+
 
 
 return [
@@ -43,4 +45,23 @@ return [
         PermissionErrorCode::ERR_EMPTY_IDENTIFIER   => 'Empty identifier. Identifier is required.',
         PermissionErrorCode::ERR_INVALID_IDENTIFIER => 'Invalid identifier value. Identifier should be a string.',
     ],
+
+    OrganisationErrorCode::class => [
+        OrganisationErrorCode::ERR_EMPTY_NAME              => 'Empty organisation name. Organisation name is required.',
+        OrganisationErrorCode::ERR_INVALID_NAME            => 'Invalid organisation name. Organisation name should be a string.',
+        OrganisationErrorCode::ERR_INVALID_SORT            => 'Invalid sort value. Sort should be ASC or DESC.',
+        OrganisationErrorCode::ERR_EMPTY_IDENTIFIER        => 'Empty identifier. Identifier is required.',
+        OrganisationErrorCode::ERR_INVALID_IDENTIFIER      => 'Invalid identifier value. Identifier should be a string.',
+        OrganisationErrorCode::ERR_INVALID_CITY            => 'Invalid city name. City name should be a string.',
+        OrganisationErrorCode::ERR_EMPTY_CITY              => 'Empty city name. City name is required.',
+        OrganisationErrorCode::ERR_INVALID_COUNTY          => 'Invalid county name. County name is required.',
+        OrganisationErrorCode::ERR_EMPTY_COUNTY            => 'Empty county name. County name should be a string.',
+        OrganisationErrorCode::ERR_INVALID_COUNTRY         => 'Invalid country name. Country name is required.',
+        OrganisationErrorCode::ERR_EMPTY_COUNTRY           => 'Empty country name. Country name should be a string.',
+        OrganisationErrorCode::ERR_INVALID_DESCRIPTION     => 'Invalid description. Description should be a string.',
+        OrganisationErrorCode::ERR_INVALID_PRIMARY_COLOR   => 'Invalid primary color. Primary color should be a string.',
+        OrganisationErrorCode::ERR_INVALID_SECONDARY_COLOR => 'Invalid secondary color. Secondary color should be a string.',
+        OrganisationErrorCode::ERR_INVALID_TERTIARY_COLOR  => 'Invalid tertiary color. Tertiary color should be a string.',
+        OrganisationErrorCode::ERR_INVALID_LOGO            => 'Invalid logo. Logo should be a string.',
+    ]
 ];
