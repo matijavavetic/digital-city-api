@@ -15,4 +15,9 @@ class Organisation extends Model
         'county', 'country', 'primary_color',
         'secondary_color', 'tertiary_color', 'logo'
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_organisations');
+    }
 }
