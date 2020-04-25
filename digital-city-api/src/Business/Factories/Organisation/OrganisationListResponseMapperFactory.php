@@ -15,11 +15,11 @@ class OrganisationListResponseMapperFactory
         foreach($collection as $organisation) {
             $organisationMapper = new OrganisationMapper($organisation->identifier, $organisation->name, $organisation->city, $organisation->county, $organisation->country);
 
-            $organisationMapper->setDescription($organisation->firstname);
-            $organisationMapper->setPrimaryColor($organisation->lastname);
-            $organisationMapper->setSecondaryColor($organisation->birth_date);
-            $organisationMapper->setTertiaryColor($organisation->country);
-            $organisationMapper->setLogo($organisation->city);
+            $organisationMapper->setDescription($organisation->description);
+            $organisationMapper->setPrimaryColor($organisation->primary_color);
+            $organisationMapper->setSecondaryColor($organisation->secondary_color);
+            $organisationMapper->setTertiaryColor($organisation->tertiary_color);
+            $organisationMapper->setLogo($organisation->logo);
 
             $organisationsMapper[] = $organisationMapper;
         }

@@ -18,6 +18,6 @@ class Organisation extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_organisations');
+        return $this->belongsToMany(User::class, 'user_organisation');
     }
 }

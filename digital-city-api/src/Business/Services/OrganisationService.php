@@ -3,12 +3,16 @@
 namespace src\Business\Services;
 
 use Illuminate\Database\QueryException;
+use src\Applications\Http\Factories\Organisation\OrganisationUsersRequestMapperFactory;
 use src\Business\Factories\Organisation\OrganisationCreateResponseMapperFactory;
 use src\Business\Factories\Organisation\OrganisationUpdateResponseMapperFactory;
+use src\Business\Factories\Organisation\OrganisationUsersResponseMapperFactory;
 use src\Business\Mappers\Organisation\Request\OrganisationDeleteRequestMapper;
 use src\Business\Mappers\Organisation\Request\OrganisationUpdateRequestMapper;
+use src\Business\Mappers\Organisation\Request\OrganisationUsersRequestMapper;
 use src\Business\Mappers\Organisation\Response\OrganisationDeleteResponseMapper;
 use src\Business\Mappers\Organisation\Response\OrganisationUpdateResponseMapper;
+use src\Business\Mappers\Organisation\Response\OrganisationUsersResponseMapper;
 use src\Data\Entities\Organisation;
 use src\Business\Mappers\Organisation\Request\OrganisationCreateRequestMapper;
 use src\Business\Mappers\Organisation\Response\OrganisationCreateResponseMapper;
@@ -44,6 +48,15 @@ class OrganisationService
         $organisation = $this->organisationRepository->findOne($mapper->getIdentifier());
 
         $responseMapper = OrganisationInfoResponseMapperFactory::make($organisation);
+
+        return $responseMapper;
+    }
+
+    public function getUsers(OrganisationUsersRequestMapper $mapper) : OrganisationUsersResponseMapper
+    {
+        $organisation = $this->organisationRepository->findOne($mapper->getIdentifier());
+
+        $responseMapper = OrganisationUsersResponseMapperFactory::make($organisation);
 
         return $responseMapper;
     }

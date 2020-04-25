@@ -14,23 +14,18 @@ class UserInfoResponseMapperFactory
     public static function make(User $user) : UserInfoResponseMapper
     {
         $rolesMapper = [];
-        $userPermissionsMapper = [];
-        $rolePermissionsMapper = [];
+        $permissionsMapper = [];
         $organisationsMapper = [];
 
         if ($user->relationLoaded('roles')) {
             foreach ($user->roles as $role) {
-                foreach ($role->permissions as $permission) {
-                    $rolePermissionsMapper[] = new PermissionMapper($permission->identifier, $permission->name);
-                }
-
-                $rolesMapper[] = new RoleMapper($role->identifier, $role->name, $rolePermissionsMapper);
+                $rolesMapper[] = new RoleMapper($role->identifier, $role->name);
             }
         }
 
         if ($user->relationLoaded('permissions')) {
             foreach ($user->permissions as $permission) {
-                $userPermissionsMapper[] = new PermissionMapper($permission->identifier, $permission->name);
+                $permissionsMapper[] = new PermissionMapper($permission->identifier, $permission->name);
             }
         }
 
@@ -40,13 +35,16 @@ class UserInfoResponseMapperFactory
             }
         }
 
-        $userMapper = new UserMapper($user->identifier, $user->username, $user->email, $rolesMapper, $userPermissionsMapper, $organisationsMapper);
+        $userMapper = new UserMapper($user->identifier, $user->username, $user->email);
 
         $userMapper->setFirstName($user->firstname);
         $userMapper->setLastName($user->lastname);
         $userMapper->setBirthDate($user->birth_date);
         $userMapper->setCountry($user->country);
         $userMapper->setCity($user->city);
+        $userMapper->setRoles($rolesMapper);
+        $userMapper->setPermissions($permissionsMapper);
+        $userMapper->setOrganisations($organisationsMapper);
 
         $mapper = new UserInfoResponseMapper();
         $mapper->setUserMapper($userMapper);
