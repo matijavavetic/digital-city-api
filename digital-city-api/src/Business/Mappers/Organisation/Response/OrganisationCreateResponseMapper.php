@@ -1,10 +1,10 @@
 <?php
 
-namespace src\Business\Mappers\User\Response;
+namespace src\Business\Mappers\Organisation\Response;
 
 use JsonSerializable;
 
-class UserCreateResponseMapper implements JsonSerializable
+class OrganisationCreateResponseMapper implements JsonSerializable
 {
     private string $identifier;
 

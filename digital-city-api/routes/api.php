@@ -5,7 +5,7 @@ use src\Applications\Http\Controllers\RoleController;
 use src\Applications\Http\Controllers\UserController;
 use src\Applications\Http\Controllers\PermissionController;
 use src\Applications\Http\Controllers\AuthController;
-
+use src\Applications\Http\Controllers\OrganisationController;
 
 Route::group(['middleware' => ['api']], function () {
     Route::get('/role.list', [RoleController::class, 'list']);
@@ -25,6 +25,12 @@ Route::group(['middleware' => ['api']], function () {
     Route::post('/permission.create', [PermissionController::class, 'create']);
     Route::post('/permission.update', [PermissionController::class, 'update']);
     Route::post('/permission.delete', [PermissionController::class, 'delete']);
+
+    Route::get('/organisation.list', [OrganisationController::class, 'list']);
+    Route::get('/organisation.info', [OrganisationController::class, 'info']);
+    Route::post('/organisation.create', [OrganisationController::class, 'create']);
+    Route::post('/organisation.update', [OrganisationController::class, 'update']);
+    Route::post('/organisation.delete', [OrganisationController::class, 'delete']);
 });
 
 Route::post('/sign.up', [AuthController::class, 'signUp']);
