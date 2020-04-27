@@ -24,9 +24,9 @@ Enter in digital-city/digital-city-auth/Docker/mysql dir:
 
      docker build -t digital-city-mysql .
      
-Enter in digital-city/digital-city-auth dir:
+Enter in digital-city/digital-city-api dir:
 
-    docker build -t digital-city-auth .
+    docker build -t digital-city-api .
     
 ### 4. Build app with docker compose ###
 
