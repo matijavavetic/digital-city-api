@@ -1,6 +1,6 @@
 FROM php:7.4-fpm-alpine
 
-COPY digital-city-api /var/www/digital-city-api
+COPY . /var/www/digital-city-api
 
 WORKDIR /var/www/digital-city-api
 
