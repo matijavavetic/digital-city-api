@@ -16,6 +16,7 @@ class OrganisationMapper implements JsonSerializable
     private ?string $secondaryColor;
     private ?string $tertiaryColor;
     private ?string $logo;
+    private ?array $users = null;
 
     public function __construct(string $identifier, string $name, string $city, string $county, string $country)
     {
@@ -76,10 +77,14 @@ class OrganisationMapper implements JsonSerializable
         $this->logo = $logo;
     }
 
+    public function setUsers(?array $users) : void
+    {
+        $this->users = $users;
+    }
+
     public function jsonSerialize()
     {
         return [
-
             'identifier' => $this->identifier,
             'name' => $this->name,
             'city' => $this->city,
@@ -90,6 +95,7 @@ class OrganisationMapper implements JsonSerializable
             'secondaryColor' => $this->secondaryColor,
             'tertiaryColor' => $this->tertiaryColor,
             'logo' => $this->logo,
+            'users' => $this->users
         ];
     }
 }

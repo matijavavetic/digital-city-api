@@ -28,6 +28,7 @@ Route::group(['middleware' => ['api']], function () {
 
     Route::get('/organisation.list', [OrganisationController::class, 'list']);
     Route::get('/organisation.info', [OrganisationController::class, 'info']);
+    Route::get('/organisation.users', [OrganisationController::class, 'users']);
     Route::post('/organisation.create', [OrganisationController::class, 'create']);
     Route::post('/organisation.update', [OrganisationController::class, 'update']);
     Route::post('/organisation.delete', [OrganisationController::class, 'delete']);

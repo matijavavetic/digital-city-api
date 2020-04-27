@@ -7,6 +7,7 @@ class UserUpdateRequestMapper
     private string $identifier;
     private ?array $roles;
     private ?array $permissions;
+    private ?array $organisations;
     private ?string $username;
     private ?string $email;
     private ?string $password;
@@ -76,6 +77,11 @@ class UserUpdateRequestMapper
         return $this->permissions;
     }
 
+    public function getOrganisations() : ?array
+    {
+        return $this->organisations;
+    }
+
     public function setUsername(?string $username) : void
     {
         $this->username = $username;
@@ -124,5 +130,10 @@ class UserUpdateRequestMapper
     public function setPermissions(?array $permissions) : void
     {
         $this->permissions = $permissions;
+    }
+
+    public function setOrganisations(?array $organisations) : void
+    {
+        $this->organisations = $organisations;
     }
 }

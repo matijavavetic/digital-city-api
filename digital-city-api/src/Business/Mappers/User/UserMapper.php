@@ -3,28 +3,26 @@
 namespace src\Business\Mappers\User;
 
 use JsonSerializable;
-use src\Business\Mappers\Role\RoleMapper;
 
 class UserMapper implements JsonSerializable
 {
     private string $identifier;
     private string $username;
     private string $email;
-    private array $roles;
-    private array $permissions;
+    private ?array $roles = null;
+    private ?array $permissions = null;
+    private ?array $organisations = null;
     private ?string $firstName;
     private ?string $lastName;
     private ?string $birthDate;
     private ?string $country;
     private ?string $city;
 
-    public function __construct(string $identifier, string $username, string $email, array $roles, array $permissions)
+    public function __construct(string $identifier, string $username, string $email)
     {
-        $this->identifier  = $identifier;
-        $this->username    = $username;
-        $this->email       = $email;
-        $this->roles       = $roles;
-        $this->permissions = $permissions;
+        $this->identifier = $identifier;
+        $this->username   = $username;
+        $this->email      = $email;
     }
 
     public function getIdentifier() : string
@@ -67,20 +65,37 @@ class UserMapper implements JsonSerializable
         $this->city = $city;
     }
 
+    public function setRoles(?array $roles) : void
+    {
+        $this->roles = $roles;
+    }
+
+    public function setPermissions(?array $permissions) : void
+    {
+        if (empty($permissions) === false) {
+            $this->permissions = $permissions;
+        }
+    }
+
+    public function setOrganisations(?array $organisations) : void
+    {
+        $this->organisations = $organisations;
+    }
+
     public function jsonSerialize()
     {
         return [
-
             'identifier' => $this->identifier,
             'username' => $this->username,
             'email' => $this->email,
-            'first_name' => $this->firstName,
-            'last_name' => $this->lastName,
-            'birth_date' => $this->birthDate,
+            'firstName' => $this->firstName,
+            'lastName' => $this->lastName,
+            'birthDate' => $this->birthDate,
             'country' => $this->country,
             'city' => $this->city,
             'roles' => $this->roles,
-            'permissions' => $this->permissions
+            'organisations' => $this->organisations,
+            'permissions' =>  $this->permissions
         ];
     }
 }

@@ -19,7 +19,9 @@ class RoleListResponseMapperFactory
                 $permissionMappers[] = new PermissionMapper($permission->identifier, $permission->name);
             }
 
-            $roleMappers[] = new RoleMapper($role->identifier, $role->name, $permissionMappers);
+            $roleMapper = new RoleMapper($role->identifier, $role->name);
+            $roleMapper->setPermissions($permissionMappers);
+            $roleMappers[] = $roleMapper;
 
             $permissionMappers = [];
         }
