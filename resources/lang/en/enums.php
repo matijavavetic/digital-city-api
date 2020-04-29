@@ -1,6 +1,7 @@
 <?php
 
 use src\Applications\Http\Enum\ErrorCodes\RoleErrorCode;
+use src\Applications\Http\Enum\ErrorCodes\TenderErrorCode;
 use src\Applications\Http\Enum\ErrorCodes\UserErrorCode;
 use src\Applications\Http\Enum\ErrorCodes\PermissionErrorCode;
 use src\Applications\Http\Enum\ErrorCodes\OrganisationErrorCode;
@@ -65,5 +66,9 @@ return [
         OrganisationErrorCode::ERR_INVALID_SECONDARY_COLOR => 'Invalid secondary color. Secondary color should be a string.',
         OrganisationErrorCode::ERR_INVALID_TERTIARY_COLOR  => 'Invalid tertiary color. Tertiary color should be a string.',
         OrganisationErrorCode::ERR_INVALID_LOGO            => 'Invalid logo. Logo should be a string.',
+    ],
+
+    TenderErrorCode::class => [
+        TenderErrorCode::ERR_INVALID_SORT => 'Invalid sort value. Sort should be ASC or DESC.'
     ]
 ];
