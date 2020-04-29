@@ -3,6 +3,7 @@
 namespace src\Applications\Http\Factories\Tender;
 
 use src\Business\Mappers\Role\Request\RoleInfoRequestMapper;
+use src\Business\Mappers\Tender\Request\TenderInfoRequestMapper;
 
 class TenderInfoRequestMapperFactory
 {
