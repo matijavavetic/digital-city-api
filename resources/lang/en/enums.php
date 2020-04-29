@@ -69,6 +69,8 @@ return [
     ],
 
     TenderErrorCode::class => [
-        TenderErrorCode::ERR_INVALID_SORT => 'Invalid sort value. Sort should be ASC or DESC.'
+        TenderErrorCode::ERR_INVALID_SORT       => 'Invalid sort value. Sort should be ASC or DESC.',
+        TenderErrorCode::ERR_EMPTY_IDENTIFIER   => 'Empty identifier. Identifier is required.',
+        TenderErrorCode::ERR_INVALID_IDENTIFIER => 'Invalid identifier value. Identifier should be a string.'
     ]
 ];
