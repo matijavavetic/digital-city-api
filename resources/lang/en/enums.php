@@ -71,6 +71,12 @@ return [
     TenderErrorCode::class => [
         TenderErrorCode::ERR_INVALID_SORT       => 'Invalid sort value. Sort should be ASC or DESC.',
         TenderErrorCode::ERR_EMPTY_IDENTIFIER   => 'Empty identifier. Identifier is required.',
-        TenderErrorCode::ERR_INVALID_IDENTIFIER => 'Invalid identifier value. Identifier should be a string.'
+        TenderErrorCode::ERR_INVALID_IDENTIFIER => 'Invalid identifier value. Identifier should be a string.',
+        TenderErrorCode::ERR_EMPTY_NAME         => 'Empty name. Name is required.',
+        TenderErrorCode::ERR_INVALID_NAME       => 'Invalid name value. Name should be a string.',
+        TenderErrorCode::ERR_EMPTY_TYPE         => 'Empty type. Type is required.',
+        TenderErrorCode::ERR_INVALID_TYPE       => 'Invalid type value. Type should be a string.',
+        TenderErrorCode::ERR_INVALID_DATE_FROM  => 'Invalid date from. Date from should be a date.',
+        TenderErrorCode::ERR_INVALID_DATE_TO    => 'Invalid date to. Date to should be a date.',
     ]
 ];
