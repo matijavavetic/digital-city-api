@@ -20,4 +20,9 @@ class Organisation extends Model
     {
         return $this->belongsToMany(User::class, 'user_organisation');
     }
+
+    public function tenders()
+    {
+        return $this->hasMany(Tender::class, 'organisation_id');
+    }
 }

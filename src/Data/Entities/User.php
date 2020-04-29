@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Organisation::class, 'user_organisation');
     }
+
+    public function tenders()
+    {
+        return $this->hasMany(Tender::class, 'created_by_user_id');
+    }
 }
