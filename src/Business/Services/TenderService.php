@@ -4,8 +4,11 @@ namespace src\Business\Services;
 
 use Illuminate\Database\QueryException;
 use Ramsey\Uuid\Uuid;
+use src\Business\Factories\Tender\TenderInfoResponseMapperFactory;
 use src\Business\Factories\Tender\TenderListResponseMapperFactory;
+use src\Business\Mappers\Tender\Request\TenderInfoRequestMapper;
 use src\Business\Mappers\Tender\Request\TenderListRequestMapper;
+use src\Business\Mappers\Tender\Response\TenderInfoResponseMapper;
 use src\Business\Mappers\Tender\Response\TenderListResponseMapper;
 use src\Data\Entities\Role;
 use src\Data\Repositories\RoleRepository;
@@ -40,6 +43,15 @@ class TenderService
         $tenders = $this->tenderRepository->get($mapper->getSort());
 
         $responseMapper = TenderListResponseMapperFactory::make($tenders);
+
+        return $responseMapper;
+    }
+
+    public function getOne(TenderInfoRequestMapper $mapper) : TenderInfoResponseMapper
+    {
+        $tender = $this->tenderRepository->findOne($mapper->getIdentifier());
+
+        $responseMapper = TenderInfoResponseMapperFactory::make($tender);
 
         return $responseMapper;
     }
