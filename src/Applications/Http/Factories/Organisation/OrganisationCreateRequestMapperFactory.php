@@ -11,7 +11,7 @@ class OrganisationCreateRequestMapperFactory
     {
         $identifier = Uuid::uuid4()->getHex();
 
-        $mapper = new OrganisationCreateRequestMapper($identifier, $data['name'], $data['city'], $data['county'], $data['country']);
+        $mapper = new OrganisationCreateRequestMapper($identifier, $data['name'], $data['cityIdentifier'], $data['countyIdentifier']);
 
         $mapper->setDescription($data['description']);
         $mapper->setPrimaryColor($data['primaryColor']);
