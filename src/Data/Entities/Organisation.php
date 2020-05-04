@@ -15,12 +15,7 @@ class Organisation extends Model
         'county', 'country', 'primary_color',
         'secondary_color', 'tertiary_color', 'logo'
     ];
-
-<<<<<<< Updated upstream
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'user_organisation');
-=======
+    
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id');
@@ -29,6 +24,5 @@ class Organisation extends Model
     public function county()
     {
         return $this->belongsTo(County::class, 'county_id');
->>>>>>> Stashed changes
     }
 }
