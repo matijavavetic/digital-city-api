@@ -25,14 +25,4 @@ class Organisation extends Model
     {
         return $this->belongsTo(County::class, 'county_id');
     }
-
-    public function city()
-    {
-        return $this->belongsTo(City::class, 'city_id');
-    }
-
-    public function county()
-    {
-        return $this->belongsTo(County::class, 'county_id');
-    }
 }
