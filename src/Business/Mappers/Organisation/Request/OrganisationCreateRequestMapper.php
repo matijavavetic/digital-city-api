@@ -6,22 +6,20 @@ class OrganisationCreateRequestMapper
 {
     private string $identifier;
     private string $name;
-    private string $city;
-    private string $county;
-    private string $country;
+    private int $cityIdentifier;
+    private int $countyIdentifier;
     private ?string $description;
     private ?string $primaryColor;
     private ?string $secondaryColor;
     private ?string $tertiaryColor;
     private ?string $logo;
 
-    public function __construct(string $identifier, string $name, string $city, string $county, string $country)
+    public function __construct(string $identifier, string $name, int $cityIdentifier, int $countyIdentifier)
     {
-        $this->identifier = $identifier;
-        $this->name       = $name;
-        $this->city       = $city;
-        $this->county     = $county;
-        $this->country    = $country;
+        $this->identifier       = $identifier;
+        $this->name             = $name;
+        $this->cityIdentifier   = $cityIdentifier;
+        $this->countyIdentifier = $countyIdentifier;
     }
 
     public function getIdentifier() : string
@@ -34,19 +32,14 @@ class OrganisationCreateRequestMapper
         return $this->name;
     }
 
-    public function getCity() : string
+    public function getCity() : int
     {
-        return $this->city;
+        return $this->cityIdentifier;
     }
 
-    public function getCounty() : string
+    public function getCounty() : int
     {
-        return $this->county;
-    }
-
-    public function getCountry() : string
-    {
-        return $this->country;
+        return $this->countyIdentifier;
     }
 
     public function getDescription() : ?string
