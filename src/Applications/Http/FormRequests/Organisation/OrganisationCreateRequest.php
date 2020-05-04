@@ -2,7 +2,7 @@
 
 namespace src\Applications\Http\FormRequests\Organisation;
 
-use src\Applications\Http\Enum\ErrorCodes\UserErrorCode;
+use src\Applications\Http\Enum\ErrorCodes\OrganisationErrorCode;
 use src\Applications\Http\FormRequests\FormRequest;
 
 class OrganisationCreateRequest extends FormRequest
@@ -21,15 +21,13 @@ class OrganisationCreateRequest extends FormRequest
             ],
             'city' => [
                 'required',
-                'string'
+                'int',
+                'exists:city,id'
             ],
             'county' => [
                 'required',
-                'string'
-            ],
-            'country' => [
-                'required',
-                'string',
+                'int',
+                'exists:county,id'
             ],
             'description' => 'nullable|string',
             'primaryColor' => 'nullable|string',
@@ -50,11 +48,9 @@ class OrganisationCreateRequest extends FormRequest
             'name.required'         => OrganisationErrorCode::ERR_EMPTY_NAME,
             'name.string'           => OrganisationErrorCode::ERR_INVALID_NAME,
             'city.required'         => OrganisationErrorCode::ERR_EMPTY_CITY,
-            'city.string'           => OrganisationErrorCode::ERR_INVALID_CITY,
+            'city.integer'          => OrganisationErrorCode::ERR_INVALID_CITY,
             'county.required'       => OrganisationErrorCode::ERR_EMPTY_COUNTY,
-            'county.string'         => OrganisationErrorCode::ERR_INVALID_COUNTY,
-            'country.required'      => OrganisationErrorCode::ERR_EMPTY_COUNTRY,
-            'country.string'        => OrganisationErrorCode::ERR_INVALID_COUNTRY,
+            'county.integer'        => OrganisationErrorCode::ERR_INVALID_COUNTY,
             'description.string'    => OrganisationErrorCode::ERR_INVALID_DESCRIPTION,
             'primaryColor.string'   => OrganisationErrorCode::ERR_INVALID_PRIMARY_COLOR,
             'secondaryColor.string' => OrganisationErrorCode::ERR_INVALID_SECONDARY_COLOR,
@@ -86,7 +82,6 @@ class OrganisationCreateRequest extends FormRequest
             'name'           => $this->input('name'),
             'city'           => $this->input('city'),
             'county'         => $this->input('county'),
-            'country'        => $this->input('country'),
             'description'    => $this->input('description'),
             'primaryColor'   => $this->input('primaryColor'),
             'secondaryColor' => $this->input('secondaryColor'),

@@ -13,7 +13,6 @@ class OrganisationUpdateRequestMapperFactory
         $mapper->setName($data['name']);
         $mapper->setCity($data['city']);
         $mapper->setCounty($data['county']);
-        $mapper->setCountry($data['country']);
         $mapper->setDescription($data['description']);
         $mapper->setPrimaryColor($data['primaryColor']);
         $mapper->setSecondaryColor($data['secondaryColor']);

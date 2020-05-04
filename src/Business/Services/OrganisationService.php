@@ -54,9 +54,8 @@ class OrganisationService
 
         $organisation->identifier = $mapper->getIdentifier();
         $organisation->name = $mapper->getName();
-        $organisation->city = $mapper->getCity();
-        $organisation->county = $mapper->getCounty();
-        $organisation->country = $mapper->getCountry();
+        $organisation->city_id = $mapper->getCity();
+        $organisation->county_id = $mapper->getCounty();
         $organisation->primary_color = $mapper->getPrimaryColor();
         $organisation->secondary_color = $mapper->getSecondaryColor();
         $organisation->tertiary_color = $mapper->getTertiaryColor();

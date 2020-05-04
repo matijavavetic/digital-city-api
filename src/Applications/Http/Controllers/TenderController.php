@@ -2,25 +2,27 @@
 
 namespace src\Applications\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
+
 class TenderController extends Controller
 {
-    public function list() : JsonResponse
+    public function list()
     {
     }
 
-    public function info() : JsonResponse
+    public function info()
     {
     }
 
-    public function create() : JsonResponse
+    public function create()
     {
     }
 
-    public function update() : JsonResponse
+    public function update()
     {
     }
 
-    public function delete() : JsonResponse
+    public function delete()
     {
     }
 }
