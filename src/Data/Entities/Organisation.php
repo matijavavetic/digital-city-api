@@ -15,7 +15,7 @@ class Organisation extends Model
         'county', 'country', 'primary_color',
         'secondary_color', 'tertiary_color', 'logo'
     ];
-    
+
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id');

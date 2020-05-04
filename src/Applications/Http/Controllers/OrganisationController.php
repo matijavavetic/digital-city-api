@@ -7,13 +7,11 @@ use Symfony\Component\HttpFoundation\Response;
 use src\Business\Services\OrganisationService;
 use src\Applications\Http\FormRequests\Organisation\OrganisationListRequest;
 use src\Applications\Http\FormRequests\Organisation\OrganisationInfoRequest;
-use src\Applications\Http\FormRequests\Organisation\OrganisationUsersRequest;
 use src\Applications\Http\FormRequests\Organisation\OrganisationCreateRequest;
 use src\Applications\Http\FormRequests\Organisation\OrganisationUpdateRequest;
 use src\Applications\Http\FormRequests\Organisation\OrganisationDeleteRequest;
 use src\Applications\Http\Factories\Organisation\OrganisationListRequestMapperFactory;
 use src\Applications\Http\Factories\Organisation\OrganisationInfoRequestMapperFactory;
-use src\Applications\Http\Factories\Organisation\OrganisationUsersRequestMapperFactory;
 use src\Applications\Http\Factories\Organisation\OrganisationCreateRequestMapperFactory;
 use src\Applications\Http\Factories\Organisation\OrganisationUpdateRequestMapperFactory;
 use src\Applications\Http\Factories\Organisation\OrganisationDeleteRequestMapperFactory;
@@ -38,17 +36,6 @@ class OrganisationController extends Controller
         $requestMapper = OrganisationInfoRequestMapperFactory::make($data);
 
         $responseMapper = $organisationService->getOne($requestMapper);
-
-        return new JsonResponse($responseMapper, Response::HTTP_OK);
-    }
-
-    public function users(OrganisationUsersRequest $request, OrganisationService $organisationService) : JsonResponse
-    {
-        $data = $request->validationData();
-
-        $requestMapper = OrganisationUsersRequestMapperFactory::make($data);
-
-        $responseMapper = $organisationService->getUsers($requestMapper);
 
         return new JsonResponse($responseMapper, Response::HTTP_OK);
     }
