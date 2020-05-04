@@ -15,6 +15,15 @@ class CreateTenderTable extends Migration
     {
         Schema::create('tender', function (Blueprint $table) {
             $table->id();
+            $table->string('identifier')->unique();
+            $table->string('name');
+            $table->string('type');
+            $table->bigInteger('created_by_user_id')->unsigned();
+            $table->bigInteger('organisation_id')->unsigned();
+            $table->date('date_from')->nullable();
+            $table->date('date_to')->nullable();
+            $table->foreign('created_by_user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('organisation_id')->references('id')->on('organisation')->onDelete('cascade');
             $table->timestamps();
         });
     }

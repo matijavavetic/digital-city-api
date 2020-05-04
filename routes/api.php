@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use src\Applications\Http\Controllers\RoleController;
+use src\Applications\Http\Controllers\TenderController;
 use src\Applications\Http\Controllers\UserController;
 use src\Applications\Http\Controllers\PermissionController;
 use src\Applications\Http\Controllers\AuthController;
@@ -32,6 +33,12 @@ Route::group(['middleware' => ['api']], function () {
     Route::post('/organisation.create', [OrganisationController::class, 'create']);
     Route::post('/organisation.update', [OrganisationController::class, 'update']);
     Route::post('/organisation.delete', [OrganisationController::class, 'delete']);
+
+    Route::get('/tender.list', [TenderController::class, 'list']);
+    Route::get('/tender.info', [TenderController::class, 'info']);
+    Route::post('/tender.create', [TenderController::class, 'create']);
+    Route::post('/tender.update', [TenderController::class, 'update']);
+    Route::post('/tender.delete', [TenderController::class, 'delete']);
 });
 
 Route::post('/sign.up', [AuthController::class, 'signUp']);

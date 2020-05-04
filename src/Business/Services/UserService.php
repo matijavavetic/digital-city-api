@@ -79,15 +79,15 @@ class UserService
         }
 
         try {
-            $user->roles()->sync($mapper->getRoles());
-        } catch(QueryException $e) {
-            throw new \Exception("Failed to store user's roles!", 400);
-        }
-
-        try {
             $user->organisations()->sync($mapper->getOrganisations());
         } catch(QueryException $e) {
             throw new \Exception("Failed to store user's organisations!", 400);
+        }
+
+        try {
+            $user->roles()->sync($mapper->getRoles());
+        } catch(QueryException $e) {
+            throw new \Exception("Failed to store user's roles!", 400);
         }
 
         if ($mapper->getPermissions() !== null) {
@@ -139,6 +139,14 @@ class UserService
             $user->city = $mapper->getCity();
         }
 
+        $stored = null;
+
+        $stored = $this->userRepository->store($user);
+
+        if ($stored === false) {
+            throw new \Exception("Failed to update existing user!", 400);
+        }
+
         if ($mapper->getRoles() !== null) {
             try {
                 $user->roles()->sync($mapper->getRoles());
@@ -161,14 +169,6 @@ class UserService
             } catch(QueryException $e) {
                 throw new \Exception("Failed to store user's organisations!", 400);
             }
-        }
-
-        $stored = null;
-
-        $stored = $this->userRepository->store($user);
-
-        if ($stored === false) {
-            throw new \Exception("Failed to update existing user!", 400);
         }
 
         $responseMapper = UserUpdateResponseMapperFactory::make($user);
