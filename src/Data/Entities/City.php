@@ -8,6 +8,8 @@ class City extends Model
 {
     protected $table = 'city';
 
+    protected $hidden = ['id'];
+
     public $timestamps = false;
 
     protected $fillable = [

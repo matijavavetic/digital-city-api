@@ -8,6 +8,8 @@ class County extends Model
 {
     protected $table = 'county';
 
+    protected $hidden = ['id'];
+
     public $timestamps = false;
 
     protected $fillable = [
