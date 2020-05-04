@@ -10,7 +10,7 @@ class OrganisationInfoResponseMapperFactory
 {
     public static function make(Organisation $organisation) : OrganisationInfoResponseMapper
     {
-        $organisationMapper = new OrganisationMapper($organisation->identifier, $organisation->name, $organisation->city, $organisation->county, $organisation->country);
+        $organisationMapper = new OrganisationMapper($organisation->identifier, $organisation->name, $organisation->city, $organisation->county);
 
         $organisationMapper->setDescription($organisation->description);
         $organisationMapper->setPrimaryColor($organisation->primary_color);

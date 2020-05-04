@@ -2,7 +2,7 @@
 
 namespace src\Applications\Http\FormRequests\Organisation;
 
-use src\Applications\Http\Enum\ErrorCodes\UserErrorCode;
+use src\Applications\Http\Enum\ErrorCodes\OrganisationErrorCode;
 use src\Applications\Http\FormRequests\FormRequest;
 
 class OrganisationUpdateRequest extends FormRequest
@@ -19,11 +19,18 @@ class OrganisationUpdateRequest extends FormRequest
                 'required',
                 'string'
             ],
+            'city' => [
+                'nullable',
+                'integer',
+                'exists:city,id'
+            ],
+            'county' => [
+                'nullable',
+                'integer',
+                'exists:county,id'
+            ],
             'name' => 'nullable|string',
             'description' => 'nullable|string',
-            'city' => 'nullable|string',
-            'county' => 'nullable|string',
-            'country' => 'nullable|string',
             'primaryColor' => 'nullable|string',
             'secondaryColor' => 'nullable|string',
             'tertiaryColor' => 'nullable|string',
@@ -41,11 +48,10 @@ class OrganisationUpdateRequest extends FormRequest
         return [
             'identifier.required'   => OrganisationErrorCode::ERR_EMPTY_IDENTIFIER,
             'identifier.string'     => OrganisationErrorCode::ERR_INVALID_IDENTIFIER,
-            'name.email'            => OrganisationErrorCode::ERR_INVALID_NAME,
+            'name.string'           => OrganisationErrorCode::ERR_INVALID_NAME,
             'description.string'    => OrganisationErrorCode::ERR_INVALID_DESCRIPTION,
-            'city.string'           => OrganisationErrorCode::ERR_INVALID_CITY,
-            'county.string'         => OrganisationErrorCode::ERR_INVALID_COUNTY,
-            'country.date'          => OrganisationErrorCode::ERR_INVALID_COUNTRY,
+            'city.integer'          => OrganisationErrorCode::ERR_INVALID_CITY,
+            'county.integer'        => OrganisationErrorCode::ERR_INVALID_COUNTY,
             'primaryColor.string'   => OrganisationErrorCode::ERR_INVALID_PRIMARY_COLOR,
             'secondaryColor.string' => OrganisationErrorCode::ERR_INVALID_SECONDARY_COLOR,
             'tertiaryColor.string'  => OrganisationErrorCode::ERR_INVALID_TERTIARY_COLOR,
@@ -77,7 +83,6 @@ class OrganisationUpdateRequest extends FormRequest
             'name'           => $this->input('name'),
             'city'           => $this->input('city'),
             'county'         => $this->input('county'),
-            'country'        => $this->input('country'),
             'description'    => $this->input('description'),
             'primaryColor'   => $this->input('primaryColor'),
             'secondaryColor' => $this->input('secondaryColor'),

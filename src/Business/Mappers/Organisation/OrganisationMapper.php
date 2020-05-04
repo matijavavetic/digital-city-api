@@ -3,14 +3,15 @@
 namespace src\Business\Mappers\Organisation;
 
 use JsonSerializable;
+use src\Data\Entities\City;
+use src\Data\Entities\County;
 
 class OrganisationMapper implements JsonSerializable
 {
     private string $identifier;
     private string $name;
-    private string $city;
-    private string $county;
-    private string $country;
+    private City $city;
+    private County $county;
     private ?string $description;
     private ?string $primaryColor;
     private ?string $secondaryColor;
@@ -18,13 +19,12 @@ class OrganisationMapper implements JsonSerializable
     private ?string $logo;
     private ?array $users = null;
 
-    public function __construct(string $identifier, string $name, string $city, string $county, string $country)
+    public function __construct(string $identifier, string $name, City $city, County $county)
     {
         $this->identifier = $identifier;
         $this->name       = $name;
         $this->city       = $city;
         $this->county     = $county;
-        $this->country    = $country;
     }
 
     public function getIdentifier() : string
@@ -37,19 +37,14 @@ class OrganisationMapper implements JsonSerializable
         return $this->name;
     }
 
-    public function getCity() : string
+    public function getCity() : City
     {
         return $this->city;
     }
 
-    public function getCounty() : string
+    public function getCounty() : County
     {
         return $this->county;
-    }
-
-    public function getCountry() : string
-    {
-        return $this->country;
     }
 
     public function setDescription(?string $description) : void
@@ -89,7 +84,6 @@ class OrganisationMapper implements JsonSerializable
             'name' => $this->name,
             'city' => $this->city,
             'county' => $this->county,
-            'country' => $this->country,
             'description' => $this->description,
             'primaryColor' => $this->primaryColor,
             'secondaryColor' => $this->secondaryColor,

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserOrganisationTable extends Migration
+class AddOrganisationIdToUserPermissionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateUserOrganisationTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_organisation', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('organisation_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        Schema::table('user_permission', function (Blueprint $table) {
+            $table->bigInteger('organisation_id')->unsigned()->nullable();
             $table->foreign('organisation_id')->references('id')->on('organisation')->onDelete('cascade');
         });
     }
@@ -29,6 +26,8 @@ class CreateUserOrganisationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_organisation');
+        Schema::table('user_permission', function (Blueprint $table) {
+            //
+        });
     }
 }

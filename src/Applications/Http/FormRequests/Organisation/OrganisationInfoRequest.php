@@ -2,9 +2,8 @@
 
 namespace src\Applications\Http\FormRequests\Organisation;
 
-use src\Applications\Http\Enum\ErrorCodes\UserErrorCode;
+use src\Applications\Http\Enum\ErrorCodes\OrganisationErrorCode;
 use src\Applications\Http\FormRequests\FormRequest;
-use src\Data\Enums\RelationEnum;
 
 class OrganisationInfoRequest extends FormRequest
 {
