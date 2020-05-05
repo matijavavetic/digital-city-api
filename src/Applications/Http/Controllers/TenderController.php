@@ -25,6 +25,7 @@ class TenderController extends Controller
         return new JsonResponse($responseMapper, Response::HTTP_OK);
     }
 
+
     public function info(TenderInfoRequest $request, TenderService $tenderService) : JsonResponse
     {
         $data = $request->validationData();
@@ -35,6 +36,7 @@ class TenderController extends Controller
 
         return new JsonResponse($responseMapper, Response::HTTP_OK);
     }
+
 
     public function create(TenderCreateRequest $request, TenderService $tenderService) : JsonResponse
     {
@@ -47,11 +49,11 @@ class TenderController extends Controller
         return new JsonResponse($responseMapper, Response::HTTP_CREATED);
     }
 
-    public function update() : JsonResponse
+    public function update()
     {
     }
 
-    public function delete() : JsonResponse
+    public function delete()
     {
     }
 }

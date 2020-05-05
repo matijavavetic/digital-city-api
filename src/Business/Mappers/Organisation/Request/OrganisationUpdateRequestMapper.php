@@ -6,9 +6,8 @@ class OrganisationUpdateRequestMapper
 {
     private string $identifier;
     private ?string $name;
-    private ?string $city;
-    private ?string $county;
-    private ?string $country;
+    private ?int $cityIdentifier;
+    private ?int $countyIdentifier;
     private ?string $description;
     private ?string $primaryColor;
     private ?string $secondaryColor;
@@ -30,19 +29,14 @@ class OrganisationUpdateRequestMapper
         return $this->name;
     }
 
-    public function getCity() : ?string
+    public function getCity() : ?int
     {
-        return $this->city;
+        return $this->cityIdentifier;
     }
 
-    public function getCounty() : ?string
+    public function getCounty() : ?int
     {
-        return $this->county;
-    }
-
-    public function getCountry() : ?string
-    {
-        return $this->country;
+        return $this->countyIdentifier;
     }
 
     public function getDescription() : ?string
@@ -75,19 +69,14 @@ class OrganisationUpdateRequestMapper
         $this->name = $name;
     }
 
-    public function setCity(?string $city) : void
+    public function setCity(?int $cityIdentifier) : void
     {
-        $this->city = $city;
+        $this->cityIdentifier = $cityIdentifier;
     }
 
-    public function setCounty(?string $county) : void
+    public function setCounty(?int $countyIdentifier) : void
     {
-        $this->county = $county;
-    }
-
-    public function setCountry(?string $country) : void
-    {
-        $this->country = $country;
+        $this->countyIdentifier = $countyIdentifier;
     }
 
     public function setDescription(?string $description) : void

@@ -11,14 +11,19 @@ class Organisation extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'identifier', 'name', 'description', 'city',
-        'county', 'country', 'primary_color',
+        'identifier', 'name', 'description',
+        'city_id', 'county_id', 'primary_color',
         'secondary_color', 'tertiary_color', 'logo'
     ];
 
-    public function users()
+    public function city()
     {
-        return $this->belongsToMany(User::class, 'user_organisation');
+        return $this->belongsTo(City::class, 'city_id');
+    }
+
+    public function county()
+    {
+        return $this->belongsTo(County::class, 'county_id');
     }
 
     public function tenders()

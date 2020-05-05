@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrganisationTable extends Migration
+class CreateCountyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateOrganisationTable extends Migration
      */
     public function up()
     {
-        Schema::create('organisation', function (Blueprint $table) {
+        Schema::create('county', function (Blueprint $table) {
             $table->id();
             $table->string('identifier')->unique();
+            $table->string('code')->unique();
             $table->string('name')->unique();
-            $table->string('description')->nullable();
-            $table->string('primary_color')->nullable();
-            $table->string('secondary_color')->nullable();
-            $table->string('tertiary_color')->nullable();
-            $table->string('logo')->nullable();
         });
     }
 
@@ -32,6 +28,6 @@ class CreateOrganisationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organisation');
+        Schema::dropIfExists('county');
     }
 }
