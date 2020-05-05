@@ -8,13 +8,13 @@ class UserCreateRequestMapper
     private string $username;
     private string $email;
     private string $password;
-    private ?array $roles;
     private array $organisations;
     private ?string $firstName;
     private ?string $lastName;
     private ?string $birthDate;
     private ?string $country;
     private ?string $city;
+    private ?array $roles;
     private ?array $permissions;
 
     public function __construct(string $identifier, string $email, string $username, string $password, array $organisations)
