@@ -4,13 +4,17 @@ namespace src\Business\Services;
 
 use Illuminate\Database\QueryException;
 use Ramsey\Uuid\Uuid;
+use src\Business\Factories\Tender\TenderCreateResponseMapperFactory;
 use src\Business\Factories\Tender\TenderInfoResponseMapperFactory;
 use src\Business\Factories\Tender\TenderListResponseMapperFactory;
+use src\Business\Mappers\Tender\Request\TenderCreateRequestMapper;
 use src\Business\Mappers\Tender\Request\TenderInfoRequestMapper;
 use src\Business\Mappers\Tender\Request\TenderListRequestMapper;
+use src\Business\Mappers\Tender\Response\TenderCreateResponseMapper;
 use src\Business\Mappers\Tender\Response\TenderInfoResponseMapper;
 use src\Business\Mappers\Tender\Response\TenderListResponseMapper;
 use src\Data\Entities\Role;
+use src\Data\Entities\Tender;
 use src\Data\Repositories\RoleRepository;
 use src\Business\Factories\Role\RoleInfoResponseMapperFactory;
 use src\Business\Mappers\Role\Response\RoleInfoResponseMapper;
@@ -52,6 +56,31 @@ class TenderService
         $tender = $this->tenderRepository->findOne($mapper->getIdentifier());
 
         $responseMapper = TenderInfoResponseMapperFactory::make($tender);
+
+        return $responseMapper;
+    }
+
+    public function create(TenderCreateRequestMapper $mapper) : TenderCreateResponseMapper
+    {
+        $tender = new Tender();
+
+        $tender->identifier = $mapper->getIdentifier();
+        $tender->name = $mapper->getName();
+        $tender->type = $mapper->getType();
+        $tender->created_by_user_id = $mapper->getCreatedByUser();
+        $tender->organisation_id = $mapper->getOrganisation();
+        $tender->date_from = $mapper->getDateFrom();
+        $tender->date_to = $mapper->getDateTo();
+
+        $stored = null;
+
+        $stored = $this->tenderRepository->store($tender);
+
+        if ($stored === false) {
+            throw new \Exception("Failed to store new tender!", 400);
+        }
+
+        $responseMapper = TenderCreateResponseMapperFactory::make($tender);
 
         return $responseMapper;
     }

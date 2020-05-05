@@ -23,8 +23,14 @@ class TenderCreateRequest extends FormRequest
                 'required',
                 'string'
             ],
-            'dateFrom' => 'nullable|string',
-            'dateTo' => 'nullable|string'
+            'dateFrom' => [
+                'nullable',
+                'string',
+            ],
+            'dateTo' => [
+                'nullable',
+                'string'
+            ]
         ];
     }
 
@@ -65,10 +71,11 @@ class TenderCreateRequest extends FormRequest
     public function validationData() : array
     {
         $input = [
-            'name'     => $this->input('name'),
-            'type'     => $this->input('type'),
-            'dateFrom' => $this->input('dateFrom'),
-            'dateTo'   => $this->input('dateTo')
+            'name'                   => $this->input('name'),
+            'type'                   => $this->input('type'),
+            'dateFrom'               => $this->input('dateFrom'),
+            'dateTo'                 => $this->input('dateTo'),
+            'organisationIdentifier' => $this->input('organisationIdentifier')
         ];
 
         return $input;

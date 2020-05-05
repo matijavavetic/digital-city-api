@@ -3,6 +3,7 @@
 namespace src\Applications\Http\Factories\Tender;
 
 use Ramsey\Uuid\Uuid;
+use src\Business\Mappers\Tender\Request\TenderCreateRequestMapper;
 
 class TenderCreateRequestMapperFactory
 {
@@ -10,9 +11,8 @@ class TenderCreateRequestMapperFactory
     {
         $identifier = Uuid::uuid4()->getHex();
         $createdByUser = auth()->user()->id;
-        $organisation = 1;
 
-        $mapper = new TenderCreateRequestMapper($identifier, $data['name'], $data['type'], $createdByUser, $organisation);
+        $mapper = new TenderCreateRequestMapper($identifier, $data['name'], $data['type'], $createdByUser, $data['organisationIdentifier']);
 
         $mapper->setDateFrom($data['dateFrom']);
         $mapper->setDateTo($data['dateTo']);
