@@ -24,15 +24,17 @@ class UserCreateRequest extends FormRequest
                 'string'
             ],
             'roles' => [
-                'required',
+                'nullable',
                 'array'
             ],
             'roles.*' => [
-                'required',
                 'integer',
                 'distinct'
             ],
-            'permissions' => 'nullable|array',
+            'permissions' => [
+                'nullable',
+                'array'
+            ],
             'permissions.*' => [
                 'distinct',
                 'integer'
@@ -46,11 +48,26 @@ class UserCreateRequest extends FormRequest
                 'distinct',
                 'integer'
             ],
-            'firstName' => 'nullable|string',
-            'lastName' => 'nullable|string',
-            'birthDate' => 'nullable|date',
-            'country' => 'nullable|string',
-            'city' => 'nullable|string',
+            'firstName' => [
+                'nullable',
+                'string'
+            ],
+            'lastName' => [
+                'nullable',
+                'string'
+            ],
+            'birthDate' => [
+                'nullable',
+                'date'
+            ],
+            'country' => [
+                'nullable',
+                'string',
+            ],
+            'city' => [
+                'nullable',
+                'string',
+            ]
         ];
     }
 

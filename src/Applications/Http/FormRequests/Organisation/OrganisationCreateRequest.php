@@ -29,11 +29,26 @@ class OrganisationCreateRequest extends FormRequest
                 'int',
                 'exists:county,id'
             ],
-            'description' => 'nullable|string',
-            'primaryColor' => 'nullable|string',
-            'secondaryColor' => 'nullable|date',
-            'tertiaryColor' => 'nullable|string',
-            'logo' => 'nullable|string',
+            'description' => [
+                'nullable',
+                'string',
+            ],
+            'primaryColor' => [
+                'nullable',
+                'string',
+            ],
+            'secondaryColor' => [
+                'nullable',
+                'date',
+            ],
+            'tertiaryColor' => [
+                'nullable',
+                'string',
+            ],
+            'logo' => [
+                'nullable',
+                'string'
+            ]
         ];
     }
 
