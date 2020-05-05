@@ -19,24 +19,54 @@ class UserUpdateRequest extends FormRequest
                 'required',
                 'string'
             ],
-            'email' => 'nullable|email',
-            'password' => 'nullable|string',
-            'firstName' => 'nullable|string',
-            'lastName' => 'nullable|string',
-            'birthDate' => 'nullable|date',
-            'country' => 'nullable|string',
-            'city' => 'nullable|string',
-            'roles' => 'nullable|array',
+            'email' => [
+                'nullable',
+                'email'
+            ],
+            'password' => [
+                'nullable',
+                'string'
+            ],
+            'firstName' => [
+                'nullable',
+                'string'
+            ],
+            'lastName' => [
+                'nullable',
+                'string'
+            ],
+            'birthDate' => [
+                'nullable',
+                'date'
+            ],
+            'country' => [
+                'nullable',
+                'string'
+            ],
+            'city' => [
+                'nullable',
+                'string'
+            ],
+            'roles' => [
+                'nullable',
+                'array'
+            ],
             'roles.*' => [
                 'integer',
                 'distinct'
             ],
-            'permissions' => 'nullable|array',
+            'permissions' => [
+                'nullable',
+                'array'
+            ],
             'permissions.*' => [
                 'distinct',
                 'integer'
             ],
-            'organisations' => 'nullable|array',
+            'organisations' => [
+                'nullable',
+                'array'
+            ],
             'organisations.*' => [
                 'distinct',
                 'integer'

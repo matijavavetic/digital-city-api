@@ -29,12 +29,30 @@ class OrganisationUpdateRequest extends FormRequest
                 'integer',
                 'exists:county,id'
             ],
-            'name' => 'nullable|string',
-            'description' => 'nullable|string',
-            'primaryColor' => 'nullable|string',
-            'secondaryColor' => 'nullable|string',
-            'tertiaryColor' => 'nullable|string',
-            'logo' => 'nullable|string'
+            'name' => [
+                'nullable',
+                'string',
+            ],
+            'description' => [
+                'nullable',
+                'string',
+            ],
+            'primaryColor' => [
+                'nullable',
+                'string',
+            ],
+            'secondaryColor' => [
+                'nullable',
+                'date',
+            ],
+            'tertiaryColor' => [
+                'nullable',
+                'string',
+            ],
+            'logo' => [
+                'nullable',
+                'string'
+            ]
         ];
     }
 
