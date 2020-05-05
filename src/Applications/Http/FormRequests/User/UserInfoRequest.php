@@ -20,12 +20,15 @@ class UserInfoRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'relations' => 'nullable|array',
+            'relations' => [
+                'nullable',
+                'array'
+            ],
             'relations.*' => [
                 'string',
                 'distinct',
                 'enum_value:' . RelationEnum::class,
-            ],
+            ]
         ];
     }
 
