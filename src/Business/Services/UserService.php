@@ -12,6 +12,7 @@ use src\Business\Mappers\User\Response\UserUpdateResponseMapper;
 use src\Data\Entities\User;
 use src\Business\Mappers\User\Request\UserCreateRequestMapper;
 use src\Business\Mappers\User\Response\UserCreateResponseMapper;
+use src\Data\Enums\HttpStatusCode;
 use src\Data\Repositories\UserRepository;
 use src\Business\Mappers\User\Request\UserListRequestMapper;
 use src\Business\Mappers\User\Request\UserInfoRequestMapper;
@@ -75,20 +76,22 @@ class UserService
         $stored = $this->userRepository->store($user);
 
         if ($stored === false) {
-            throw new \Exception("Failed to store new user!", 400);
+            throw new \Exception("Failed to store new user!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
-        try {
-            $user->roles()->sync($mapper->getRoles());
-        } catch(QueryException $e) {
-            throw new \Exception("Failed to store user's roles!", 400);
+        if ($mapper->getRoles() !== null) {
+            try {
+                $user->roles()->sync($mapper->getRoles());
+            } catch(QueryException $e) {
+                throw new \Exception("Failed to store user's roles!", HttpStatusCode::HTTP_BAD_REQUEST);
+            }
         }
 
         if ($mapper->getPermissions() !== null) {
             try {
                 $user->permissions()->sync($mapper->getPermissions());
             } catch (QueryException $e) {
-                throw new \Exception("Failed to store user's permissions!", 400);
+                throw new \Exception("Failed to store user's permissions!", HttpStatusCode::HTTP_BAD_REQUEST);
             }
         }
 
@@ -138,14 +141,14 @@ class UserService
         $stored = $this->userRepository->store($user);
 
         if ($stored === false) {
-            throw new \Exception("Failed to update existing user!", 400);
+            throw new \Exception("Failed to update existing user!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         if ($mapper->getRoles() !== null) {
             try {
                 $user->roles()->sync($mapper->getRoles());
             } catch (QueryException $e) {
-                throw new \Exception("Failed to store user's roles!", 400);
+                throw new \Exception("Failed to store user's roles!", HttpStatusCode::HTTP_BAD_REQUEST);
             }
         }
 
@@ -153,7 +156,7 @@ class UserService
             try {
                 $user->permissions()->sync($mapper->getPermissions());
             } catch (QueryException $e) {
-                throw new \Exception("Failed to store user's permissions!", 400);
+                throw new \Exception("Failed to store user's permissions!", HttpStatusCode::HTTP_BAD_REQUEST);
             }
         }
 
@@ -171,7 +174,7 @@ class UserService
         $stored = $this->userRepository->destroy($user);
 
         if ($stored === false) {
-            throw new \Exception("Failed to delete user!", 400);
+            throw new \Exception("Failed to delete user!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         $responseMapper = UserDeleteResponseMapperFactory::make($user);
