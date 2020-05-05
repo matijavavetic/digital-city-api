@@ -5,14 +5,17 @@ namespace src\Business\Services;
 use Illuminate\Database\QueryException;
 use Ramsey\Uuid\Uuid;
 use src\Business\Factories\Tender\TenderCreateResponseMapperFactory;
+use src\Business\Factories\Tender\TenderDeleteResponseMapperFactory;
 use src\Business\Factories\Tender\TenderInfoResponseMapperFactory;
 use src\Business\Factories\Tender\TenderListResponseMapperFactory;
 use src\Business\Factories\Tender\TenderUpdateResponseMapperFactory;
 use src\Business\Mappers\Tender\Request\TenderCreateRequestMapper;
+use src\Business\Mappers\Tender\Request\TenderDeleteRequestMapper;
 use src\Business\Mappers\Tender\Request\TenderInfoRequestMapper;
 use src\Business\Mappers\Tender\Request\TenderListRequestMapper;
 use src\Business\Mappers\Tender\Request\TenderUpdateRequestMapper;
 use src\Business\Mappers\Tender\Response\TenderCreateResponseMapper;
+use src\Business\Mappers\Tender\Response\TenderDeleteResponseMapper;
 use src\Business\Mappers\Tender\Response\TenderInfoResponseMapper;
 use src\Business\Mappers\Tender\Response\TenderListResponseMapper;
 use src\Business\Mappers\Tender\Response\TenderUpdateResponseMapper;
@@ -118,6 +121,23 @@ class TenderService
         }
 
         $responseMapper = TenderUpdateResponseMapperFactory::make($tender);
+
+        return $responseMapper;
+    }
+
+    public function delete(TenderDeleteRequestMapper $mapper) : TenderDeleteResponseMapper
+    {
+        $tender = $this->tenderRepository->findOne($mapper->getIdentifier());
+
+        $stored = null;
+
+        $stored = $this->tenderRepository->destroy($tender);
+
+        if ($stored === false) {
+            throw new \Exception("Failed to delete tender!", HttpStatusCode::HTTP_BAD_REQUEST);
+        }
+
+        $responseMapper = TenderDeleteResponseMapperFactory::make($tender);
 
         return $responseMapper;
     }

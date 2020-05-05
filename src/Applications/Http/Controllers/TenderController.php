@@ -3,9 +3,12 @@
 namespace src\Applications\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use src\Applications\Http\Factories\Tender\TenderDeleteRequestMapperFactory;
 use src\Applications\Http\Factories\Tender\TenderInfoRequestMapperFactory;
 use src\Applications\Http\Factories\Tender\TenderListRequestMapperFactory;
 use src\Applications\Http\Factories\Tender\TenderCreateRequestMapperFactory;
+use src\Applications\Http\Factories\Tender\TenderUpdateRequestMapperFactory;
+use src\Applications\Http\FormRequests\Tender\TenderDeleteRequest;
 use src\Applications\Http\FormRequests\Tender\TenderInfoRequest;
 use src\Applications\Http\FormRequests\Tender\TenderListRequest;
 use src\Applications\Http\FormRequests\Tender\TenderCreateRequest;
@@ -61,7 +64,14 @@ class TenderController extends Controller
         return new JsonResponse($responseMapper, Response::HTTP_CREATED);
     }
 
-    public function delete()
+    public function delete(TenderDeleteRequest $request, TenderService $tenderService) : JsonResponse
     {
+        $data = $request->validationData();
+
+        $requestMapper = TenderDeleteRequestMapperFactory::make($data);
+
+        $responseMapper = $tenderService->delete($requestMapper);
+
+        return new JsonResponse($responseMapper, Response::HTTP_OK);
     }
 }
