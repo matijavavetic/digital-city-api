@@ -7,14 +7,18 @@ use Ramsey\Uuid\Uuid;
 use src\Business\Factories\Tender\TenderCreateResponseMapperFactory;
 use src\Business\Factories\Tender\TenderInfoResponseMapperFactory;
 use src\Business\Factories\Tender\TenderListResponseMapperFactory;
+use src\Business\Factories\Tender\TenderUpdateResponseMapperFactory;
 use src\Business\Mappers\Tender\Request\TenderCreateRequestMapper;
 use src\Business\Mappers\Tender\Request\TenderInfoRequestMapper;
 use src\Business\Mappers\Tender\Request\TenderListRequestMapper;
+use src\Business\Mappers\Tender\Request\TenderUpdateRequestMapper;
 use src\Business\Mappers\Tender\Response\TenderCreateResponseMapper;
 use src\Business\Mappers\Tender\Response\TenderInfoResponseMapper;
 use src\Business\Mappers\Tender\Response\TenderListResponseMapper;
+use src\Business\Mappers\Tender\Response\TenderUpdateResponseMapper;
 use src\Data\Entities\Role;
 use src\Data\Entities\Tender;
+use src\Data\Enums\HttpStatusCode;
 use src\Data\Repositories\RoleRepository;
 use src\Business\Factories\Role\RoleInfoResponseMapperFactory;
 use src\Business\Mappers\Role\Response\RoleInfoResponseMapper;
@@ -77,10 +81,43 @@ class TenderService
         $stored = $this->tenderRepository->store($tender);
 
         if ($stored === false) {
-            throw new \Exception("Failed to store new tender!", 400);
+            throw new \Exception("Failed to store new tender!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         $responseMapper = TenderCreateResponseMapperFactory::make($tender);
+
+        return $responseMapper;
+    }
+
+    public function update(TenderUpdateRequestMapper $mapper) : TenderUpdateResponseMapper
+    {
+        $tender = $this->tenderRepository->findOne($mapper->getIdentifier());
+
+        if ($mapper->getName() !== null) {
+            $tender->name = $mapper->getName();
+        }
+
+        if ($mapper->getType() !== null) {
+            $tender->type = $mapper->getType();
+        }
+
+        if ($mapper->getDateFrom() !== null) {
+            $tender->date_from = $mapper->getDateFrom();
+        }
+
+        if ($mapper->getDateTo() !== null) {
+            $tender->date_to = $mapper->getDateTo();
+        }
+
+        $stored = null;
+
+        $stored = $this->tenderRepository->store($tender);
+
+        if ($stored === false) {
+            throw new \Exception("Failed to update existing tender!", HttpStatusCode::HTTP_BAD_REQUEST);
+        }
+
+        $responseMapper = TenderUpdateResponseMapperFactory::make($tender);
 
         return $responseMapper;
     }

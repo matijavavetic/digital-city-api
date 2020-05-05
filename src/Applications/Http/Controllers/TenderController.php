@@ -9,6 +9,7 @@ use src\Applications\Http\Factories\Tender\TenderCreateRequestMapperFactory;
 use src\Applications\Http\FormRequests\Tender\TenderInfoRequest;
 use src\Applications\Http\FormRequests\Tender\TenderListRequest;
 use src\Applications\Http\FormRequests\Tender\TenderCreateRequest;
+use src\Applications\Http\FormRequests\Tender\TenderUpdateRequest;
 use src\Business\Services\TenderService;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -49,8 +50,15 @@ class TenderController extends Controller
         return new JsonResponse($responseMapper, Response::HTTP_CREATED);
     }
 
-    public function update()
+    public function update(TenderUpdateRequest $request, TenderService $tenderService) : JsonResponse
     {
+        $data = $request->validationData();
+
+        $requestMapper = TenderUpdateRequestMapperFactory::make($data);
+
+        $responseMapper = $tenderService->update($requestMapper);
+
+        return new JsonResponse($responseMapper, Response::HTTP_CREATED);
     }
 
     public function delete()
