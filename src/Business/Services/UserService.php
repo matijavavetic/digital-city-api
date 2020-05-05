@@ -78,10 +78,12 @@ class UserService
             throw new \Exception("Failed to store new user!", 400);
         }
 
-        try {
-            $user->roles()->sync($mapper->getRoles());
-        } catch(QueryException $e) {
-            throw new \Exception("Failed to store user's roles!", 400);
+        if ($mapper->getRoles() !== null) {
+            try {
+                $user->roles()->sync($mapper->getRoles());
+            } catch(QueryException $e) {
+                throw new \Exception("Failed to store user's roles!", 400);
+            }
         }
 
         if ($mapper->getPermissions() !== null) {
