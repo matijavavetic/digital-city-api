@@ -12,8 +12,8 @@ class TenderInfoResponseMapperFactory
 {
     public static function make(Tender $tender) : TenderInfoResponseMapper
     {
-        $userMapper[] = new UserMapper($tender->users->identifier, $tender->users->username, $tender->users->email);
-        $organisationMapper[] = new OrganisationMapper($tender->organisations->identifier, $tender->organisations->name, $tender->organisations->city, $tender->organisations->county, $tenders->organisations->country);
+        $userMapper[] = new UserMapper($tender->user->identifier, $tender->user->username, $tender->user->email);
+        $organisationMapper[] = new OrganisationMapper($tender->organisation->identifier, $tender->organisation->name, $tender->organisation->city, $tender->organisation->county);
         $tenderMapper = new TenderMapper($tender->identifier, $tender->name, $tender->type);
 
         $tenderMapper->setDateFrom($tender->date_from);

@@ -14,13 +14,13 @@ class Tender extends Model
         'date_from', 'date_to'
     ];
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class, 'created_by_user_id');
     }
 
-    public function organisations()
+    public function organisation()
     {
-        return $this->belongsToMany(Organisation::class, 'organisation_id');
+        return $this->belongsTo(Organisation::class, 'organisation_id');
     }
 }
