@@ -4,6 +4,7 @@ namespace src\Business\Services;
 
 use Ramsey\Uuid\Uuid;
 use src\Data\Entities\Permission;
+use src\Data\Enums\HttpStatusCode;
 use src\Data\Repositories\PermissionRepository;
 use src\Business\Factories\Permission\PermissionInfoResponseMapperFactory;
 use src\Business\Mappers\Permission\Response\PermissionInfoResponseMapper;
@@ -60,7 +61,7 @@ class PermissionService
         $stored = $this->permissionRepository->store($permission);
 
         if  ($stored === false) {
-            throw new \Exception("Failed to store new permission!", 400);
+            throw new \Exception("Failed to store new permission!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         $responseMapper = PermissionCreateResponseMapperFactory::make($permission);
@@ -79,7 +80,7 @@ class PermissionService
         $stored = $this->permissionRepository->store($permission);
 
         if ($stored === false) {
-            throw new \Exception("Failed to update existing permission!", 400);
+            throw new \Exception("Failed to update existing permission!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         $responseMapper = PermissionUpdateResponseMapperFactory::make($permission);
@@ -96,7 +97,7 @@ class PermissionService
         $stored = $this->permissionRepository->destroy($permission);
 
         if ($stored === false) {
-            throw new \Exception("Failed to delete permission!", 400);
+            throw new \Exception("Failed to delete permission!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         $responseMapper = PermissionDeleteResponseMapperFactory::make($permission);

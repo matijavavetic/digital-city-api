@@ -13,6 +13,7 @@ use src\Business\Mappers\Auth\Request\SignUpRequestMapper;
 use src\Business\Mappers\Auth\Response\SignInResponseMapper;
 use src\Business\Mappers\Auth\Response\SignUpResponseMapper;
 use src\Data\Entities\User;
+use src\Data\Enums\HttpStatusCode;
 use src\Data\Repositories\UserRepository;
 
 class AuthService
@@ -38,7 +39,7 @@ class AuthService
         $stored = $this->userRepository->store($user);
 
         if ($stored === false) {
-            throw new \Exception("Failed to store new user!", 400);
+            throw new \Exception("Failed to store new user!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         $responseMapper = SignUpResponseMapperFactory::make();
@@ -51,13 +52,13 @@ class AuthService
         $user = $this->userRepository->findOneByEmail($mapper->getEmail());
 
         if (! $user) {
-            throw new \Exception("User not found!", 404);
+            throw new \Exception("User not found!", HttpStatusCode::HTTP_NOT_FOUND);
         }
 
         $isPasswordCorrect = Hash::check($mapper->getPassword(), $user->password);
 
         if ($isPasswordCorrect === false) {
-            throw new \Exception("Incorrect password!", 400);
+            throw new \Exception("Incorrect password!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         $randomString = Str::random(100);
@@ -68,7 +69,7 @@ class AuthService
         $stored = $this->userRepository->store($user);
 
         if ($stored === false) {
-            throw new \Exception("Error occured!", 400);
+            throw new \Exception("Error occurred!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         $pathToPrivateKey = base_path()."/private.pem";
