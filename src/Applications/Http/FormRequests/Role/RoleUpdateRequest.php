@@ -23,7 +23,10 @@ class RoleUpdateRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'permissions' => 'nullable|array',
+            'permissions' => [
+                'nullable',
+                'array',
+            ],
             'permissions.*' => [
                 'distinct',
                 'integer'
