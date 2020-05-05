@@ -30,7 +30,7 @@ class OrganisationListRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'sort.in'    => OrganisationErrorCode::ERR_INVALID_SORT,
+            'sort.in' => OrganisationErrorCode::ERR_INVALID_SORT,
         ];
     }
 

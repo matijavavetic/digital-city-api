@@ -73,10 +73,10 @@ class TenderUpdateRequest extends FormRequest
     public function validationData() : array
     {
         $input = [
-            'name'                   => $this->input('name'),
-            'type'                   => $this->input('type'),
-            'dateFrom'               => $this->input('dateFrom'),
-            'dateTo'                 => $this->input('dateTo'),
+            'name'     => $this->input('name'),
+            'type'     => $this->input('type'),
+            'dateFrom' => $this->input('dateFrom'),
+            'dateTo'   => $this->input('dateTo'),
         ];
 
         return $input;

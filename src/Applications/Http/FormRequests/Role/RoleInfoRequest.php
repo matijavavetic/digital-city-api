@@ -31,7 +31,7 @@ class RoleInfoRequest extends FormRequest
     {
         return [
            'identifier.required' => RoleErrorCode::ERR_EMPTY_IDENTIFIER,
-           'identifier.string' => RoleErrorCode::ERR_INVALID_IDENTIFIER,
+           'identifier.string'   => RoleErrorCode::ERR_INVALID_IDENTIFIER,
         ];
     }
 
