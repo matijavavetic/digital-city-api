@@ -1,9 +1,10 @@
 <?php
 
-namespace Tests\Integration;
+namespace Tests\Integration\Role;
 
 use Illuminate\Http\Response;
 use src\Applications\Http\Enum\ErrorCodes\RoleErrorCode;
+use Tests\Integration\TestCase;
 
 class RoleCreateTest extends TestCase
 {
