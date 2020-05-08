@@ -47,4 +47,24 @@ class PermissionCreateTest extends TestCase
             'code' => PermissionErrorCode::ERR_EMPTY_NAME,
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function callPermissionCreateEndpointWithExistingName_ExpectBadRequestResponse()
+    {
+        // Arrange
+        $data = [
+            'name' => 'scholarship_create',
+        ];
+
+        // Act
+        $response = $this->json('POST', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonFragment([
+            'code' => 'Permission with that name already exists.'
+        ]);
+    }
 }
