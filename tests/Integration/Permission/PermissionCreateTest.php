@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\Integration\Role;
+namespace Tests\Integration\Permission;
 
 use Illuminate\Http\Response;
-use Ramsey\Uuid\Uuid;
 use src\Applications\Http\Enum\ErrorCodes\PermissionErrorCode;
 use Tests\Integration\TestCase;
 
@@ -18,8 +17,7 @@ class PermissionCreateTest extends TestCase
     {
         // Arrange
         $data = [
-            'identifier' => Uuid::uuid4()->getHex(),
-            'name'       => 'New permission name'
+            'name' => 'New permission name'
         ];
 
         // Act
