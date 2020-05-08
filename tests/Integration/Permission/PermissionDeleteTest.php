@@ -6,14 +6,14 @@ use Illuminate\Http\Response;
 use src\Applications\Http\Enum\ErrorCodes\PermissionErrorCode;
 use Tests\Integration\TestCase;
 
-class PermissionUpdateList extends TestCase
+class PermissionDeleteTest extends TestCase
 {
-    private string $endpoint = '/api/permission.update';
+    private string $endpoint = '/api/permission.delete';
 
     /**
      * @test
      */
-    public function callPermissionUpdateEndpointWithValidData_ExpectOkResponse()
+    public function callPermissionDeleteEndpointWithValidData_ExpectOkResponse()
     {
         // Arrange
         $listResponse = $this->json('GET', '/api/permission.list');
@@ -23,7 +23,6 @@ class PermissionUpdateList extends TestCase
 
         $data = [
             'identifier' => $permission['identifier'],
-            'name'       => 'New updated permission name'
         ];
 
         // Act
@@ -33,14 +32,13 @@ class PermissionUpdateList extends TestCase
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJsonFragment([
             'identifier' => $permission['identifier'],
-            'name'       => 'New updated role name',
         ]);
     }
 
     /**
      * @test
      */
-    public function callPermissionUpdateEndpointWithEmptyIdentifier_ExpectBadRequestResponse()
+    public function callPermissionDeleteEndpointWithEmptyIdentifier_ExpectBadRequestResponse()
     {
         // Arrange
         $data = [
@@ -60,17 +58,11 @@ class PermissionUpdateList extends TestCase
     /**
      * @test
      */
-    public function callPermissionUpdateEndpointWithValidIdentifierAndEmptyName_ExpectBadRequestResponse()
+    public function callPermissionDeleteEndpointWithNonExistingIdentifier_ExpectBadRequestResponse()
     {
         // Arrange
-        $listResponse = $this->json('GET', '/api/permission.list');
-
-        // get first role from the list
-        $permission = $listResponse->json('data.0');
-
         $data = [
-            'identifier' => $permission['identifier'],
-            'name'       => '',
+            'identifier' => 'non-existing-identifier'
         ];
 
         // Act
@@ -79,14 +71,14 @@ class PermissionUpdateList extends TestCase
         // Assert
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
         $response->assertJsonFragment([
-            'code' => PermissionErrorCode::ERR_EMPTY_NAME,
+            'code' => 'Permission with that identifier does not exist',
         ]);
     }
 
     /**
      * @test
      */
-    public function callPermissionUpdateEndpointWithInvalidIdentifierDataType_ExpectBadRequestResponse()
+    public function callPermissionDeleteEndpointWithInvalidIdentifierDataType_ExpectBadRequestResponse()
     {
         // Arrange
         $data = [
@@ -100,27 +92,6 @@ class PermissionUpdateList extends TestCase
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
         $response->assertJsonFragment([
             'code' => PermissionErrorCode::ERR_INVALID_IDENTIFIER,
-        ]);
-    }
-
-    /**
-     * @test
-     */
-    public function callPermissionUpdateEndpointWithInvalidIdentifierAndValidName_ExpectBadRequestResponse()
-    {
-        // Arrange
-        $data = [
-            'identifier' => 'invalid-uuid-identifier',
-            'name'       => 'valid-name-but-none-existing-identifier',
-        ];
-
-        // Act
-        $response = $this->json('POST', $this->endpoint, $data);
-
-        // Assert
-        $response->assertStatus(Response::HTTP_BAD_REQUEST);
-        $response->assertJsonFragment([
-            'code' => "Permission with that identifier doesn't exist.",
         ]);
     }
 }
