@@ -86,11 +86,11 @@ class PermissionUpdateList extends TestCase
     /**
      * @test
      */
-    public function callPermissionUpdateEndpointWithInvalidIdentifier_ExpectBadRequestResponse()
+    public function callPermissionUpdateEndpointWithInvalidIdentifierDataType_ExpectBadRequestResponse()
     {
         // Arrange
         $data = [
-            'identifier' => 'invalid-uuid-identifier',
+            'identifier' => 123,
         ];
 
         // Act
@@ -120,7 +120,7 @@ class PermissionUpdateList extends TestCase
         // Assert
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
         $response->assertJsonFragment([
-            'code' => PermissionErrorCode::ERR_INVALID_IDENTIFIER,
+            'code' => "Permission with that identifier doesn't exist.",
         ]);
     }
 }
