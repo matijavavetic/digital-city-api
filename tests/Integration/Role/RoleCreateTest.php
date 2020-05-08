@@ -34,7 +34,7 @@ class RoleCreateTest extends TestCase
     /**
      * @test
      */
-    public function callRoleListEndpointWithInvalidData_ExpectBadRequestResponse()
+    public function callRoleCreateEndpointWithInvalidData_ExpectBadRequestResponse()
     {
         // Arrange
         $data = [
