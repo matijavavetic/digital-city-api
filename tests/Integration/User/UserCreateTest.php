@@ -4,7 +4,7 @@ namespace Tests\Integration\User;
 
 use Illuminate\Http\Response;
 use Tests\Integration\TestCase;
-use Faker;
+use Faker\Factory as Faker;
 
 class UserCreateTest extends TestCase
 {
@@ -16,7 +16,7 @@ class UserCreateTest extends TestCase
     public function callUserCreateEndpointWithValidData_ExpectCreatedResponse()
     {
         // Arrange
-        $faker = Faker\Factory::create();
+        $faker = Faker::create();
 
         $data = [
             'email' => $faker->safeEmail
