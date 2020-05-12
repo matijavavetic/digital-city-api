@@ -3,6 +3,7 @@
 namespace Tests\Integration\User;
 
 use Illuminate\Http\Response;
+use src\Applications\Http\Enum\ErrorCodes\UserErrorCode;
 use Tests\Integration\TestCase;
 
 class UserListTest extends TestCase
@@ -24,5 +25,25 @@ class UserListTest extends TestCase
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
+    }
+
+    /**
+     * @test
+     */
+    public function callUserListEndpointWithInvalidSort_ExpectBadRequestResponse()
+    {
+        // Arrange
+        $data = [
+            'sort' => 'wrong-asc-desc-sort',
+        ];
+
+        // Act
+        $response = $this->json('GET', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonFragment([
+            'code' => UserErrorCode::ERR_INVALID_SORT,
+        ]);
     }
 }
