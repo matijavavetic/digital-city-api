@@ -65,7 +65,7 @@ class PermissionUpdateList extends TestCase
         // Arrange
         $listResponse = $this->json('GET', '/api/permission.list');
 
-        // get first role from the list
+        // Get first permission from the list
         $permission = $listResponse->json('data.0');
 
         $data = [
