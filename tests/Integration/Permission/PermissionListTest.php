@@ -1,18 +1,19 @@
 <?php
 
-namespace Tests\Integration;
+namespace Tests\Integration\Permission;
 
 use Illuminate\Http\Response;
-use src\Applications\Http\Enum\ErrorCodes\RoleErrorCode;
+use src\Applications\Http\Enum\ErrorCodes\PermissionErrorCode;
+use Tests\Integration\TestCase;
 
-class RoleListTest extends TestCase
+class PermissionListTest extends TestCase
 {
-    private string $endpoint = '/api/role.list';
+    private string $endpoint = '/api/permission.list';
 
     /**
      * @test
      */
-    public function callRoleListEndpoint_ExpectOkResponse()
+    public function callPermissionListEndpoint_ExpectOkResponse()
     {
         // Arrange
         $data = [
@@ -29,7 +30,7 @@ class RoleListTest extends TestCase
     /**
      * @test
      */
-    public function callRoleListEndpointWithInvalidSort_ExpectBadRequestResponse()
+    public function callPermissionListEndpointWithInvalidSort_ExpectBadRequestResponse()
     {
         // Arrange
         $data = [
@@ -42,7 +43,7 @@ class RoleListTest extends TestCase
         // Assert
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
         $response->assertJsonFragment([
-            'code' => RoleErrorCode::ERR_INVALID_SORT,
+            'code' => PermissionErrorCode::ERR_INVALID_SORT,
         ]);
     }
 }
