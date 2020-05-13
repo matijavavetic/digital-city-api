@@ -5,6 +5,7 @@ namespace Tests\Integration\User;
 use Illuminate\Http\Response;
 use src\Applications\Http\Enum\ErrorCodes\UserErrorCode;
 use Tests\Integration\TestCase;
+use Faker\Factory as Faker;
 
 class UserInfoTest extends TestCase
 {
@@ -62,8 +63,10 @@ class UserInfoTest extends TestCase
     public function callUserUpdateEndpointWithInvalidIdentifierDataType_ExpectBadRequestResponse()
     {
         // Arrange
+        $faker = Faker::create();
+
         $data = [
-            'identifier' => 1,
+            'identifier' => $faker->boolean,
         ];
 
         // Act
@@ -73,6 +76,28 @@ class UserInfoTest extends TestCase
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
         $response->assertJsonFragment([
             'code' => UserErrorCode::ERR_INVALID_IDENTIFIER,
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function callUserInfoEndpointWithValidNonExistingIdentifier_ExpectBadRequestResponse()
+    {
+        // Arrange
+        $faker = Faker::create();
+
+        $data = [
+            'identifier' => $faker->word,
+        ];
+
+        // Act
+        $response = $this->json('POST', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonFragment([
+            'code' => "User with that identifier doesn't exist.",
         ]);
     }
 }
