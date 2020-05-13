@@ -3,7 +3,6 @@
 namespace Tests\Integration\User;
 
 use Illuminate\Http\Response;
-use src\Applications\Http\Enum\ErrorCodes\PermissionErrorCode;
 use src\Applications\Http\Enum\ErrorCodes\UserErrorCode;
 use Tests\Integration\TestCase;
 use Faker\Factory as Faker;
