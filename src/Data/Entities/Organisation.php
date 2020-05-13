@@ -25,4 +25,9 @@ class Organisation extends Model
     {
         return $this->belongsTo(County::class, 'county_id');
     }
+
+    public function tenders()
+    {
+        return $this->hasMany(Tender::class, 'organisation_id');
+    }
 }

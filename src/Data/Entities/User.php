@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Permission::class, 'user_permission');
     }
+
+    public function tenders()
+    {
+        return $this->hasMany(Tender::class, 'created_by_user_id');
+    }
 }

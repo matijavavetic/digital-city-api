@@ -1,11 +1,11 @@
 <?php
 
-namespace src\Applications\Http\FormRequests\Organisation;
+namespace src\Applications\Http\FormRequests\Tender;
 
-use src\Applications\Http\Enum\ErrorCodes\OrganisationErrorCode;
+use src\Applications\Http\Enum\ErrorCodes\TenderErrorCode;
 use src\Applications\Http\FormRequests\FormRequest;
 
-class OrganisationListRequest extends FormRequest
+class TenderInfoRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,9 +15,9 @@ class OrganisationListRequest extends FormRequest
     public function rules() : array
     {
         return [
-            'sort' => [
-                'nullable',
-                'in:ASC,DESC',
+            'identifier' => [
+                'required',
+                'string',
             ],
         ];
     }
@@ -30,7 +30,8 @@ class OrganisationListRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'sort.in' => OrganisationErrorCode::ERR_INVALID_SORT,
+            'identifier.required' => TenderErrorCode::ERR_EMPTY_IDENTIFIER,
+            'identifier.string'   => TenderErrorCode::ERR_INVALID_IDENTIFIER,
         ];
     }
 
@@ -54,7 +55,7 @@ class OrganisationListRequest extends FormRequest
     public function validationData() : array
     {
         $input = [
-            'sort'      => $this->input('sort')
+            'identifier' => $this->input('identifier'),
         ];
 
         return $input;

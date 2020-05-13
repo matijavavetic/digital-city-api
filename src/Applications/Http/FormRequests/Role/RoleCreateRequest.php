@@ -40,10 +40,10 @@ class RoleCreateRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'name.required'          => RoleErrorCode::ERR_EMPTY_NAME,
-            'name.string'            => RoleErrorCode::ERR_INVALID_NAME,
-            'permissions.required'   => RoleErrorCode::ERR_EMPTY_PERMISSIONS_FIELD,
-            'permissions.array'      => RoleErrorCode::ERR_INVALID_PERMISSIONS_FIELD,
+            'name.required'        => RoleErrorCode::ERR_EMPTY_NAME,
+            'name.string'          => RoleErrorCode::ERR_INVALID_NAME,
+            'permissions.required' => RoleErrorCode::ERR_EMPTY_PERMISSIONS_FIELD,
+            'permissions.array'    => RoleErrorCode::ERR_INVALID_PERMISSIONS_FIELD,
         ];
     }
 
