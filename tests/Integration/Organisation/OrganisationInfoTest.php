@@ -4,7 +4,6 @@ namespace Tests\Integration\Organisation;
 
 use Illuminate\Http\Response;
 use src\Applications\Http\Enum\ErrorCodes\OrganisationErrorCode;
-use src\Applications\Http\Enum\ErrorCodes\UserErrorCode;
 use Tests\Integration\TestCase;
 use Faker\Factory as Faker;
 
@@ -77,6 +76,28 @@ class OrganisationInfoTest extends TestCase
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
         $response->assertJsonFragment([
             'code' => OrganisationErrorCode::ERR_INVALID_IDENTIFIER,
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function callOrganisationInfoEndpointWithValidNonExistingIdentifier_ExpectBadRequestResponse()
+    {
+        // Arrange
+        $faker = Faker::create();
+
+        $data = [
+            'identifier' => $faker->word,
+        ];
+
+        // Act
+        $response = $this->json('POST', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonFragment([
+            'code' => "Organisation with that identifier doesn't exist.",
         ]);
     }
 }
