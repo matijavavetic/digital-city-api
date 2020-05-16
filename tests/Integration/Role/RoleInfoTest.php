@@ -36,4 +36,24 @@ class RoleInfoTest extends TestCase
             'name'       => $role['name']
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function callRoleInfoEndpointWithEmptyIdentifier_ExpectBadRequestResponse()
+    {
+        // Arrange
+        $data = [
+            'identifier' => '',
+        ];
+
+        // Act
+        $response = $this->json('POST', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonFragment([
+            'code' => RoleErrorCode::ERR_EMPTY_IDENTIFIER,
+        ]);
+    }
 }
