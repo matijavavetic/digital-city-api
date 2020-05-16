@@ -3,15 +3,16 @@
 namespace Tests\Unit\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use src\Applications\Http\Middleware\Jsonify;
 use Tests\TestCase;
 
 class JsonifyMiddlewareTest extends TestCase
 {
     /**
-     * @test
+     *
      */
-    public function callEndpointWithValidAcceptHeader_expectTestPass()
+    public function callEndpointWithValidAcceptHeader_ExpectRequestExpectsJsonTrue()
     {
         $request = Request::create('/', 'GET');
 
