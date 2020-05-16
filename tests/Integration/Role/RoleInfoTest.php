@@ -78,4 +78,26 @@ class RoleInfoTest extends TestCase
             'code' => RoleErrorCode::ERR_INVALID_IDENTIFIER,
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function callRoleInfoEndpointWithValidNonExistingIdentifier_ExpectBadRequestResponse()
+    {
+        // Arrange
+        $faker = Faker::create();
+
+        $data = [
+            'identifier' => $faker->word,
+        ];
+
+        // Act
+        $response = $this->json('POST', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonFragment([
+            'code' => "Role with that identifier doesn't exist.",
+        ]);
+    }
 }
