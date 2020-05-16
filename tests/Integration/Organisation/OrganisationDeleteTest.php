@@ -76,4 +76,26 @@ class OrganisationDeleteTest extends TestCase
             'code' => 'Organisation with that identifier does not exist',
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function callOrganisationDeleteEndpointWithInvalidIdentifierDataType_ExpectBadRequestResponse()
+    {
+        // Arrange
+        $faker = Faker::create();
+
+        $data = [
+            'identifier' => $faker->randomDigit,
+        ];
+
+        // Act
+        $response = $this->json('POST', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonFragment([
+            'code' => OrganisationErrorCode::ERR_INVALID_IDENTIFIER,
+        ]);
+    }
 }
