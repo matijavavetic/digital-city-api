@@ -51,4 +51,22 @@ class OrganisationCreateTest extends TestCase
             'code' => OrganisationErrorCode::ERR_INVALID_NAME,
         ]);
     }
+
+
+    public function callOrganisationCreateEndpointWithExistingName_ExpectBadRequestResponse()
+    {
+        // Arrange
+        $data = [
+            'name' => 'Grad Vukovar'
+        ];
+
+        // Act
+        $response = $this->json('POST', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonFragment([
+            'code' => 'Organisation with this name already exists.'
+        ]);
+    }
 }
