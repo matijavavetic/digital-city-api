@@ -56,4 +56,26 @@ class RoleInfoTest extends TestCase
             'code' => RoleErrorCode::ERR_EMPTY_IDENTIFIER,
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function callRoleInfoEndpointWithInvalidIdentifierDataType_ExpectBadRequestResponse()
+    {
+        // Arrange
+        $faker = Faker::create();
+
+        $data = [
+            'identifier' => $faker->boolean,
+        ];
+
+        // Act
+        $response = $this->json('POST', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonFragment([
+            'code' => RoleErrorCode::ERR_INVALID_IDENTIFIER,
+        ]);
+    }
 }
