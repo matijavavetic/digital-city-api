@@ -56,4 +56,24 @@ class OrganisationDeleteTest extends TestCase
             'code' => OrganisationErrorCode::ERR_EMPTY_IDENTIFIER,
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function callOrganisationDeleteEndpointWithNonExistingIdentifier_ExpectBadRequestResponse()
+    {
+        // Arrange
+        $data = [
+            'identifier' => 'non-existing-identifier'
+        ];
+
+        // Act
+        $response = $this->json('POST', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonFragment([
+            'code' => 'Organisation with that identifier does not exist',
+        ]);
+    }
 }
