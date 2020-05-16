@@ -32,4 +32,23 @@ class OrganisationCreateTest extends TestCase
         $response->assertStatus(Response::HTTP_CREATED);
         $response->assertJsonFragment($data);
     }
+
+    public function callOrganisationCreateEndpointWithInvalidData_ExpectBadRequestResponse()
+    {
+        // Arrange
+        $faker = Faker::create();
+
+        $data = [
+            'name' => $faker->randomDigit,
+        ];
+
+        // Act
+        $response = $this->json('POST', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonFragment([
+            'code' => OrganisationErrorCode::ERR_INVALID_NAME,
+        ]);
+    }
 }
