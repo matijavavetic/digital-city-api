@@ -36,4 +36,24 @@ class PermissionInfoTest extends TestCase
             'name'       => $permission['name']
         ]);
     }
+    
+    /**
+     * @test
+     */
+    public function callPermissionInfoEndpointWithEmptyIdentifier_ExpectBadRequestResponse()
+    {
+        // Arrange
+        $data = [
+            'identifier' => '',
+        ];
+
+        // Act
+        $response = $this->json('POST', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonFragment([
+            'code' => PermissionErrorCode::ERR_EMPTY_IDENTIFIER,
+        ]);
+    }
 }
