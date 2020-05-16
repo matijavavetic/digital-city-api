@@ -10,7 +10,7 @@ use Tests\TestCase;
 class JsonifyMiddlewareTest extends TestCase
 {
     /**
-     *
+     * @test
      */
     public function callEndpointWithValidAcceptHeader_ExpectRequestExpectsJsonTrue()
     {
