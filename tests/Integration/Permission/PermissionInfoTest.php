@@ -36,7 +36,7 @@ class PermissionInfoTest extends TestCase
             'name'       => $permission['name']
         ]);
     }
-    
+
     /**
      * @test
      */
@@ -54,6 +54,28 @@ class PermissionInfoTest extends TestCase
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
         $response->assertJsonFragment([
             'code' => PermissionErrorCode::ERR_EMPTY_IDENTIFIER,
+        ]);
+    }
+    
+    /**
+     * @test
+     */
+    public function callPermissionInfoEndpointWithInvalidIdentifierDataType_ExpectBadRequestResponse()
+    {
+        // Arrange
+        $faker = Faker::create();
+
+        $data = [
+            'identifier' => $faker->boolean,
+        ];
+
+        // Act
+        $response = $this->json('POST', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonFragment([
+            'code' => PermissionErrorCode::ERR_INVALID_IDENTIFIER,
         ]);
     }
 }
