@@ -87,4 +87,25 @@ class OrganisationUpdateTest extends TestCase
             'code' => OrganisationErrorCode::ERR_INVALID_NAME,
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function callOrganisationUpdateEndpointWithNonExistingIdentifierAndValidNameDataType_ExpectBadRequestResponse()
+    {
+        // Arrange
+        $data = [
+            'identifier' => 'non-existing-identifier',
+            'name'       => 'valid-name',
+        ];
+
+        // Act
+        $response = $this->json('POST', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonFragment([
+            'code' => "Organisation with that identifier doesn't exist.",
+        ]);
+    }
 }
