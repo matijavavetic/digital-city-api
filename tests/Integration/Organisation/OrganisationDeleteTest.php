@@ -35,4 +35,25 @@ class OrganisationDeleteTest extends TestCase
             'identifier' => $organisation['identifier'],
         ]);
     }
+
+
+    /**
+     * @test
+     */
+    public function callOrganisationDeleteEndpointWithEmptyIdentifier_ExpectBadRequestResponse()
+    {
+        // Arrange
+        $data = [
+            'identifier' => '',
+        ];
+
+        // Act
+        $response = $this->json('POST', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonFragment([
+            'code' => OrganisationErrorCode::ERR_EMPTY_IDENTIFIER,
+        ]);
+    }
 }
