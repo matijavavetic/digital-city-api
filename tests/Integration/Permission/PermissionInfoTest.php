@@ -56,7 +56,7 @@ class PermissionInfoTest extends TestCase
             'code' => PermissionErrorCode::ERR_EMPTY_IDENTIFIER,
         ]);
     }
-    
+
     /**
      * @test
      */
@@ -76,6 +76,28 @@ class PermissionInfoTest extends TestCase
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
         $response->assertJsonFragment([
             'code' => PermissionErrorCode::ERR_INVALID_IDENTIFIER,
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function callPermissionInfoEndpointWithValidNonExistingIdentifier_ExpectBadRequestResponse()
+    {
+        // Arrange
+        $faker = Faker::create();
+
+        $data = [
+            'identifier' => $faker->word,
+        ];
+
+        // Act
+        $response = $this->json('POST', $this->endpoint, $data);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonFragment([
+            'code' => "Permission with that identifier doesn't exist.",
         ]);
     }
 }
