@@ -1,6 +1,9 @@
 <?php
-namespace App\Http\Middleware;
+
+namespace src\Applications\Http\Middleware;
+
 use Closure;
+
 class Cors
 {
     public function handle($request, Closure $next)
