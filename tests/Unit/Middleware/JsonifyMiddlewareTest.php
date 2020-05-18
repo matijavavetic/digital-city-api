@@ -3,7 +3,6 @@
 namespace Tests\Unit\Middleware;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use src\Applications\Http\Middleware\Jsonify;
 use Tests\TestCase;
 
@@ -23,5 +22,22 @@ class JsonifyMiddlewareTest extends TestCase
         $middleware->handle($request, function ($response) {
             $this->assertTrue($response->expectsJson());
         });
+    }
+
+    /**
+     * @test
+     */
+    public function callEndpointWithNoAcceptHeader_ExpectRequestExpectsJsonFalse()
+    {
+        $request = Request::create('/', 'GET');
+
+        $middleware = new Jsonify;
+
+        try {
+            $middleware->handle($request, function () {} );
+        } catch (\Exception $e) {
+            $this->assertFalse($request->expectsJson());
+            $this->assertEquals(400, $e->getCode());
+        }
     }
 }
