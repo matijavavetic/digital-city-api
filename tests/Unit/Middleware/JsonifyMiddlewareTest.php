@@ -27,7 +27,7 @@ class JsonifyMiddlewareTest extends TestCase
     /**
      * @test
      */
-    public function callEndpointWithNoAcceptHeader_ExpectRequestExpectsJsonFalse()
+    public function callEndpointWithNoAcceptHeader_ExpectBadResponse()
     {
         $request = Request::create('/', 'GET');
 
