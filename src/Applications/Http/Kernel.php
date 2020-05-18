@@ -2,10 +2,10 @@
 
 namespace src\Applications\Http;
 
-use App\Http\Middleware\Cors;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use src\Applications\Http\Middleware\Authenticate;
 use src\Applications\Http\Middleware\Authorization;
+use src\Applications\Http\Middleware\Cors;
 use src\Applications\Http\Middleware\Jsonify;
 
 class Kernel extends HttpKernel
