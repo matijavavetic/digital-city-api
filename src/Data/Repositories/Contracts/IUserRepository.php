@@ -2,9 +2,9 @@
 
 namespace src\Data\Repositories\Contracts;
 
-use src\Business\Mappers\User\Request\Contracts\IUserCreateRequestMapper;
 use src\Data\Entities\Contracts\IUserEntity;
 use src\Data\Mappers\UserCollectionMapper;
+use src\Data\Mappers\UserRelationsCollection;
 
 interface IUserRepository
 {
@@ -15,6 +15,6 @@ interface IUserRepository
     public function findOneByAccessToken(string $accessToken) : IUserEntity;
     public function findOneByEmailAndAccessToken(string $email, string $accessToken) : IUserEntity;
     public function findOneByEmail(string $email) : IUserEntity;
-    public function store(IUserEntity $user, IUserCreateRequestMapper $mapper);
+    public function store(IUserEntity $user, UserRelationsCollection $relations);
     public function destroy(IUserEntity $user) : bool;
 }

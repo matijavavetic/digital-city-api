@@ -3,8 +3,9 @@
 namespace src\Data\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use src\Data\Mappers\Contracts\IUserRelatedEntity;
 
-class Organisation extends Model
+class Organisation extends Model implements IUserRelatedEntity
 {
     protected $table = 'organisation';
 

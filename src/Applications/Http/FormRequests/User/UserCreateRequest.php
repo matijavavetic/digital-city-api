@@ -28,7 +28,7 @@ class UserCreateRequest extends FormRequest
                 'array'
             ],
             'roles.*' => [
-                'integer',
+                'string',
                 'distinct'
             ],
             'permissions' => [

@@ -2,13 +2,13 @@
 
 namespace src\Data\Repositories;
 
-use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
-use src\Business\Mappers\User\Request\Contracts\IUserCreateRequestMapper;
 use src\Data\Entities\Contracts\IUserEntity;
+use src\Data\Entities\Permission;
+use src\Data\Entities\Role;
 use src\Data\Entities\User;
-use src\Data\Enums\HttpStatusCode;
 use src\Data\Mappers\UserCollectionMapper;
+use src\Data\Mappers\UserRelationsCollection;
 use src\Data\Repositories\Contracts\IUserRepository;
 
 class UserRepository implements IUserRepository
@@ -86,24 +86,16 @@ class UserRepository implements IUserRepository
             ->first();
     }
 
-    public function store(IUserEntity $user, IUserCreateRequestMapper $mapper)
+    public function store(IUserEntity $user, UserRelationsCollection $relations)
     {
-        $transaction = DB::transaction(function() use ($user, $mapper) {
+        $transaction = DB::transaction(function() use ($user, $relations) {
             $user->save();
 
-            if ($mapper->getRoles() !== null) {
-                try {
-                    $user->roles()->sync($mapper->getRoles());
-                } catch(QueryException $e) {
-                    throw new \Exception("Failed to store user's roles!", HttpStatusCode::HTTP_BAD_REQUEST);
-                }
-            }
-
-            if ($mapper->getPermissions() !== null) {
-                try {
-                    $user->permissions()->sync($mapper->getPermissions());
-                } catch (QueryException $e) {
-                    throw new \Exception("Failed to store user's permissions!", HttpStatusCode::HTTP_BAD_REQUEST);
+            foreach($relations as $relation) {
+                if($relation instanceof Role) {
+                    $user->roles()->save($relation);
+                } elseif($relation instanceof Permission) {
+                    $user->permissions()->save($relation);
                 }
             }
         });

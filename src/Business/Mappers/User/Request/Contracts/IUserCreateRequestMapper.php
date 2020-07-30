@@ -16,6 +16,7 @@ interface IUserCreateRequestMapper
     public function getCountry(): ?string;
     public function getCity(): ?string;
     public function getPermissions(): ?array;
+
     public function setFirstName(?string $firstName): void;
     public function setLastName(?string $lastName): void;
     public function setBirthDate(?string $birthDate): void;

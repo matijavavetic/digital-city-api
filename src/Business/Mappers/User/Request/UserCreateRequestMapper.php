@@ -3,8 +3,9 @@
 namespace src\Business\Mappers\User\Request;
 
 use src\Business\Mappers\User\Request\Contracts\IUserCreateRequestMapper;
+use src\Data\Mappers\Contracts\IUserCreateEntityMapper;
 
-class UserCreateRequestMapper implements IUserCreateRequestMapper
+class UserCreateRequestMapper implements IUserCreateRequestMapper, IUserCreateEntityMapper
 {
     private string $identifier;
     private string $username;

@@ -2,9 +2,9 @@
 
 namespace src\Data\Entities\Factories;
 
-use src\Business\Mappers\User\Request\Contracts\IUserCreateRequestMapper;
 use src\Data\Entities\Contracts\IUserEntity;
 use src\Data\Entities\User;
+use src\Data\Mappers\Contracts\IUserCreateEntityMapper;
 
 class UserEntityFactory
 {

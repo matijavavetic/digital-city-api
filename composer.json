@@ -11,6 +11,7 @@
         "php": "^7.4",
         "ext-json": "*",
         "bensampo/laravel-enum": "^1.26",
+        "doctrine/inflector": "^1.0",
         "fideloper/proxy": "^4.2",
         "firebase/php-jwt": "^3.0|^4.0|^5.0",
         "fruitcake/laravel-cors": "^2.0",
@@ -52,7 +53,6 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [

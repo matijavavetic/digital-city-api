@@ -5,7 +5,6 @@ namespace src\Business\Services;
 use Illuminate\Database\QueryException;
 use src\Business\Factories\User\UserCreateResponseMapperFactory;
 use src\Business\Factories\User\UserUpdateResponseMapperFactory;
-use src\Business\Mappers\User\Request\Contracts\IUserCreateRequestMapper;
 use src\Business\Mappers\User\Request\UserCreateRequestMapper;
 use src\Business\Mappers\User\Request\UserDeleteRequestMapper;
 use src\Business\Mappers\User\Request\UserUpdateRequestMapper;
@@ -14,6 +13,7 @@ use src\Business\Mappers\User\Response\UserUpdateResponseMapper;
 use src\Data\Entities\Factories\UserEntityFactory;
 use src\Business\Mappers\User\Response\UserCreateResponseMapper;
 use src\Data\Enums\HttpStatusCode;
+use src\Data\Mappers\UserRelationsCollection;
 use src\Data\Repositories\Contracts\IUserRepository;
 use src\Business\Mappers\User\Request\UserListRequestMapper;
 use src\Business\Mappers\User\Request\UserInfoRequestMapper;
@@ -22,14 +22,20 @@ use src\Business\Mappers\User\Response\UserListResponseMapper;
 use src\Business\Factories\User\UserListResponseMapperFactory;
 use src\Business\Factories\User\UserDeleteResponseMapperFactory;
 use src\Business\Factories\User\UserInfoResponseMapperFactory;
+use src\Data\Repositories\PermissionRepository;
+use src\Data\Repositories\RoleRepository;
 
 class UserService
 {
     private IUserRepository $userRepository;
+    private RoleRepository $roleRepository;
+    private PermissionRepository $permissionRepository;
 
-    public function __construct(IUserRepository $userRepository)
+    public function __construct(IUserRepository $userRepository, RoleRepository $roleRepository, PermissionRepository $permissionRepository)
     {
         $this->userRepository = $userRepository;
+        $this->roleRepository = $roleRepository;
+        $this->permissionRepository = $permissionRepository;
     }
 
     public function getAll(UserListRequestMapper $mapper) : UserListResponseMapper
@@ -60,10 +66,25 @@ class UserService
 
     public function create(UserCreateRequestMapper $mapper) : UserCreateResponseMapper
     {
-        $user = UserEntityFactory::make($mapper); //mapper impellements user create entity mapper contains all necessary data to map new user entity
+        $user = UserEntityFactory::make($mapper);
 
+        $userRelationsCollection = new UserRelationsCollection();
 
-        $this->userRepository->store($user, $mapper);
+        if($mapper->getRoles() !== null) {
+            foreach ($mapper->getRoles() as $role) {
+                $roleEntity = $this->roleRepository->findOne($role);
+                $userRelationsCollection->tack($roleEntity);
+            }
+        }
+
+        if($mapper->getPermissions() !== null) {
+            foreach ($mapper->getPermissions() as $permission) {
+                $permissionEntity = $this->permissionRepository->findOne($permission);
+                $userRelationsCollection->tack($permissionEntity);
+            }
+        }
+
+        $this->userRepository->store($user, $userRelationsCollection);
 
         $responseMapper = UserCreateResponseMapperFactory::make($user);
 
