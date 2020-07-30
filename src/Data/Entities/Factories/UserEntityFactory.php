@@ -8,7 +8,7 @@ use src\Data\Entities\User;
 
 class UserEntityFactory
 {
-    public static function make(IUserCreateRequestMapper $mapper) : IUserEntity
+    public static function make(IUserCreateEntityMapper $mapper) : IUserEntity
     {
         $user = new User();
 

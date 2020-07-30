@@ -6,6 +6,7 @@ use Illuminate\Database\QueryException;
 use src\Business\Factories\User\UserCreateResponseMapperFactory;
 use src\Business\Factories\User\UserUpdateResponseMapperFactory;
 use src\Business\Mappers\User\Request\Contracts\IUserCreateRequestMapper;
+use src\Business\Mappers\User\Request\UserCreateRequestMapper;
 use src\Business\Mappers\User\Request\UserDeleteRequestMapper;
 use src\Business\Mappers\User\Request\UserUpdateRequestMapper;
 use src\Business\Mappers\User\Response\UserDeleteResponseMapper;
@@ -57,9 +58,10 @@ class UserService
         return $responseMapper;
     }
 
-    public function create(IUserCreateRequestMapper $mapper) : UserCreateResponseMapper
+    public function create(UserCreateRequestMapper $mapper) : UserCreateResponseMapper
     {
-        $user = UserEntityFactory::make($mapper);
+        $user = UserEntityFactory::make($mapper); //mapper impellements user create entity mapper contains all necessary data to map new user entity
+
 
         $this->userRepository->store($user, $mapper);
 
