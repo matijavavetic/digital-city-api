@@ -4,8 +4,9 @@ namespace src\Data\Entities;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use src\Data\Entities\Contracts\IUserEntity;
 
-class User extends Authenticatable
+class User extends Authenticatable implements IUserEntity
 {
     protected $table = "users";
 
@@ -39,6 +40,61 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function setIdentifier(string $identifier)
+    {
+        $this->identifier = $identifier;
+    }
+
+    public function setUsername(string $username)
+    {
+        $this->username = $username;
+    }
+
+    public function setFirstName(string $firstName)
+    {
+        $this->firstname = $firstName;
+    }
+
+    public function setLastName(string $lastName)
+    {
+        $this->lastname = $lastName;
+    }
+
+    public function setEmail(string $email)
+    {
+        $this->email = $email;
+    }
+
+    public function setPassword(string $password)
+    {
+        $this->password = $password;
+    }
+
+    public function setBirthDate(string $birthDate)
+    {
+        $this->birth_date = $birthDate;
+    }
+
+    public function setCity(string $city)
+    {
+        $this->city = $city;
+    }
+
+    public function setCountry(string $country)
+    {
+        $this->country = $country;
+    }
+
+    public function setAccessToken(string $accessToken)
+    {
+        $this->access_token = $accessToken;
+    }
+
+    public function setActive(int $active)
+    {
+        $this->is_active = $active;
+    }
 
     public function roles()
     {

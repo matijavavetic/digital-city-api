@@ -2,18 +2,26 @@
 
 namespace src\Data\Repositories;
 
+use src\Data\Entities\Contracts\IUserEntity;
 use src\Data\Entities\User;
+use src\Data\Mappers\UserCollectionMapper;
 use src\Data\Repositories\Contracts\IUserRepository;
 
 class UserRepository implements IUserRepository
 {
-    public function get(string $sort)
+    public function get(string $sort) : UserCollectionMapper
     {
-        $user = new User();
+        $users = new User();
 
-        return $user
-            ->orderBy('id', $sort)
-            ->get();
+        $users->orderBy('id', $sort)->get();
+
+        $userCollection = new UserCollectionMapper();
+
+        foreach($users as $user) {
+            $userCollection->tack($user);
+        }
+
+        return $userCollection;
     }
 
     public function getWith(string $sort, array $relations)
@@ -64,13 +72,22 @@ class UserRepository implements IUserRepository
             ->first();
     }
 
-    public function store(User $user)
+    public function store(IUserEntity $user)
     {
         return $user->save();
     }
 
-    public function destroy(User $user)
+    public function destroy(IUserEntity $user)
     {
         return $user->delete();
+    }
+
+    public function findOneByAccessToken(string $accessToken)
+    {
+        $user = new User();
+
+        return $user
+            ->where('access_token', $accessToken)
+            ->first();
     }
 }

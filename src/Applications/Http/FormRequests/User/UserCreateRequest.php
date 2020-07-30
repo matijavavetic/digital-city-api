@@ -40,11 +40,11 @@ class UserCreateRequest extends FormRequest
                 'integer'
             ],
             'organisations' => [
-                'required',
+
                 'array'
             ],
             'organisations.*' => [
-                'required',
+
                 'distinct',
                 'integer'
             ],

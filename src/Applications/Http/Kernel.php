@@ -17,8 +17,9 @@ class Kernel extends HttpKernel
     protected $middlewareGroups = [
         'api' => [
             Jsonify::class,
+            Cors::class,
             Authorization::class,
-            Authenticate::class,
+            Authenticate::class
         ],
     ];
 }

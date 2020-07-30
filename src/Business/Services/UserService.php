@@ -13,6 +13,7 @@ use src\Data\Entities\User;
 use src\Business\Mappers\User\Request\UserCreateRequestMapper;
 use src\Business\Mappers\User\Response\UserCreateResponseMapper;
 use src\Data\Enums\HttpStatusCode;
+use src\Data\Repositories\Contracts\IUserRepository;
 use src\Data\Repositories\UserRepository;
 use src\Business\Mappers\User\Request\UserListRequestMapper;
 use src\Business\Mappers\User\Request\UserInfoRequestMapper;
@@ -24,9 +25,9 @@ use src\Business\Factories\User\UserInfoResponseMapperFactory;
 
 class UserService
 {
-    private UserRepository $userRepository;
+    private IUserRepository $userRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(IUserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }
@@ -39,7 +40,7 @@ class UserService
             $users = $this->userRepository->get($mapper->getSort());
         }
 
-        $responseMapper = UserListResponseMapperFactory::make($users);
+         $responseMapper = UserListResponseMapperFactory::make($users);
 
         return $responseMapper;
     }
@@ -61,17 +62,15 @@ class UserService
     {
         $user = new User();
 
-        $user->identifier = $mapper->getIdentifier();
-        $user->username = $mapper->getUsername();
-        $user->email = $mapper->getEmail();
-        $user->password = $mapper->getPassword();
-        $user->firstname = $mapper->getFirstName();
-        $user->lastname = $mapper->getLastName();
-        $user->birth_date = $mapper->getBirthDate();
-        $user->country = $mapper->getCountry();
-        $user->city = $mapper->getCity();
-
-        $stored = null;
+        $user->setIdentifier($mapper->getIdentifier());
+        $user->setUsername($mapper->getUsername());
+        $user->setEmail($mapper->getEmail());
+        $user->setPassword($mapper->getPassword());
+        $user->setFirstName($mapper->getFirstName());
+        $user->setLastName($mapper->getLastName());
+        $user->setBirthDate($mapper->getBirthDate());
+        $user->setCountry($mapper->getCountry());
+        $user->setCity($mapper->getCity());
 
         $stored = $this->userRepository->store($user);
 

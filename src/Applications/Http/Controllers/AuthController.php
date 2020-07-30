@@ -3,6 +3,8 @@
 namespace src\Applications\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use src\Applications\Http\Factories\Auth\SignOutRequestFactory;
+use src\Applications\Http\FormRequests\Auth\SignOutRequest;
 use Symfony\Component\HttpFoundation\Response;
 use src\Applications\Http\Factories\Auth\SignInRequestFactory;
 use src\Applications\Http\Factories\Auth\SignUpRequestFactory;
@@ -30,6 +32,17 @@ class AuthController extends Controller
         $requestMapper = SignInRequestFactory::make($data);
 
         $responseMapper = $service->signIn($requestMapper);
+
+        return new JsonResponse($responseMapper, Response::HTTP_OK);
+    }
+
+    public function signOut(SignOutRequest $request, AuthService $service)
+    {
+        $data = $request->validationData();
+
+        $requestMapper = SignOutRequestFactory::make($data);
+
+        $responseMapper = $service->signOut($requestMapper);
 
         return new JsonResponse($responseMapper, Response::HTTP_OK);
     }

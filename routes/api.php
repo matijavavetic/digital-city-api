@@ -42,3 +42,4 @@ Route::group(['middleware' => ['api']], function () {
 
 Route::post('/sign.up', [AuthController::class, 'signUp']);
 Route::post('/sign.in', [AuthController::class, 'signIn']);
+Route::post('/sign.out', [AuthController::class, 'signOut']);

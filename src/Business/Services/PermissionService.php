@@ -5,6 +5,7 @@ namespace src\Business\Services;
 use Ramsey\Uuid\Uuid;
 use src\Data\Entities\Permission;
 use src\Data\Enums\HttpStatusCode;
+use src\Data\Repositories\Contracts\IPermissionRepository;
 use src\Data\Repositories\PermissionRepository;
 use src\Business\Factories\Permission\PermissionInfoResponseMapperFactory;
 use src\Business\Mappers\Permission\Response\PermissionInfoResponseMapper;
@@ -24,9 +25,9 @@ use src\Business\Mappers\Permission\Response\PermissionDeleteResponseMapper;
 
 class PermissionService
 {
-    private PermissionRepository $permissionRepository;
+    private IPermissionRepository $permissionRepository;
 
-    public function __construct(PermissionRepository $permissionRepository)
+    public function __construct(IPermissionRepository $permissionRepository)
     {
         $this->permissionRepository = $permissionRepository;
     }

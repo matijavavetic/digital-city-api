@@ -13,6 +13,7 @@ use src\Data\Entities\Organisation;
 use src\Business\Mappers\Organisation\Request\OrganisationCreateRequestMapper;
 use src\Business\Mappers\Organisation\Response\OrganisationCreateResponseMapper;
 use src\Data\Enums\HttpStatusCode;
+use src\Data\Repositories\Contracts\IOrganisationRepository;
 use src\Data\Repositories\OrganisationRepository;
 use src\Business\Mappers\Organisation\Request\OrganisationListRequestMapper;
 use src\Business\Mappers\Organisation\Request\OrganisationInfoRequestMapper;
@@ -24,9 +25,9 @@ use src\Business\Factories\Organisation\OrganisationInfoResponseMapperFactory;
 
 class OrganisationService
 {
-    private OrganisationRepository $organisationRepository;
+    private IOrganisationRepository $organisationRepository;
 
-    public function __construct(OrganisationRepository $organisationRepository)
+    public function __construct(IOrganisationRepository $organisationRepository)
     {
         $this->organisationRepository = $organisationRepository;
     }

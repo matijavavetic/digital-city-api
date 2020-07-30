@@ -6,6 +6,7 @@ use Illuminate\Database\QueryException;
 use Ramsey\Uuid\Uuid;
 use src\Data\Entities\Role;
 use src\Data\Enums\HttpStatusCode;
+use src\Data\Repositories\Contracts\IRoleRepository;
 use src\Data\Repositories\RoleRepository;
 use src\Business\Factories\Role\RoleInfoResponseMapperFactory;
 use src\Business\Mappers\Role\Response\RoleInfoResponseMapper;
@@ -25,9 +26,9 @@ use src\Business\Mappers\Role\Response\RoleUpdateResponseMapper;
 
 class RoleService
 {
-    private RoleRepository $roleRepository;
+    private IRoleRepository $roleRepository;
 
-    public function __construct(RoleRepository $roleRepository)
+    public function __construct(IRoleRepository $roleRepository)
     {
         $this->roleRepository = $roleRepository;
     }

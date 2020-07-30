@@ -22,6 +22,7 @@ use src\Business\Mappers\Tender\Response\TenderUpdateResponseMapper;
 use src\Data\Entities\Role;
 use src\Data\Entities\Tender;
 use src\Data\Enums\HttpStatusCode;
+use src\Data\Repositories\Contracts\ITenderRepository;
 use src\Data\Repositories\RoleRepository;
 use src\Business\Factories\Role\RoleInfoResponseMapperFactory;
 use src\Business\Mappers\Role\Response\RoleInfoResponseMapper;
@@ -42,9 +43,9 @@ use src\Data\Repositories\TenderRepository;
 
 class TenderService
 {
-    private TenderRepository $tenderRepository;
+    private ITenderRepository $tenderRepository;
 
-    public function __construct(TenderRepository $tenderRepository)
+    public function __construct(ITenderRepository $tenderRepository)
     {
         $this->tenderRepository = $tenderRepository;
     }
