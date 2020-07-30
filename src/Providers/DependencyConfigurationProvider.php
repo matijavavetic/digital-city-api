@@ -16,16 +16,6 @@ use src\Data\Repositories\UserRepository;
 
 class DependencyConfigurationProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
-    }
-
     public function BindAbstractToConcrete()
     {
         $this->app->bind(IUserRepository::class, UserRepository::class);
@@ -35,11 +25,6 @@ class DependencyConfigurationProvider extends ServiceProvider
         $this->app->bind(ITenderRepository::class, TenderRepository::class);
     }
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
     public function boot()
     {
         $this->BindAbstractToConcrete();

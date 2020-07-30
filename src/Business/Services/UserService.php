@@ -5,16 +5,15 @@ namespace src\Business\Services;
 use Illuminate\Database\QueryException;
 use src\Business\Factories\User\UserCreateResponseMapperFactory;
 use src\Business\Factories\User\UserUpdateResponseMapperFactory;
+use src\Business\Mappers\User\Request\Contracts\IUserCreateRequestMapper;
 use src\Business\Mappers\User\Request\UserDeleteRequestMapper;
 use src\Business\Mappers\User\Request\UserUpdateRequestMapper;
 use src\Business\Mappers\User\Response\UserDeleteResponseMapper;
 use src\Business\Mappers\User\Response\UserUpdateResponseMapper;
-use src\Data\Entities\User;
-use src\Business\Mappers\User\Request\UserCreateRequestMapper;
+use src\Data\Entities\Factories\UserEntityFactory;
 use src\Business\Mappers\User\Response\UserCreateResponseMapper;
 use src\Data\Enums\HttpStatusCode;
 use src\Data\Repositories\Contracts\IUserRepository;
-use src\Data\Repositories\UserRepository;
 use src\Business\Mappers\User\Request\UserListRequestMapper;
 use src\Business\Mappers\User\Request\UserInfoRequestMapper;
 use src\Business\Mappers\User\Response\UserInfoResponseMapper;
@@ -58,41 +57,11 @@ class UserService
         return $responseMapper;
     }
 
-    public function create(UserCreateRequestMapper $mapper) : UserCreateResponseMapper
+    public function create(IUserCreateRequestMapper $mapper) : UserCreateResponseMapper
     {
-        $user = new User();
+        $user = UserEntityFactory::make($mapper);
 
-        $user->setIdentifier($mapper->getIdentifier());
-        $user->setUsername($mapper->getUsername());
-        $user->setEmail($mapper->getEmail());
-        $user->setPassword($mapper->getPassword());
-        $user->setFirstName($mapper->getFirstName());
-        $user->setLastName($mapper->getLastName());
-        $user->setBirthDate($mapper->getBirthDate());
-        $user->setCountry($mapper->getCountry());
-        $user->setCity($mapper->getCity());
-
-        $stored = $this->userRepository->store($user);
-
-        if ($stored === false) {
-            throw new \Exception("Failed to store new user!", HttpStatusCode::HTTP_BAD_REQUEST);
-        }
-
-        if ($mapper->getRoles() !== null) {
-            try {
-                $user->roles()->sync($mapper->getRoles());
-            } catch(QueryException $e) {
-                throw new \Exception("Failed to store user's roles!", HttpStatusCode::HTTP_BAD_REQUEST);
-            }
-        }
-
-        if ($mapper->getPermissions() !== null) {
-            try {
-                $user->permissions()->sync($mapper->getPermissions());
-            } catch (QueryException $e) {
-                throw new \Exception("Failed to store user's permissions!", HttpStatusCode::HTTP_BAD_REQUEST);
-            }
-        }
+        $this->userRepository->store($user, $mapper);
 
         $responseMapper = UserCreateResponseMapperFactory::make($user);
 
@@ -135,8 +104,6 @@ class UserService
             $user->city = $mapper->getCity();
         }
 
-        $stored = null;
-
         $stored = $this->userRepository->store($user);
 
         if ($stored === false) {
@@ -167,8 +134,6 @@ class UserService
     public function delete(UserDeleteRequestMapper $mapper) : UserDeleteResponseMapper
     {
         $user = $this->userRepository->findOne($mapper->getIdentifier());
-
-        $stored = null;
 
         $stored = $this->userRepository->destroy($user);
 

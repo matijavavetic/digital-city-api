@@ -44,13 +44,13 @@ class UserListResponseMapperFactory
                 }
             }
 
-            $userMapper = new UserMapper($user->identifier, $user->username, $user->email);
+            $userMapper = new UserMapper($user->getIdentifier(), $user->getUsername(), $user->getEmail());
 
-            $userMapper->setFirstName($user->firstname);
-            $userMapper->setLastName($user->lastname);
-            $userMapper->setBirthDate($user->birth_date);
-            $userMapper->setCountry($user->country);
-            $userMapper->setCity($user->city);
+            $userMapper->setFirstName($user->getFirstName());
+            $userMapper->setLastName($user->getLastName());
+            $userMapper->setBirthDate($user->getBirthDate());
+            $userMapper->setCountry($user->getCountry());
+            $userMapper->setCity($user->getCity());
             $userMapper->setRoles($rolesMapper);
             $userMapper->setPermissions($permissionsMapper);
             $userMapper->setOrganisations($organisationsMapper);

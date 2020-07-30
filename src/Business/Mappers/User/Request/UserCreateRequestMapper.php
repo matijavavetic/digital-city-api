@@ -2,7 +2,9 @@
 
 namespace src\Business\Mappers\User\Request;
 
-class UserCreateRequestMapper
+use src\Business\Mappers\User\Request\Contracts\IUserCreateRequestMapper;
+
+class UserCreateRequestMapper implements IUserCreateRequestMapper
 {
     private string $identifier;
     private string $username;
@@ -17,13 +19,12 @@ class UserCreateRequestMapper
     private ?array $roles;
     private ?array $permissions;
 
-    public function __construct(string $identifier, string $email, string $username, string $password, array $organisations)
+    public function __construct(string $identifier, string $email, string $username, string $password)
     {
-        $this->identifier    = $identifier;
-        $this->email         = $email;
-        $this->username      = $username;
-        $this->password      = $password;
-        $this->organisations = $organisations;
+        $this->identifier = $identifier;
+        $this->email      = $email;
+        $this->username   = $username;
+        $this->password   = $password;
     }
 
     public function getIdentifier() : string
