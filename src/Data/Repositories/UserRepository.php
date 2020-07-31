@@ -86,26 +86,21 @@ class UserRepository implements IUserRepository
             ->first();
     }
 
-    public function store(IUserEntity $user) : bool
+    public function store(IUserEntity $user, UserRelationsCollection $relations) : void
     {
-        return $user->save();
-    }
-
-    public function storeWithRelations(IUserEntity $user, UserRelationsCollection $relations)
-    {
-        $transaction = DB::transaction(function() use ($user, $relations) {
+        DB::transaction(function() use ($user, $relations) {
             $user->save();
 
-            foreach($relations as $relation) {
-                if($relation instanceof Role) {
-                    $user->roles()->save($relation);
-                } elseif($relation instanceof Permission) {
-                    $user->permissions()->save($relation);
+            if(empty($relations) === false) {
+                foreach ($relations as $relation) {
+                    if ($relation instanceof Role) {
+                        $user->roles()->save($relation);
+                    } elseif ($relation instanceof Permission) {
+                        $user->permissions()->save($relation);
+                    }
                 }
             }
         });
-
-        return $transaction;
     }
 
     public function destroy(IUserEntity $user) : bool
