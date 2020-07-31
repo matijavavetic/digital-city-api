@@ -27,7 +27,7 @@ class UserListResponseMapperFactory
 
             if ($user->relationLoaded('organisations')) {
                 foreach ($user->organisations as $organisation) {
-                    $organisationMapper = new OrganisationMapper($organisation->identifier, $organisation->name, $organisation->city, $organisation->county, $organisation->country);
+                    $organisationMapper = new OrganisationMapper($organisation->identifier, $organisation->name, $organisation->city, $organisation->country);
                     $organisationMapper->setDescription($organisation->description);
                     $organisationMapper->setPrimaryColor($organisation->primary_color);
                     $organisationMapper->setSecondaryColor($organisation->secondary_color);

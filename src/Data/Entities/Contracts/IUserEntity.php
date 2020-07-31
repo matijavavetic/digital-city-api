@@ -14,4 +14,11 @@ interface IUserEntity
     public function setCountry(string $country) : void;
     public function setAccessToken(string $accessToken) : void;
     public function setActive(int $active) : void;
+
+    public function getPassword() : string;
+    public function getUsername() : string;
+
+    public function getRoles() : ?array;
+    public function getOrganisations() : ?array;
+    public function getPermissions() : ?array;
 }

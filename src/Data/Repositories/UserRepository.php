@@ -86,7 +86,7 @@ class UserRepository implements IUserRepository
             ->first();
     }
 
-    public function store(IUserEntity $user, UserRelationsCollection $relations) : void
+    public function store(IUserEntity $user, ?UserRelationsCollection $relations) : IUserEntity
     {
         DB::transaction(function() use ($user, $relations) {
             $user->save();
@@ -101,6 +101,8 @@ class UserRepository implements IUserRepository
                 }
             }
         });
+
+        return $user;
     }
 
     public function destroy(IUserEntity $user) : bool

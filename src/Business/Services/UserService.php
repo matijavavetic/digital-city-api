@@ -83,11 +83,7 @@ class UserService
             }
         }
 
-        if ($userRelationsCollection !== null) {
-            $this->userRepository->storeWithRelations($user,  $userRelationsCollection);
-        } else {
-            $this->userRepository->store($user);
-        }
+        $this->userRepository->store($user, $userRelationsCollection);
 
         $responseMapper = UserCreateResponseMapperFactory::make($user);
 

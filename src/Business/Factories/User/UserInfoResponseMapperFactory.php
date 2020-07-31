@@ -18,24 +18,24 @@ class  UserInfoResponseMapperFactory
         $organisationsMapper = [];
 
         if ($user->relationLoaded('roles')) {
-            foreach ($user->roles as $role) {
+            foreach ($user->getRoles() as $role) {
                 $rolesMapper[] = new RoleMapper($role->identifier, $role->name);
             }
         }
 
         if ($user->relationLoaded('permissions')) {
-            foreach ($user->permissions as $permission) {
+            foreach ($user->getPermissions() as $permission) {
                 $permissionsMapper[] = new PermissionMapper($permission->identifier, $permission->name);
             }
         }
 
         if ($user->relationLoaded('organisations')) {
-            foreach ($user->organisations as $organisation) {
+            foreach ($user->getOrganisations() as $organisation) {
                 $organisationsMapper[] = new OrganisationMapper($organisation->identifier, $organisation->name, $organisation->city, $organisation->country);
             }
         }
 
-        $userMapper = new UserMapper($user->identifier, $user->username, $user->email);
+        $userMapper = new UserMapper($user->getIdentifier(), $user->getUsername(), $user->getEmail());
 
         $userMapper->setFirstName($user->getFirstName());
         $userMapper->setLastName($user->getLastName());

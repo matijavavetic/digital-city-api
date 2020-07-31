@@ -103,6 +103,16 @@ class User extends Authenticatable implements IUserEntity
         return $this->identifier;
     }
 
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
     public function getFirstName() : string
     {
         return $this->firstname;
@@ -141,6 +151,21 @@ class User extends Authenticatable implements IUserEntity
     public function getActive() : int
     {
         return $this->is_active;
+    }
+
+    public function getRoles() : ?array
+    {
+        return $this->roles;
+    }
+
+    public function getOrganisations() : ?array
+    {
+        return $this->organisations;
+    }
+
+    public function getPermissions(): ?array
+    {
+        return $this->permissions;
     }
 
     public function roles() : BelongsToMany

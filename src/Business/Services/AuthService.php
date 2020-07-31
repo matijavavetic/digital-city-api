@@ -31,14 +31,12 @@ class AuthService
     {
         $user = new User();
 
-        $user->identifier = $mapper->getIdentifier();
-        $user->username = $mapper->getUsername();
-        $user->email = $mapper->getEmail();
-        $user->password = $mapper->getPassword();
+        $user->setIdentifier($mapper->getIdentifier());
+        $user->setUsername($mapper->getUsername());
+        $user->setEmail($mapper->getEmail());
+        $user->setPassword($mapper->getPassword());
 
-        $stored = null;
-
-        $stored = $this->userRepository->store($user);
+        $stored = $this->userRepository->store($user, null);
 
         if ($stored === false) {
             throw new \Exception("Failed to store new user!", HttpStatusCode::HTTP_BAD_REQUEST);
@@ -57,7 +55,7 @@ class AuthService
             throw new \Exception("User not found!", HttpStatusCode::HTTP_NOT_FOUND);
         }
 
-        $isPasswordCorrect = Hash::check($mapper->getPassword(), $user->password);
+        $isPasswordCorrect = Hash::check($mapper->getPassword(), $user->getPassword());
 
         if ($isPasswordCorrect === false) {
             throw new \Exception("Incorrect password!", HttpStatusCode::HTTP_BAD_REQUEST);
@@ -66,9 +64,9 @@ class AuthService
         $randomString = Str::random(100);
         $accessToken = Hash::make($randomString);
 
-        $user->access_token = $accessToken;
+        $user->setAccessToken($accessToken);
 
-        $stored = $this->userRepository->store($user);
+        $stored = $this->userRepository->store($user, null);
 
         if ($stored === false) {
             throw new \Exception("Error occurred!", HttpStatusCode::HTTP_BAD_REQUEST);
@@ -78,8 +76,8 @@ class AuthService
         $privateKey = file_get_contents($pathToPrivateKey);
 
         $data = [
-            "username"    => $user->username,
-            "email"       => $user->email,
+            "username"    => $user->getUsername(),
+            "email"       => $user->getEmail(),
             "accessToken" => $accessToken
         ];
 
@@ -112,9 +110,9 @@ class AuthService
             throw new \Exception("User not found!", HttpStatusCode::HTTP_NOT_FOUND);
         }
 
-        $user->access_token = null;
+        $user->setAccessToken(null);
 
-        $this->userRepository->store($user);
+        $this->userRepository->store($user, null);
 
         Auth::logout();
 
