@@ -2,6 +2,7 @@
 
 namespace src\Business\Services;
 
+use Exception;
 use src\Business\Factories\User\UserCreateResponseMapperFactory;
 use src\Business\Factories\User\UserUpdateResponseMapperFactory;
 use src\Business\Mappers\User\Request\UserCreateRequestMapper;
@@ -126,7 +127,7 @@ class UserService
         $stored = $this->userRepository->destroy($user);
 
         if ($stored === false) {
-            throw new \Exception("Failed to delete user!", HttpStatusCode::HTTP_BAD_REQUEST);
+            throw new Exception("Failed to delete user!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         $responseMapper = UserDeleteResponseMapperFactory::make($user);
