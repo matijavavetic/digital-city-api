@@ -2,7 +2,6 @@
 
 namespace src\Business\Services;
 
-use Illuminate\Database\QueryException;
 use src\Business\Factories\User\UserCreateResponseMapperFactory;
 use src\Business\Factories\User\UserUpdateResponseMapperFactory;
 use src\Business\Mappers\User\Request\UserCreateRequestMapper;
@@ -70,18 +69,24 @@ class UserService
 
         $userRelationsCollection = new UserRelationsCollection();
 
-        if($mapper->getRoles() !== null) {
-            foreach ($mapper->getRoles() as $role) {
-                $roleEntity = $this->roleRepository->findOne($role);
-                $userRelationsCollection->tack($roleEntity);
+        if ($mapper->getRoles() !== null) {
+            foreach ($mapper->getRoles() as $roleIdentifier) {
+                $role = $this->roleRepository->findOne($roleIdentifier);
+                $userRelationsCollection->tack($role);
             }
         }
 
-        if($mapper->getPermissions() !== null) {
-            foreach ($mapper->getPermissions() as $permission) {
-                $permissionEntity = $this->permissionRepository->findOne($permission);
-                $userRelationsCollection->tack($permissionEntity);
+        if ($mapper->getPermissions() !== null) {
+            foreach ($mapper->getPermissions() as $permissionIdentifier) {
+                $permission = $this->permissionRepository->findOne($permissionIdentifier);
+                $userRelationsCollection->tack($permission);
             }
+        }
+
+        if ($userRelationsCollection !== null) {
+            $this->userRepository->storeWithRelations($user,  $userRelationsCollection);
+        } else {
+            $this->userRepository->store($user);
         }
 
         $responseMapper = UserCreateResponseMapperFactory::make($user);
@@ -93,59 +98,25 @@ class UserService
     {
         $user = $this->userRepository->findOne($mapper->getIdentifier());
 
-        if ($mapper->getUsername() !== null) {
-            $user->username = $mapper->getUsername();
-        }
+        $updatedUser = UserEntityFactory::update($user, $mapper);
 
-        if ($mapper->getEmail() !== null) {
-            $user->email = $mapper->getEmail();
-        }
-
-        if ($mapper->getPassword() !== null) {
-            $user->password = $mapper->getPassword();
-        }
-
-        if ($mapper->getFirstName() !== null) {
-            $user->firstname = $mapper->getFirstName();
-        }
-
-        if ($mapper->getLastName() !== null) {
-            $user->lastname = $mapper->getLastName();
-        }
-
-        if ($mapper->getBirthDate() !== null) {
-            $user->birth_date = $mapper->getBirthDate();
-        }
-
-        if ($mapper->getCountry() !== null) {
-            $user->country = $mapper->getCountry();
-        }
-
-        if ($mapper->getCity() !== null) {
-            $user->city = $mapper->getCity();
-        }
-
-        $stored = $this->userRepository->store($user);
-
-        if ($stored === false) {
-            throw new \Exception("Failed to update existing user!", HttpStatusCode::HTTP_BAD_REQUEST);
-        }
+        $userRelationsCollection = new UserRelationsCollection();
 
         if ($mapper->getRoles() !== null) {
-            try {
-                $user->roles()->sync($mapper->getRoles());
-            } catch (QueryException $e) {
-                throw new \Exception("Failed to store user's roles!", HttpStatusCode::HTTP_BAD_REQUEST);
+            foreach ($mapper->getRoles() as $roleIdentifier) {
+                $role = $this->roleRepository->findOne($roleIdentifier);
+                $userRelationsCollection->tack($role);
             }
         }
 
         if ($mapper->getPermissions() !== null) {
-            try {
-                $user->permissions()->sync($mapper->getPermissions());
-            } catch (QueryException $e) {
-                throw new \Exception("Failed to store user's permissions!", HttpStatusCode::HTTP_BAD_REQUEST);
+            foreach ($mapper->getPermissions() as $permissionIdentifier) {
+                $permission = $this->permissionRepository->findOne($permissionIdentifier);
+                $userRelationsCollection->tack($permission);
             }
         }
+
+        $this->userRepository->store($updatedUser, $userRelationsCollection);
 
         $responseMapper = UserUpdateResponseMapperFactory::make($user);
 

@@ -52,7 +52,7 @@ class UserUpdateRequest extends FormRequest
                 'array'
             ],
             'roles.*' => [
-                'integer',
+                'string',
                 'distinct'
             ],
             'permissions' => [
@@ -61,7 +61,7 @@ class UserUpdateRequest extends FormRequest
             ],
             'permissions.*' => [
                 'distinct',
-                'integer'
+                'string'
             ],
             'organisations' => [
                 'nullable',
@@ -69,7 +69,7 @@ class UserUpdateRequest extends FormRequest
             ],
             'organisations.*' => [
                 'distinct',
-                'integer'
+                'string'
             ]
         ];
     }
