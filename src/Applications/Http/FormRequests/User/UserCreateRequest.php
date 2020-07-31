@@ -37,7 +37,7 @@ class UserCreateRequest extends FormRequest
             ],
             'permissions.*' => [
                 'distinct',
-                'integer'
+                'string'
             ],
             'organisations' => [
                 'nullable',
@@ -45,7 +45,7 @@ class UserCreateRequest extends FormRequest
             ],
             'organisations.*' => [
                 'distinct',
-                'integer'
+                'string'
             ],
             'firstName' => [
                 'nullable',

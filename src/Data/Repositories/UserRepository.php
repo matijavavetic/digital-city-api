@@ -86,7 +86,12 @@ class UserRepository implements IUserRepository
             ->first();
     }
 
-    public function store(IUserEntity $user, UserRelationsCollection $relations)
+    public function store(IUserEntity $user) : bool
+    {
+        return $user->save();
+    }
+
+    public function storeWithRelations(IUserEntity $user, UserRelationsCollection $relations)
     {
         $transaction = DB::transaction(function() use ($user, $relations) {
             $user->save();

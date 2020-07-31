@@ -14,6 +14,8 @@ use src\Data\Entities\Factories\UserEntityFactory;
 use src\Business\Mappers\User\Response\UserCreateResponseMapper;
 use src\Data\Enums\HttpStatusCode;
 use src\Data\Mappers\UserRelationsCollection;
+use src\Data\Repositories\Contracts\IPermissionRepository;
+use src\Data\Repositories\Contracts\IRoleRepository;
 use src\Data\Repositories\Contracts\IUserRepository;
 use src\Business\Mappers\User\Request\UserListRequestMapper;
 use src\Business\Mappers\User\Request\UserInfoRequestMapper;
@@ -22,16 +24,14 @@ use src\Business\Mappers\User\Response\UserListResponseMapper;
 use src\Business\Factories\User\UserListResponseMapperFactory;
 use src\Business\Factories\User\UserDeleteResponseMapperFactory;
 use src\Business\Factories\User\UserInfoResponseMapperFactory;
-use src\Data\Repositories\PermissionRepository;
-use src\Data\Repositories\RoleRepository;
 
 class UserService
 {
     private IUserRepository $userRepository;
-    private RoleRepository $roleRepository;
-    private PermissionRepository $permissionRepository;
+    private IRoleRepository $roleRepository;
+    private IPermissionRepository $permissionRepository;
 
-    public function __construct(IUserRepository $userRepository, RoleRepository $roleRepository, PermissionRepository $permissionRepository)
+    public function __construct(IUserRepository $userRepository, IRoleRepository $roleRepository, IPermissionRepository $permissionRepository)
     {
         $this->userRepository = $userRepository;
         $this->roleRepository = $roleRepository;
@@ -83,8 +83,6 @@ class UserService
                 $userRelationsCollection->tack($permissionEntity);
             }
         }
-
-        $this->userRepository->store($user, $userRelationsCollection);
 
         $responseMapper = UserCreateResponseMapperFactory::make($user);
 

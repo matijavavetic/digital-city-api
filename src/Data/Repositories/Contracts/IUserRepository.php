@@ -15,6 +15,7 @@ interface IUserRepository
     public function findOneByAccessToken(string $accessToken) : IUserEntity;
     public function findOneByEmailAndAccessToken(string $email, string $accessToken) : IUserEntity;
     public function findOneByEmail(string $email) : IUserEntity;
-    public function store(IUserEntity $user, UserRelationsCollection $relations);
+    public function store(IUserEntity $user) : bool;
+    public function storeWithRelations(IUserEntity $user, UserRelationsCollection $relations);
     public function destroy(IUserEntity $user) : bool;
 }
