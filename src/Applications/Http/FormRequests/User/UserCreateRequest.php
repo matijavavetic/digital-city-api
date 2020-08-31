@@ -24,33 +24,49 @@ class UserCreateRequest extends FormRequest
                 'string'
             ],
             'roles' => [
-                'required',
+                'nullable',
                 'array'
             ],
             'roles.*' => [
-                'required',
-                'integer',
+                'string',
                 'distinct'
             ],
-            'permissions' => 'nullable|array',
+            'permissions' => [
+                'nullable',
+                'array'
+            ],
             'permissions.*' => [
                 'distinct',
-                'integer'
+                'string'
             ],
             'organisations' => [
-                'required',
+                'nullable',
                 'array'
             ],
             'organisations.*' => [
-                'required',
                 'distinct',
-                'integer'
+                'string'
             ],
-            'firstName' => 'nullable|string',
-            'lastName' => 'nullable|string',
-            'birthDate' => 'nullable|date',
-            'country' => 'nullable|string',
-            'city' => 'nullable|string',
+            'firstName' => [
+                'nullable',
+                'string'
+            ],
+            'lastName' => [
+                'nullable',
+                'string'
+            ],
+            'birthDate' => [
+                'nullable',
+                'date'
+            ],
+            'country' => [
+                'nullable',
+                'string',
+            ],
+            'city' => [
+                'nullable',
+                'string',
+            ]
         ];
     }
 

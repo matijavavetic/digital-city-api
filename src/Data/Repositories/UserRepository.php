@@ -2,31 +2,53 @@
 
 namespace src\Data\Repositories;
 
+use Illuminate\Support\Facades\DB;
+use src\Data\Entities\Contracts\IUserEntity;
+use src\Data\Entities\Permission;
+use src\Data\Entities\Role;
 use src\Data\Entities\User;
+use src\Data\Mappers\UserCollectionMapper;
+use src\Data\Mappers\UserRelationsCollection;
 use src\Data\Repositories\Contracts\IUserRepository;
 
 class UserRepository implements IUserRepository
 {
-    public function get(string $sort)
+    public function get(string $sort) : UserCollectionMapper
     {
-        $user = new User();
+        $userEntity = new User();
 
-        return $user
+        $users = $userEntity
             ->orderBy('id', $sort)
             ->get();
+
+        $usersCollection = new UserCollectionMapper();
+
+        foreach($users as $user) {
+            $usersCollection->tack($user);
+        }
+
+        return $usersCollection;
     }
 
-    public function getWith(string $sort, array $relations)
+    public function getWith(string $sort, array $relations) : UserCollectionMapper
     {
-        $user = new User();
+        $userEntity = new User();
 
-        return $user
+        $users = $userEntity
             ->orderBy('id', $sort)
             ->with($relations)
             ->get();
+
+        $usersCollection = new UserCollectionMapper();
+
+        foreach($users as $user) {
+            $usersCollection->tack($user);
+        }
+
+        return $usersCollection;
     }
 
-    public function findOne(string $identifier)
+    public function findOne(string $identifier) : IUserEntity
     {
         $user = new User();
 
@@ -35,7 +57,7 @@ class UserRepository implements IUserRepository
             ->first();
     }
 
-    public function findOneWith(string $identifier, array $relations)
+    public function findOneWith(string $identifier, array $relations) : IUserEntity
     {
         $user = new User();
 
@@ -45,7 +67,7 @@ class UserRepository implements IUserRepository
             ->first();
     }
 
-    public function findOneByEmail(string $email)
+    public function findOneByEmail(string $email) : IUserEntity
     {
         $user = new User();
 
@@ -54,7 +76,7 @@ class UserRepository implements IUserRepository
             ->first();
     }
 
-    public function findOneByEmailAndAccessToken(string $email, string $accessToken)
+    public function findOneByEmailAndAccessToken(string $email, string $accessToken) : IUserEntity
     {
         $user = new User();
 
@@ -64,13 +86,36 @@ class UserRepository implements IUserRepository
             ->first();
     }
 
-    public function store(User $user)
+    public function store(IUserEntity $user, ?UserRelationsCollection $relations) : IUserEntity
     {
-        return $user->save();
+        DB::transaction(function() use ($user, $relations) {
+            $user->save();
+
+            if(empty($relations) === false) {
+                foreach ($relations as $relation) {
+                    if ($relation instanceof Role) {
+                        $user->roles()->save($relation);
+                    } elseif ($relation instanceof Permission) {
+                        $user->permissions()->save($relation);
+                    }
+                }
+            }
+        });
+
+        return $user;
     }
 
-    public function destroy(User $user)
+    public function destroy(IUserEntity $user) : bool
     {
         return $user->delete();
+    }
+
+    public function findOneByAccessToken(string $accessToken) : IUserEntity
+    {
+        $user = new User();
+
+        return $user
+            ->where('access_token', $accessToken)
+            ->first();
     }
 }

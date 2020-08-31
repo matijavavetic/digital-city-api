@@ -12,7 +12,7 @@ class Authorization
     {
         $hasAuthorizationHeader = $request->hasHeader("Authorization");
 
-        if($hasAuthorizationHeader === false) {
+        if ($hasAuthorizationHeader === false) {
             throw new \Exception("Authorization is missing.", 400);
         }
 

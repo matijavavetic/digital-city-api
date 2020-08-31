@@ -27,7 +27,7 @@ class UserListResponseMapperFactory
 
             if ($user->relationLoaded('organisations')) {
                 foreach ($user->organisations as $organisation) {
-                    $organisationMapper = new OrganisationMapper($organisation->identifier, $organisation->name, $organisation->city, $organisation->county, $organisation->country);
+                    $organisationMapper = new OrganisationMapper($organisation->identifier, $organisation->name, $organisation->city, $organisation->country);
                     $organisationMapper->setDescription($organisation->description);
                     $organisationMapper->setPrimaryColor($organisation->primary_color);
                     $organisationMapper->setSecondaryColor($organisation->secondary_color);
@@ -44,13 +44,13 @@ class UserListResponseMapperFactory
                 }
             }
 
-            $userMapper = new UserMapper($user->identifier, $user->username, $user->email);
+            $userMapper = new UserMapper($user->getIdentifier(), $user->getUsername(), $user->getEmail());
 
-            $userMapper->setFirstName($user->firstname);
-            $userMapper->setLastName($user->lastname);
-            $userMapper->setBirthDate($user->birth_date);
-            $userMapper->setCountry($user->country);
-            $userMapper->setCity($user->city);
+            $userMapper->setFirstName($user->getFirstName());
+            $userMapper->setLastName($user->getLastName());
+            $userMapper->setBirthDate($user->getBirthDate());
+            $userMapper->setCountry($user->getCountry());
+            $userMapper->setCity($user->getCity());
             $userMapper->setRoles($rolesMapper);
             $userMapper->setPermissions($permissionsMapper);
             $userMapper->setOrganisations($organisationsMapper);

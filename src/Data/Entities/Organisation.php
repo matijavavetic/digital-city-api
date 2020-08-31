@@ -3,8 +3,9 @@
 namespace src\Data\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use src\Data\Mappers\Contracts\IUserRelatedEntity;
 
-class Organisation extends Model
+class Organisation extends Model implements IUserRelatedEntity
 {
     protected $table = 'organisation';
 
@@ -24,5 +25,10 @@ class Organisation extends Model
     public function county()
     {
         return $this->belongsTo(County::class, 'county_id');
+    }
+
+    public function tenders()
+    {
+        return $this->hasMany(Tender::class, 'organisation_id');
     }
 }

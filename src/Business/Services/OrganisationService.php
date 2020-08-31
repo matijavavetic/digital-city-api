@@ -12,6 +12,8 @@ use src\Business\Mappers\Organisation\Response\OrganisationUpdateResponseMapper;
 use src\Data\Entities\Organisation;
 use src\Business\Mappers\Organisation\Request\OrganisationCreateRequestMapper;
 use src\Business\Mappers\Organisation\Response\OrganisationCreateResponseMapper;
+use src\Data\Enums\HttpStatusCode;
+use src\Data\Repositories\Contracts\IOrganisationRepository;
 use src\Data\Repositories\OrganisationRepository;
 use src\Business\Mappers\Organisation\Request\OrganisationListRequestMapper;
 use src\Business\Mappers\Organisation\Request\OrganisationInfoRequestMapper;
@@ -23,9 +25,9 @@ use src\Business\Factories\Organisation\OrganisationInfoResponseMapperFactory;
 
 class OrganisationService
 {
-    private OrganisationRepository $organisationRepository;
+    private IOrganisationRepository $organisationRepository;
 
-    public function __construct(OrganisationRepository $organisationRepository)
+    public function __construct(IOrganisationRepository $organisationRepository)
     {
         $this->organisationRepository = $organisationRepository;
     }
@@ -67,7 +69,7 @@ class OrganisationService
         $stored = $this->organisationRepository->store($organisation);
 
         if ($stored === false) {
-            throw new \Exception("Failed to store new organisation!", 400);
+            throw new \Exception("Failed to store new organisation!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         $responseMapper = OrganisationCreateResponseMapperFactory::make($organisation);
@@ -120,7 +122,7 @@ class OrganisationService
         $stored = $this->organisationRepository->store($organisation);
 
         if ($stored === false) {
-            throw new \Exception("Failed to update existing organisation!", 400);
+            throw new \Exception("Failed to update existing organisation!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         $responseMapper = OrganisationUpdateResponseMapperFactory::make($organisation);
@@ -137,7 +139,7 @@ class OrganisationService
         $stored = $this->organisationRepository->destroy($organisation);
 
         if ($stored === false) {
-            throw new \Exception("Failed to delete organisation!", 400);
+            throw new \Exception("Failed to delete organisation!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         $responseMapper = OrganisationDeleteResponseMapperFactory::make($organisation);

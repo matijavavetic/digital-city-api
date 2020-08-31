@@ -14,7 +14,7 @@ class UserCreateRequestMapperFactory
         $username = strtok($data['email'], '@');
         $password = Hash::make($data['password']);
 
-        $mapper = new UserCreateRequestMapper($identifier, $data['email'], $username, $password, $data['roles'], $data['organisations']);
+        $mapper = new UserCreateRequestMapper($identifier, $data['email'], $username, $password);
 
         $mapper->setFirstName($data['firstName']);
         $mapper->setLastName($data['lastName']);
@@ -26,6 +26,12 @@ class UserCreateRequestMapperFactory
             $mapper->setPermissions($data['permissions']);
         } else {
             $mapper->setPermissions(null);
+        }
+
+        if (is_null($data['roles']) === false) {
+            $mapper->setRoles($data['roles']);
+        } else {
+            $mapper->setRoles(null);
         }
 
         return $mapper;

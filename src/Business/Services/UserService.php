@@ -2,17 +2,21 @@
 
 namespace src\Business\Services;
 
-use Illuminate\Database\QueryException;
+use Exception;
 use src\Business\Factories\User\UserCreateResponseMapperFactory;
 use src\Business\Factories\User\UserUpdateResponseMapperFactory;
+use src\Business\Mappers\User\Request\UserCreateRequestMapper;
 use src\Business\Mappers\User\Request\UserDeleteRequestMapper;
 use src\Business\Mappers\User\Request\UserUpdateRequestMapper;
 use src\Business\Mappers\User\Response\UserDeleteResponseMapper;
 use src\Business\Mappers\User\Response\UserUpdateResponseMapper;
-use src\Data\Entities\User;
-use src\Business\Mappers\User\Request\UserCreateRequestMapper;
+use src\Data\Entities\Factories\UserEntityFactory;
 use src\Business\Mappers\User\Response\UserCreateResponseMapper;
-use src\Data\Repositories\UserRepository;
+use src\Data\Enums\HttpStatusCode;
+use src\Data\Mappers\UserRelationsCollection;
+use src\Data\Repositories\Contracts\IPermissionRepository;
+use src\Data\Repositories\Contracts\IRoleRepository;
+use src\Data\Repositories\Contracts\IUserRepository;
 use src\Business\Mappers\User\Request\UserListRequestMapper;
 use src\Business\Mappers\User\Request\UserInfoRequestMapper;
 use src\Business\Mappers\User\Response\UserInfoResponseMapper;
@@ -23,11 +27,15 @@ use src\Business\Factories\User\UserInfoResponseMapperFactory;
 
 class UserService
 {
-    private UserRepository $userRepository;
+    private IUserRepository $userRepository;
+    private IRoleRepository $roleRepository;
+    private IPermissionRepository $permissionRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(IUserRepository $userRepository, IRoleRepository $roleRepository, IPermissionRepository $permissionRepository)
     {
         $this->userRepository = $userRepository;
+        $this->roleRepository = $roleRepository;
+        $this->permissionRepository = $permissionRepository;
     }
 
     public function getAll(UserListRequestMapper $mapper) : UserListResponseMapper
@@ -38,7 +46,7 @@ class UserService
             $users = $this->userRepository->get($mapper->getSort());
         }
 
-        $responseMapper = UserListResponseMapperFactory::make($users);
+         $responseMapper = UserListResponseMapperFactory::make($users);
 
         return $responseMapper;
     }
@@ -58,39 +66,25 @@ class UserService
 
     public function create(UserCreateRequestMapper $mapper) : UserCreateResponseMapper
     {
-        $user = new User();
+        $user = UserEntityFactory::make($mapper);
 
-        $user->identifier = $mapper->getIdentifier();
-        $user->username = $mapper->getUsername();
-        $user->email = $mapper->getEmail();
-        $user->password = $mapper->getPassword();
-        $user->firstname = $mapper->getFirstName();
-        $user->lastname = $mapper->getLastName();
-        $user->birth_date = $mapper->getBirthDate();
-        $user->country = $mapper->getCountry();
-        $user->city = $mapper->getCity();
+        $userRelationsCollection = new UserRelationsCollection();
 
-        $stored = null;
-
-        $stored = $this->userRepository->store($user);
-
-        if ($stored === false) {
-            throw new \Exception("Failed to store new user!", 400);
-        }
-
-        try {
-            $user->roles()->sync($mapper->getRoles());
-        } catch(QueryException $e) {
-            throw new \Exception("Failed to store user's roles!", 400);
+        if ($mapper->getRoles() !== null) {
+            foreach ($mapper->getRoles() as $roleIdentifier) {
+                $role = $this->roleRepository->findOne($roleIdentifier);
+                $userRelationsCollection->tack($role);
+            }
         }
 
         if ($mapper->getPermissions() !== null) {
-            try {
-                $user->permissions()->sync($mapper->getPermissions());
-            } catch (QueryException $e) {
-                throw new \Exception("Failed to store user's permissions!", 400);
+            foreach ($mapper->getPermissions() as $permissionIdentifier) {
+                $permission = $this->permissionRepository->findOne($permissionIdentifier);
+                $userRelationsCollection->tack($permission);
             }
         }
+
+        $this->userRepository->store($user, $userRelationsCollection);
 
         $responseMapper = UserCreateResponseMapperFactory::make($user);
 
@@ -101,61 +95,25 @@ class UserService
     {
         $user = $this->userRepository->findOne($mapper->getIdentifier());
 
-        if ($mapper->getUsername() !== null) {
-            $user->username = $mapper->getUsername();
-        }
+        $updatedUser = UserEntityFactory::update($user, $mapper);
 
-        if ($mapper->getEmail() !== null) {
-            $user->email = $mapper->getEmail();
-        }
-
-        if ($mapper->getPassword() !== null) {
-            $user->password = $mapper->getPassword();
-        }
-
-        if ($mapper->getFirstName() !== null) {
-            $user->firstname = $mapper->getFirstName();
-        }
-
-        if ($mapper->getLastName() !== null) {
-            $user->lastname = $mapper->getLastName();
-        }
-
-        if ($mapper->getBirthDate() !== null) {
-            $user->birth_date = $mapper->getBirthDate();
-        }
-
-        if ($mapper->getCountry() !== null) {
-            $user->country = $mapper->getCountry();
-        }
-
-        if ($mapper->getCity() !== null) {
-            $user->city = $mapper->getCity();
-        }
-
-        $stored = null;
-
-        $stored = $this->userRepository->store($user);
-
-        if ($stored === false) {
-            throw new \Exception("Failed to update existing user!", 400);
-        }
+        $userRelationsCollection = new UserRelationsCollection();
 
         if ($mapper->getRoles() !== null) {
-            try {
-                $user->roles()->sync($mapper->getRoles());
-            } catch (QueryException $e) {
-                throw new \Exception("Failed to store user's roles!", 400);
+            foreach ($mapper->getRoles() as $roleIdentifier) {
+                $role = $this->roleRepository->findOne($roleIdentifier);
+                $userRelationsCollection->tack($role);
             }
         }
 
         if ($mapper->getPermissions() !== null) {
-            try {
-                $user->permissions()->sync($mapper->getPermissions());
-            } catch (QueryException $e) {
-                throw new \Exception("Failed to store user's permissions!", 400);
+            foreach ($mapper->getPermissions() as $permissionIdentifier) {
+                $permission = $this->permissionRepository->findOne($permissionIdentifier);
+                $userRelationsCollection->tack($permission);
             }
         }
+
+        $this->userRepository->store($updatedUser, $userRelationsCollection);
 
         $responseMapper = UserUpdateResponseMapperFactory::make($user);
 
@@ -166,12 +124,10 @@ class UserService
     {
         $user = $this->userRepository->findOne($mapper->getIdentifier());
 
-        $stored = null;
-
         $stored = $this->userRepository->destroy($user);
 
         if ($stored === false) {
-            throw new \Exception("Failed to delete user!", 400);
+            throw new Exception("Failed to delete user!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         $responseMapper = UserDeleteResponseMapperFactory::make($user);

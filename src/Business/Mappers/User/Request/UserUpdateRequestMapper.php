@@ -2,7 +2,10 @@
 
 namespace src\Business\Mappers\User\Request;
 
-class UserUpdateRequestMapper
+use src\Business\Mappers\User\Request\Contracts\IUserUpdateRequestMapper;
+use src\Data\Mappers\Contracts\IUserUpdateEntityMapper;
+
+class UserUpdateRequestMapper implements IUserUpdateRequestMapper, IUserUpdateEntityMapper
 {
     private string $identifier;
     private ?array $roles;

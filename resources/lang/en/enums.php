@@ -1,6 +1,7 @@
 <?php
 
 use src\Applications\Http\Enum\ErrorCodes\RoleErrorCode;
+use src\Applications\Http\Enum\ErrorCodes\TenderErrorCode;
 use src\Applications\Http\Enum\ErrorCodes\UserErrorCode;
 use src\Applications\Http\Enum\ErrorCodes\PermissionErrorCode;
 use src\Applications\Http\Enum\ErrorCodes\OrganisationErrorCode;
@@ -65,5 +66,17 @@ return [
         OrganisationErrorCode::ERR_INVALID_SECONDARY_COLOR => 'Invalid secondary color. Secondary color should be a string.',
         OrganisationErrorCode::ERR_INVALID_TERTIARY_COLOR  => 'Invalid tertiary color. Tertiary color should be a string.',
         OrganisationErrorCode::ERR_INVALID_LOGO            => 'Invalid logo. Logo should be a string.',
+    ],
+
+    TenderErrorCode::class => [
+        TenderErrorCode::ERR_INVALID_SORT       => 'Invalid sort value. Sort should be ASC or DESC.',
+        TenderErrorCode::ERR_EMPTY_IDENTIFIER   => 'Empty identifier. Identifier is required.',
+        TenderErrorCode::ERR_INVALID_IDENTIFIER => 'Invalid identifier value. Identifier should be a string.',
+        TenderErrorCode::ERR_EMPTY_NAME         => 'Empty name. Name is required.',
+        TenderErrorCode::ERR_INVALID_NAME       => 'Invalid name value. Name should be a string.',
+        TenderErrorCode::ERR_EMPTY_TYPE         => 'Empty type. Type is required.',
+        TenderErrorCode::ERR_INVALID_TYPE       => 'Invalid type value. Type should be a string.',
+        TenderErrorCode::ERR_INVALID_DATE_FROM  => 'Invalid date from. Date from should be a date.',
+        TenderErrorCode::ERR_INVALID_DATE_TO    => 'Invalid date to. Date to should be a date.',
     ]
 ];

@@ -174,6 +174,7 @@ return [
         \src\Providers\AuthServiceProvider::class,
         \src\Providers\EventServiceProvider::class,
         \src\Providers\RouteServiceProvider::class,
+        \src\Providers\DependencyConfigurationProvider::class
     ],
 
     /*

@@ -2,29 +2,30 @@
 
 namespace src\Business\Mappers\User\Request;
 
-class UserCreateRequestMapper
+use src\Business\Mappers\User\Request\Contracts\IUserCreateRequestMapper;
+use src\Data\Mappers\Contracts\IUserCreateEntityMapper;
+
+class UserCreateRequestMapper implements IUserCreateRequestMapper, IUserCreateEntityMapper
 {
     private string $identifier;
     private string $username;
     private string $email;
     private string $password;
-    private array $roles;
     private array $organisations;
     private ?string $firstName;
     private ?string $lastName;
     private ?string $birthDate;
     private ?string $country;
     private ?string $city;
+    private ?array $roles;
     private ?array $permissions;
 
-    public function __construct(string $identifier, string $email, string $username, string $password, array $roles, array $organisations)
+    public function __construct(string $identifier, string $email, string $username, string $password)
     {
-        $this->identifier    = $identifier;
-        $this->email         = $email;
-        $this->username      = $username;
-        $this->password      = $password;
-        $this->roles         = $roles;
-        $this->organisations = $organisations;
+        $this->identifier = $identifier;
+        $this->email      = $email;
+        $this->username   = $username;
+        $this->password   = $password;
     }
 
     public function getIdentifier() : string
@@ -47,7 +48,7 @@ class UserCreateRequestMapper
         return $this->password;
     }
 
-    public function getRoles() : array
+    public function getRoles() : ?array
     {
         return $this->roles;
     }
@@ -115,5 +116,10 @@ class UserCreateRequestMapper
     public function setPermissions(?array $permissions) : void
     {
         $this->permissions = $permissions;
+    }
+
+    public function setRoles(?array $roles) : void
+    {
+        $this->roles = $roles;
     }
 }

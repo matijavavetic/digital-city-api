@@ -2,14 +2,19 @@
 
 namespace src\Data\Repositories\Contracts;
 
-use src\Data\Entities\User;
+use src\Data\Entities\Contracts\IUserEntity;
+use src\Data\Mappers\UserCollectionMapper;
+use src\Data\Mappers\UserRelationsCollection;
 
 interface IUserRepository
 {
-    public function get(string $sort);
-    public function getWith(string $sort, array $relations);
-    public function findOne(string $identifier);
-    public function findOneWith(string $identifier, array $relations);
-    public function store(User $user);
-    public function destroy(User $user);
+    public function get(string $sort) : UserCollectionMapper;
+    public function getWith(string $sort, array $relations) : UserCollectionMapper;
+    public function findOne(string $identifier) : IUserEntity;
+    public function findOneWith(string $identifier, array $relations) : IUserEntity;
+    public function findOneByAccessToken(string $accessToken) : IUserEntity;
+    public function findOneByEmailAndAccessToken(string $email, string $accessToken) : IUserEntity;
+    public function findOneByEmail(string $email) : IUserEntity;
+    public function store(IUserEntity $user, ?UserRelationsCollection $relations) : IUserEntity;
+    public function destroy(IUserEntity $user) : bool;
 }

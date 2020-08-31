@@ -3,7 +3,6 @@
 namespace src\Business\Mappers\User\Response;
 
 use JsonSerializable;
-use src\Business\Mappers\Role\RoleMapper;
 
 class UserUpdateResponseMapper implements JsonSerializable
 {

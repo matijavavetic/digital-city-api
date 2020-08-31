@@ -5,6 +5,8 @@ namespace src\Business\Services;
 use Illuminate\Database\QueryException;
 use Ramsey\Uuid\Uuid;
 use src\Data\Entities\Role;
+use src\Data\Enums\HttpStatusCode;
+use src\Data\Repositories\Contracts\IRoleRepository;
 use src\Data\Repositories\RoleRepository;
 use src\Business\Factories\Role\RoleInfoResponseMapperFactory;
 use src\Business\Mappers\Role\Response\RoleInfoResponseMapper;
@@ -24,9 +26,9 @@ use src\Business\Mappers\Role\Response\RoleUpdateResponseMapper;
 
 class RoleService
 {
-    private RoleRepository $roleRepository;
+    private IRoleRepository $roleRepository;
 
-    public function __construct(RoleRepository $roleRepository)
+    public function __construct(IRoleRepository $roleRepository)
     {
         $this->roleRepository = $roleRepository;
     }
@@ -60,13 +62,13 @@ class RoleService
         $stored = $this->roleRepository->store($role);
 
         if ($stored === false) {
-            throw new \Exception("Failed to store new role!", 400);
+            throw new \Exception("Failed to store new role!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         try {
             $role->permissions()->sync($mapper->getPermissions());
         } catch(QueryException $e) {
-            throw new \Exception("Failed to store role's permissions!", 400);
+            throw new \Exception("Failed to store role's permissions!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         $responseMapper = RoleCreateResponseMapperFactory::make($role);
@@ -85,14 +87,14 @@ class RoleService
         $stored = $this->roleRepository->store($role);
 
         if( $stored === false) {
-            throw new \Exception("Failed to update existing role!", 400);
+            throw new \Exception("Failed to update existing role!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         if ($mapper->getPermissions() !== null) {
             try {
                 $role->permissions()->sync($mapper->getPermissions());
             } catch (QueryException $e) {
-                throw new \Exception("Failed to store role's permissions!", 400);
+                throw new \Exception("Failed to store role's permissions!", HttpStatusCode::HTTP_BAD_REQUEST);
             }
         }
 
@@ -110,7 +112,7 @@ class RoleService
         $stored = $this->roleRepository->destroy($role);
 
         if ($stored === false) {
-            throw new \Exception("Failed to delete role!", 400);
+            throw new \Exception("Failed to delete role!", HttpStatusCode::HTTP_BAD_REQUEST);
         }
 
         $responseMapper = RoleDeleteResponseMapperFactory::make($role);

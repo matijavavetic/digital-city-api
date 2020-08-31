@@ -20,12 +20,15 @@ class UserListRequest extends FormRequest
                 'nullable',
                 'in:ASC,DESC',
             ],
-            'relations' => 'nullable|array',
+            'relations' => [
+                'nullable',
+                'array',
+            ],
             'relations.*' => [
                 'string',
                 'distinct',
                 'enum_value:' . RelationEnum::class,
-            ],
+            ]
         ];
     }
 
@@ -37,7 +40,7 @@ class UserListRequest extends FormRequest
     public function errorCodes() : array
     {
         return [
-            'sort.in'    => UserErrorCode::ERR_INVALID_SORT,
+            'sort.in'         => UserErrorCode::ERR_INVALID_SORT,
             'relations.array' => UserErrorCode::ERR_INVALID_RELATIONS
         ];
     }
